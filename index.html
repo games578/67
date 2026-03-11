@@ -23,71 +23,80 @@
     <title>Games578 | Free Unblocked Browser Games</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <style>
-      body {
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: #111;
-        color: white;
+        padding: 0;
       }
 
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #0e0e0e;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* ── Navbar ── */
       .navbar {
         display: flex;
         align-items: center;
-        padding: 10px 8%;
-        background: rgba(17, 17, 17, 0.55);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
+        padding: 0 24px 0 0;
+        background: rgba(14, 14, 14, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 200;
+        height: 70px;
       }
 
       .navbar a.logo-link {
         display: flex;
         align-items: center;
-        margin-right: 20px;
+        width: 64px;
         flex-shrink: 0;
+        justify-content: center;
         opacity: 0.9;
         transition: opacity 0.2s;
+        height: 100%;
       }
-
       .navbar a.logo-link:hover {
         opacity: 1;
       }
-
       .navbar img.logo {
-        height: 80px;
+        height: 46px;
         display: block;
       }
 
       .search-wrapper {
         flex: 1;
         position: relative;
+        margin: 0 16px;
       }
-
       .search-wrapper input.search {
         width: 100%;
         padding: 9px 16px;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.07);
         color: white;
-        font-size: 15px;
+        font-size: 14px;
         outline: none;
         transition:
           border 0.2s,
           background 0.2s;
-        box-sizing: border-box;
       }
-
       .search-wrapper input.search::placeholder {
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.35);
       }
-
       .search-wrapper input.search:focus {
-        border-color: rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.11);
       }
 
       .suggestions {
@@ -96,122 +105,320 @@
         top: calc(100% + 6px);
         left: 0;
         right: 0;
-        background: #1e1e1e;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-        z-index: 200;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.7);
+        z-index: 300;
       }
-
       .suggestions.visible {
         display: block;
       }
-
       .suggestion-item {
         display: flex;
         align-items: center;
         gap: 10px;
         padding: 9px 14px;
         cursor: pointer;
-        transition: background 0.15s;
+        transition: background 0.12s;
         text-decoration: none;
         color: white;
       }
-
       .suggestion-item:hover,
       .suggestion-item.active {
-        background: rgba(255, 255, 255, 0.09);
+        background: rgba(255, 255, 255, 0.08);
       }
-
       .suggestion-item img {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         border-radius: 6px;
         object-fit: cover;
         flex-shrink: 0;
       }
-
       .suggestion-item span {
-        font-size: 14px;
+        font-size: 13px;
       }
       .suggestion-item .match {
         color: white;
         font-weight: 600;
       }
       .suggestion-item .rest {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.45);
       }
 
-      #gameCards {
+      /* ── Layout ── */
+      .layout {
+        display: flex;
+        flex: 1;
+      }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        width: 64px;
+        flex-shrink: 0;
+        background: #141414;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        display: flex;
+        flex-direction: column;
+        padding-top: 12px;
+        z-index: 100;
+      }
+      .sidebar:hover {
+        width: 190px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 0 11px 18px;
+        cursor: pointer;
+        white-space: nowrap;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+      }
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        border-left-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .nav-emoji {
+        font-size: 18px;
+        flex-shrink: 0;
+        width: 26px;
+        text-align: center;
+      }
+      .nav-label {
+        opacity: 0;
+        transition: opacity 0.15s 0.05s;
+        font-size: 13px;
+        overflow: hidden;
+      }
+      .sidebar:hover .nav-label {
+        opacity: 1;
+      }
+      .nav-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.06);
+        margin: 8px 12px;
+        flex-shrink: 0;
+      }
+
+      /* ── Main ── */
+      .main {
+        flex: 1;
+        padding: 24px 5% 0;
+        min-width: 0;
+      }
+
+      /* ── Section ── */
+      .section {
+        margin-bottom: 36px;
+      }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .section-title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .section-count {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 2px 8px;
+        border-radius: 20px;
+      }
+      .section-grid {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
-        gap: 15px;
-        padding: 24px 20%;
+        gap: 10px;
       }
 
-      @media (max-width: 700px) {
-        #gameCards {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 10px;
-          padding: 16px 10%;
-        }
-      }
-
-      @media (max-width: 420px) {
-        #gameCards {
-          grid-template-columns: repeat(3, 1fr);
-          gap: 8px;
-          padding: 12px 12%;
-        }
-      }
-
+      /* ── Card ── */
       .card {
-        background: #222;
+        background: #1e1e1e;
         border-radius: 10px;
         overflow: hidden;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        aspect-ratio: 1 / 1;
-        transition:
-          transform 0.2s,
-          background 0.2s;
+        aspect-ratio: 1/1;
+        position: relative;
+        transition: transform 0.18s;
+        border: 1px solid rgba(255, 255, 255, 0.04);
       }
-
       .card:hover {
-        transform: scale(1.05);
-        background: #333;
+        transform: scale(1.06);
       }
-
+      .card:hover .card-label {
+        opacity: 1;
+        transform: translateY(0);
+      }
       .card a {
         display: block;
         width: 100%;
         height: 100%;
-        text-decoration: none;
-        color: white;
-        text-align: center;
       }
-
       .card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
       }
-      footer {
+
+      /* Hover label */
+      .card-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 16px 6px 6px;
         text-align: center;
-        padding: 28px 8%;
-        border-top: 1px solid rgba(255, 255, 255, 0.07);
-        margin-top: 20px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition:
+          opacity 0.18s,
+          transform 0.18s;
+        pointer-events: none;
+        line-height: 1.2;
       }
 
-      footer h3 {
+      /* Fav button */
+      .fav-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, 0.55);
+        border: none;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
         font-size: 13px;
-        font-weight: 400;
+        opacity: 0;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+        z-index: 2;
+        padding: 0;
+      }
+      .card:hover .fav-btn {
+        opacity: 1;
+      }
+      .fav-btn:hover {
+        transform: scale(1.2);
+      }
+      .fav-btn.active {
+        opacity: 1;
+      }
+
+      /* Shimmer skeleton */
+      .skeleton {
+        background: #1e1e1e;
+        border-radius: 10px;
+        aspect-ratio: 1/1;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: linear-gradient(
+          90deg,
+          #1e1e1e 25%,
+          #2a2a2a 50%,
+          #1e1e1e 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.4s infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Search results */
+      #searchResults {
+        display: none;
+      }
+      .search-label {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 16px;
+        display: block;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 48px 0;
         color: rgba(255, 255, 255, 0.25);
-        margin: 0;
+        font-size: 14px;
+      }
+      .empty-state .emoji {
+        font-size: 36px;
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 24px 8%;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        margin-top: 16px;
+      }
+      footer h3 {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      @media (max-width: 800px) {
+        .sidebar {
+          display: none;
+        }
+        .main {
+          padding: 16px 4% 0;
+        }
+        .section-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 480px) {
+        .section-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 7px;
+        }
       }
     </style>
   </head>
@@ -232,35 +439,304 @@
       </div>
     </div>
 
-    <div id="gameCards"></div>
+    <div class="layout">
+      <nav class="sidebar" id="sidebar">
+        <a class="nav-item active" data-tag="all" href="#">
+          <span class="nav-emoji">🏠</span><span class="nav-label">Home</span>
+        </a>
+        <a class="nav-item" data-tag="favourites" href="#">
+          <span class="nav-emoji">❤️</span
+          ><span class="nav-label">Favourites</span>
+        </a>
+        <a class="nav-item" data-tag="recent" href="#">
+          <span class="nav-emoji">🕐</span
+          ><span class="nav-label">Recently Played</span>
+        </a>
+        <div class="nav-divider"></div>
+        <a class="nav-item" data-tag="new" href="#">
+          <span class="nav-emoji">🆕</span><span class="nav-label">New</span>
+        </a>
+        <a class="nav-item" data-tag="popular" href="#">
+          <span class="nav-emoji">🔥</span
+          ><span class="nav-label">Popular</span>
+        </a>
+        <div class="nav-divider"></div>
+        <a class="nav-item" data-tag="soccer" href="#">
+          <span class="nav-emoji">⚽</span><span class="nav-label">Soccer</span>
+        </a>
+        <a class="nav-item" data-tag="shooting" href="#">
+          <span class="nav-emoji">🔫</span
+          ><span class="nav-label">Shooting</span>
+        </a>
+        <a class="nav-item" data-tag="racing" href="#">
+          <span class="nav-emoji">🏎️</span><span class="nav-label">Racing</span>
+        </a>
+        <a class="nav-item" data-tag="action" href="#">
+          <span class="nav-emoji">⚡</span><span class="nav-label">Action</span>
+        </a>
+        <a class="nav-item" data-tag="sports" href="#">
+          <span class="nav-emoji">🏆</span><span class="nav-label">Sports</span>
+        </a>
+        <a class="nav-item" data-tag="casual" href="#">
+          <span class="nav-emoji">🎮</span><span class="nav-label">Casual</span>
+        </a>
+        <a class="nav-item" data-tag="idle" href="#">
+          <span class="nav-emoji">💤</span><span class="nav-label">Idle</span>
+        </a>
+        <a class="nav-item" data-tag="running" href="#">
+          <span class="nav-emoji">🏃</span
+          ><span class="nav-label">Running</span>
+        </a>
+      </nav>
+
+      <main class="main" id="main">
+        <div id="searchResults">
+          <span class="search-label" id="searchLabel"></span>
+          <div class="section-grid" id="searchGrid"></div>
+          <div class="empty-state" id="emptyState" style="display: none">
+            <span class="emoji">🎮</span>
+            No games found — try a different search!
+          </div>
+        </div>
+        <div id="content"></div>
+        <footer><h3>🐶 and Skyllars dog Bueno</h3></footer>
+      </main>
+    </div>
 
     <script src="games.js"></script>
     <script>
-      const grid = document.getElementById("gameCards");
-      const searchInput = document.getElementById("searchInput");
-      const suggestionsBox = document.getElementById("suggestions");
-
-      // Auto-generate cards from games.js
-      games.forEach((game) => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.dataset.title = game.title.toLowerCase();
-        card.innerHTML = `<a href="play.html?${game.id}"><img src="${game.img}" alt="${game.title}" /></a>`;
-        grid.appendChild(card);
-      });
-
-      // Search filter
-      function filterCards(filter) {
-        document.querySelectorAll("#gameCards .card").forEach((card) => {
-          card.style.display = card.dataset.title.includes(filter)
-            ? "flex"
-            : "none";
-        });
+      // ── Storage helpers ──
+      function getFavs() {
+        try {
+          return JSON.parse(localStorage.getItem("favs") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function setFavs(f) {
+        try {
+          localStorage.setItem("favs", JSON.stringify(f));
+        } catch {}
+      }
+      function getRecent() {
+        try {
+          return JSON.parse(localStorage.getItem("recent") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function addRecent(id) {
+        let r = getRecent().filter((x) => x !== id);
+        r.unshift(id);
+        r = r.slice(0, 8);
+        try {
+          localStorage.setItem("recent", JSON.stringify(r));
+        } catch {}
       }
 
-      // Autocomplete
-      let activeIndex = -1;
+      const searchInput = document.getElementById("searchInput");
+      const suggestionsBox = document.getElementById("suggestions");
+      const content = document.getElementById("content");
+      const searchResults = document.getElementById("searchResults");
+      const searchGrid = document.getElementById("searchGrid");
+      const searchLabel = document.getElementById("searchLabel");
+      const emptyState = document.getElementById("emptyState");
 
+      const sections = [
+        { tag: "new", label: "🆕 New" },
+        { tag: "popular", label: "🔥 Popular" },
+        { tag: "soccer", label: "⚽ Soccer" },
+        { tag: "shooting", label: "🔫 Shooting" },
+        { tag: "racing", label: "🏎️ Racing" },
+        { tag: "action", label: "⚡ Action" },
+        { tag: "sports", label: "🏆 Sports" },
+        { tag: "casual", label: "🎮 Casual" },
+        { tag: "idle", label: "💤 Idle" },
+        { tag: "running", label: "🏃 Running" },
+      ];
+
+      const newPicks = [
+        "a-small-world-cup",
+        "bitlife",
+        "subway-surfers",
+        "among-us",
+        "sniper",
+        "lol",
+        "fruit-ninja",
+        "red-ball",
+      ];
+
+      // ── Make card ──
+      function makeCard(game) {
+        const favs = getFavs();
+        const isFav = favs.includes(game.id);
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        // Skeleton shimmer until image loads
+        const skeleton = document.createElement("div");
+        skeleton.className = "skeleton";
+        skeleton.style.cssText =
+          "position:absolute;inset:0;z-index:1;border-radius:10px;";
+        card.appendChild(skeleton);
+
+        const a = document.createElement("a");
+        a.href = `play.html?${game.id}`;
+        a.addEventListener("click", () => addRecent(game.id));
+
+        const img = document.createElement("img");
+        img.alt = game.title;
+        img.loading = "lazy";
+        img.onload = () => skeleton.remove();
+        img.onerror = () => skeleton.remove();
+        img.src = game.img;
+
+        const label = document.createElement("div");
+        label.className = "card-label";
+        label.textContent = game.title;
+
+        const favBtn = document.createElement("button");
+        favBtn.className = "fav-btn" + (isFav ? " active" : "");
+        favBtn.title = isFav ? "Remove from favourites" : "Add to favourites";
+        favBtn.textContent = isFav ? "❤️" : "🤍";
+        favBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          let f = getFavs();
+          if (f.includes(game.id)) {
+            f = f.filter((x) => x !== game.id);
+            favBtn.textContent = "🤍";
+            favBtn.classList.remove("active");
+            favBtn.title = "Add to favourites";
+          } else {
+            f.push(game.id);
+            favBtn.textContent = "❤️";
+            favBtn.classList.add("active");
+            favBtn.title = "Remove from favourites";
+          }
+          setFavs(f);
+          // If currently viewing favourites section, rebuild it
+          const activeTag =
+            document.querySelector(".nav-item.active")?.dataset.tag;
+          if (activeTag === "favourites") buildSections("favourites");
+        });
+
+        a.appendChild(img);
+        card.appendChild(a);
+        card.appendChild(label);
+        card.appendChild(favBtn);
+        return card;
+      }
+
+      // ── Skeleton grid ──
+      function makeSkeletons(count) {
+        const grid = document.createElement("div");
+        grid.className = "section-grid";
+        for (let i = 0; i < count; i++) {
+          const sk = document.createElement("div");
+          sk.className = "skeleton";
+          grid.appendChild(sk);
+        }
+        return grid;
+      }
+
+      // ── Build sections ──
+      function buildSections(tag) {
+        content.innerHTML = "";
+
+        if (tag === "all") {
+          // Recently played
+          const recentIds = getRecent();
+          if (recentIds.length) {
+            const recentGames = recentIds
+              .map((id) => games.find((g) => g.id === id))
+              .filter(Boolean);
+            appendSection("🕐 Recently Played", recentGames);
+          }
+          // Favourites (if any)
+          const favIds = getFavs();
+          if (favIds.length) {
+            const favGames = favIds
+              .map((id) => games.find((g) => g.id === id))
+              .filter(Boolean);
+            appendSection("❤️ Favourites", favGames);
+          }
+          // New picks
+          const newGames = newPicks
+            .map((id) => games.find((g) => g.id === id))
+            .filter(Boolean);
+          appendSection("🆕 New", newGames);
+          // Popular
+          const popular = games.filter(
+            (g) => g.tags && g.tags.includes("popular"),
+          );
+          appendSection("🔥 Popular", popular);
+          // All
+          appendSection("🎮 All Games", games);
+        } else if (tag === "favourites") {
+          const favIds = getFavs();
+          const favGames = favIds
+            .map((id) => games.find((g) => g.id === id))
+            .filter(Boolean);
+          if (favGames.length) {
+            appendSection("❤️ Favourites", favGames);
+          } else {
+            content.innerHTML = `<div class="empty-state"><span class="emoji">🤍</span>No favourites yet — click the heart on any game!</div>`;
+          }
+        } else if (tag === "recent") {
+          const recentIds = getRecent();
+          const recentGames = recentIds
+            .map((id) => games.find((g) => g.id === id))
+            .filter(Boolean);
+          if (recentGames.length) {
+            appendSection("🕐 Recently Played", recentGames);
+          } else {
+            content.innerHTML = `<div class="empty-state"><span class="emoji">🕐</span>No games played yet — go play something!</div>`;
+          }
+        } else {
+          const sectionDef = sections.find((s) => s.tag === tag);
+          const tagged = games.filter((g) => g.tags && g.tags.includes(tag));
+          if (sectionDef && tagged.length)
+            appendSection(sectionDef.label, tagged);
+        }
+      }
+
+      function appendSection(label, gameList) {
+        const section = document.createElement("div");
+        section.className = "section";
+        section.innerHTML = `
+          <div class="section-header">
+            <span class="section-title">${label}</span>
+            <span class="section-count">${gameList.length}</span>
+          </div>`;
+        const grid = document.createElement("div");
+        grid.className = "section-grid";
+        gameList.forEach((game) => grid.appendChild(makeCard(game)));
+        section.appendChild(grid);
+        content.appendChild(section);
+      }
+
+      buildSections("all");
+
+      // ── Sidebar nav ──
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          document
+            .querySelectorAll(".nav-item")
+            .forEach((n) => n.classList.remove("active"));
+          item.classList.add("active");
+          searchResults.style.display = "none";
+          content.style.display = "block";
+          searchInput.value = "";
+          suggestionsBox.classList.remove("visible");
+          buildSections(item.dataset.tag);
+        });
+      });
+
+      // ── Autocomplete ──
+      let activeIndex = -1;
       function escapeHtml(s) {
         return s
           .replace(/&/g, "&amp;")
@@ -275,7 +751,6 @@
           suggestionsBox.classList.remove("visible");
           return;
         }
-
         const matches = games
           .filter((g) => g.title.toLowerCase().includes(filter))
           .slice(0, 6);
@@ -283,16 +758,14 @@
           suggestionsBox.classList.remove("visible");
           return;
         }
-
         matches.forEach((game) => {
           const a = document.createElement("a");
           a.className = "suggestion-item";
           a.href = "play.html?" + game.id;
-
+          a.addEventListener("click", () => addRecent(game.id));
           const img = document.createElement("img");
           img.src = game.img;
           img.alt = game.title;
-
           const title = game.title;
           const idx = title.toLowerCase().indexOf(filter);
           const span = document.createElement("span");
@@ -302,12 +775,10 @@
                 `<span class="match">${escapeHtml(title.slice(idx, idx + filter.length))}</span>` +
                 `<span class="rest">${escapeHtml(title.slice(idx + filter.length))}</span>`
               : escapeHtml(title);
-
           a.appendChild(img);
           a.appendChild(span);
           suggestionsBox.appendChild(a);
         });
-
         suggestionsBox.classList.add("visible");
       }
 
@@ -323,7 +794,20 @@
       searchInput.addEventListener("input", () => {
         const filter = searchInput.value.toLowerCase().trim();
         showSuggestions(filter);
-        filterCards(filter);
+        if (filter) {
+          const matches = games.filter((g) =>
+            g.title.toLowerCase().includes(filter),
+          );
+          searchGrid.innerHTML = "";
+          matches.forEach((game) => searchGrid.appendChild(makeCard(game)));
+          searchLabel.textContent = `${matches.length} result${matches.length !== 1 ? "s" : ""} for "${searchInput.value.trim()}"`;
+          emptyState.style.display = matches.length ? "none" : "block";
+          searchResults.style.display = "block";
+          content.style.display = "none";
+        } else {
+          searchResults.style.display = "none";
+          content.style.display = "block";
+        }
       });
 
       searchInput.addEventListener("keydown", (e) => {
@@ -355,10 +839,5 @@
         if (f) showSuggestions(f);
       });
     </script>
-
-    <footer>
-      <h3>🐶 and Skylarr's dog Bueno</h3>
-    </footer>
   </body>
 </html>
-
