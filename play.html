@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Play Math Game</title>
+    <title>Play Game</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <style>
       *,
@@ -165,6 +165,27 @@
       .home-link:hover {
         background: rgba(255, 255, 255, 0.18);
         border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .panic-btn {
+        flex-shrink: 0;
+        background: rgba(220, 38, 38, 0.15);
+        border: 1px solid rgba(220, 38, 38, 0.35);
+        color: #fc8181;
+        padding: 7px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+        margin-left: 6px;
+      }
+      .panic-btn:hover {
+        background: rgba(220, 38, 38, 0.3);
+        border-color: rgba(220, 38, 38, 0.6);
       }
 
       /* ── Page ── */
@@ -361,6 +382,158 @@
         }
       }
 
+      /* Share toast */
+      .share-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+        z-index: 999;
+        white-space: nowrap;
+      }
+      .share-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Report modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 28px;
+        width: 100%;
+        max-width: 400px;
+        margin: 16px;
+        transform: translateY(12px);
+        transition: transform 0.2s;
+      }
+      .modal-overlay.open .modal {
+        transform: translateY(0);
+      }
+      .modal h2 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .modal p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 20px;
+      }
+      .modal textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: white;
+        font-size: 13px;
+        outline: none;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 80px;
+        transition: border-color 0.2s;
+        margin-bottom: 16px;
+      }
+      .modal textarea:focus {
+        border-color: rgba(99, 179, 237, 0.5);
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+      .modal-cancel {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.6);
+        padding: 8px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: background 0.2s;
+      }
+      .modal-cancel:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .modal-submit {
+        background: rgba(220, 38, 38, 0.2);
+        border: 1px solid rgba(220, 38, 38, 0.4);
+        color: #fc8181;
+        padding: 8px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .modal-submit:hover {
+        background: rgba(220, 38, 38, 0.35);
+      }
+      .modal-success {
+        text-align: center;
+        padding: 8px 0 4px;
+      }
+      .modal-success .big-emoji {
+        font-size: 36px;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      /* Report link under game */
+      .report-link {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.2);
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.15s;
+        padding: 0;
+        font-family: inherit;
+      }
+      .report-link:hover {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .under-frame {
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 6px 2px 0;
+      }
+
       /* Footer */
       footer {
         background: #0a0a0a;
@@ -482,6 +655,7 @@
         <div class="suggestions" id="suggestions"></div>
       </div>
       <a href="index.html" class="home-link">← Home</a>
+      <button class="panic-btn" id="panicBtn">🚨 Panic</button>
     </div>
 
     <div class="page">
@@ -489,6 +663,7 @@
         <div id="gameTitle">Loading...</div>
         <div class="controls">
           <button class="btn" id="favBtn">🤍 Favourite</button>
+          <button class="btn" id="shareBtn">🔗 Share</button>
           <button class="btn" id="reloadBtn">↺ Reload</button>
           <button class="btn primary" id="fullscreenBtn">⛶ Fullscreen</button>
         </div>
@@ -496,6 +671,11 @@
 
       <div class="game-container" id="container">
         <iframe id="gameFrame" allowfullscreen></iframe>
+      </div>
+
+      <!-- Under-frame row -->
+      <div class="under-frame">
+        <button class="report-link" id="reportBtn">⚠ Report broken game</button>
       </div>
 
       <!-- You might also like -->
@@ -526,9 +706,21 @@
           <h4>Contact</h4>
           <ul>
             <li>
-              <a href="mailto:vladpilipchuk14@gmail.com">📧 Send us an email</a>
+              <a
+                href="/cdn-cgi/l/email-protection#c0b6aca1a4b0a9aca9b0a3a8b5abf1f480a7ada1a9aceea3afad"
+                >📧 Send us an email</a
+              >
             </li>
-            <li><span>vladpilipchuk14@gmail.com</span></li>
+            <li>
+              <span
+                ><a
+                  href="/cdn-cgi/l/email-protection"
+                  class="__cf_email__"
+                  data-cfemail="d9afb5b8bda9b0b5b0a9bab1acb2e8ed99beb4b8b0b5f7bab6b4"
+                  >[email&#160;protected]</a
+                ></span
+              >
+            </li>
             <li>
               <span class="footer-note">We reply within 24&ndash;48 hours</span>
             </li>
@@ -542,6 +734,51 @@
       </div>
     </footer>
 
+    <!-- Share toast -->
+    <div class="share-toast" id="shareToast">🔗 Link copied to clipboard!</div>
+
+    <!-- Report broken game modal -->
+    <div class="modal-overlay" id="reportModal">
+      <div class="modal">
+        <div id="reportForm">
+          <h2>⚠️ Report Broken Game</h2>
+          <p>Tell us what's wrong and we'll fix it as soon as possible.</p>
+          <textarea
+            id="reportNote"
+            placeholder="What's wrong? (e.g. game doesn't load, black screen, wrong game)"
+            maxlength="300"
+          ></textarea>
+          <div class="modal-actions">
+            <button class="modal-cancel" id="reportCancel">Cancel</button>
+            <button class="modal-submit" id="reportSubmit">Send Report</button>
+          </div>
+        </div>
+        <div id="reportSuccess" class="modal-success" style="display: none">
+          <span class="big-emoji">✅</span>
+          <h2>Thanks!</h2>
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.4);
+              font-size: 13px;
+              margin-top: 8px;
+            "
+          >
+            Report saved. We'll look into it!
+          </p>
+          <div
+            class="modal-actions"
+            style="justify-content: center; margin-top: 20px"
+          >
+            <button class="modal-cancel" id="reportClose">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
     <script src="games.js"></script>
     <script>
       // ── Storage ──
@@ -646,6 +883,68 @@
         favBtn.style.display = "none";
       }
 
+      // ── Share button ──
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        const url = window.location.href;
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(url)
+            .then(showShareToast)
+            .catch(() => {
+              prompt("Copy this link:", url);
+            });
+        } else {
+          prompt("Copy this link:", url);
+        }
+      });
+
+      function showShareToast() {
+        const t = document.getElementById("shareToast");
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
+      }
+
+      // ── Report broken game ──
+      const reportModal = document.getElementById("reportModal");
+      document.getElementById("reportBtn").addEventListener("click", () => {
+        reportModal.classList.add("open");
+      });
+      function closeReport() {
+        reportModal.classList.remove("open");
+        document.getElementById("reportForm").style.display = "block";
+        document.getElementById("reportSuccess").style.display = "none";
+        document.getElementById("reportNote").value = "";
+      }
+      document
+        .getElementById("reportCancel")
+        .addEventListener("click", closeReport);
+      document
+        .getElementById("reportClose")
+        .addEventListener("click", closeReport);
+      reportModal.addEventListener("click", (e) => {
+        if (e.target === reportModal) closeReport();
+      });
+      document.getElementById("reportSubmit").addEventListener("click", () => {
+        const note = document.getElementById("reportNote").value.trim();
+        const gameName = window.location.search
+          .substring(1)
+          .trim()
+          .toLowerCase();
+        try {
+          const reports = JSON.parse(
+            localStorage.getItem("brokenReports") || "[]",
+          );
+          reports.push({
+            gameId: gameName,
+            note,
+            date: new Date().toISOString(),
+          });
+          localStorage.setItem("brokenReports", JSON.stringify(reports));
+        } catch {}
+        document.getElementById("reportForm").style.display = "none";
+        document.getElementById("reportSuccess").style.display = "block";
+      });
+
       // ── Reload ──
       document.getElementById("reloadBtn").addEventListener("click", () => {
         frame.src = frame.src;
@@ -675,6 +974,15 @@
       }
       document.addEventListener("fullscreenchange", updateFsBtn);
       document.addEventListener("webkitfullscreenchange", updateFsBtn);
+
+      // Panic key — backtick redirects to Google Classroom
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "`")
+          window.location.href = "https://classroom.google.com";
+      });
+      document.getElementById("panicBtn").addEventListener("click", () => {
+        window.location.href = "https://classroom.google.com";
+      });
 
       // ── Search autocomplete ──
       const searchInput = document.getElementById("searchInput");
