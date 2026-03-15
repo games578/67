@@ -31,13 +31,57 @@
         padding: 0;
       }
 
+      :root {
+        --bg: #0e0e0e;
+        --bg2: #141414;
+        --bg3: #1a1a1a;
+        --bg4: #1e1e1e;
+        --border: rgba(255, 255, 255, 0.06);
+        --border2: rgba(255, 255, 255, 0.1);
+        --text: white;
+        --text2: rgba(255, 255, 255, 0.5);
+        --text3: rgba(255, 255, 255, 0.3);
+        --accent: #3182ce;
+        --accent2: rgba(99, 179, 237, 0.2);
+        --accent3: #90cdf4;
+        --shimmer1: #1e1e1e;
+        --shimmer2: #2a2a2a;
+        --card-bg: #1e1e1e;
+        --navbar-bg: rgba(14, 14, 14, 0.75);
+        --sidebar-bg: #141414;
+        --footer-bg: #0a0a0a;
+      }
+      body.light {
+        --bg: #f0f2f5;
+        --bg2: #e8eaed;
+        --bg3: #ffffff;
+        --bg4: #f8f9fa;
+        --border: rgba(0, 0, 0, 0.08);
+        --border2: rgba(0, 0, 0, 0.12);
+        --text: #1a1a2e;
+        --text2: rgba(0, 0, 0, 0.5);
+        --text3: rgba(0, 0, 0, 0.35);
+        --accent: #2563eb;
+        --accent2: rgba(37, 99, 235, 0.12);
+        --accent3: #1d4ed8;
+        --shimmer1: #e8eaed;
+        --shimmer2: #d1d5db;
+        --card-bg: #ffffff;
+        --navbar-bg: rgba(240, 242, 245, 0.9);
+        --sidebar-bg: #e8eaed;
+        --footer-bg: #e2e4e8;
+      }
+
       body {
         font-family: "Segoe UI", system-ui, sans-serif;
-        background: #0e0e0e;
-        color: white;
+        background: var(--bg);
+        color: var(--text);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        transition:
+          background 0.25s,
+          color 0.25s;
       }
 
       /* ── Announcement banner ── */
@@ -65,7 +109,7 @@
         transform: translateY(-50%);
         background: none;
         border: none;
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--text2);
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
@@ -73,7 +117,7 @@
         transition: color 0.15s;
       }
       .announce-close:hover {
-        color: white;
+        color: var(--text);
       }
 
       /* ── Navbar ── */
@@ -81,10 +125,10 @@
         display: flex;
         align-items: center;
         padding: 0 16px 0 0;
-        background: rgba(14, 14, 14, 0.75);
+        background: var(--navbar-bg);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+        box-shadow: 0 1px 0 var(--border);
         position: sticky;
         top: 0;
         z-index: 200;
@@ -128,9 +172,9 @@
         width: 100%;
         padding: 9px 16px 9px 36px;
         border-radius: 8px;
-        border: 1px solid rgba(99, 179, 237, 0.2);
-        background: rgba(99, 179, 237, 0.04);
-        color: white;
+        border: 1px solid var(--accent2);
+        background: var(--accent2);
+        color: var(--text);
         font-size: 14px;
         outline: none;
         transition:
@@ -154,7 +198,7 @@
         flex-shrink: 0;
         background: rgba(255, 255, 255, 0.07);
         border: 1px solid rgba(255, 255, 255, 0.12);
-        color: white;
+        color: var(--text);
         padding: 7px 14px;
         border-radius: 8px;
         cursor: pointer;
@@ -197,8 +241,8 @@
         top: calc(100% + 6px);
         left: 0;
         right: 0;
-        background: #1a1a1a;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg3);
+        border: 1px solid var(--border2);
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 10px 32px rgba(0, 0, 0, 0.7);
@@ -215,7 +259,7 @@
         cursor: pointer;
         transition: background 0.12s;
         text-decoration: none;
-        color: white;
+        color: var(--text);
       }
       .suggestion-item:hover,
       .suggestion-item.active {
@@ -232,11 +276,11 @@
         font-size: 13px;
       }
       .suggestion-item .match {
-        color: white;
+        color: var(--text);
         font-weight: 600;
       }
       .suggestion-item .rest {
-        color: rgba(255, 255, 255, 0.45);
+        color: var(--text2);
       }
 
       /* ── Layout ── */
@@ -249,8 +293,8 @@
       .sidebar {
         width: 64px;
         flex-shrink: 0;
-        background: #141414;
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
         transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
         position: sticky;
@@ -271,7 +315,7 @@
         padding: 11px 0 11px 18px;
         cursor: pointer;
         white-space: nowrap;
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text2);
         text-decoration: none;
         font-size: 13px;
         font-weight: 500;
@@ -282,13 +326,13 @@
           border-color 0.15s;
       }
       .nav-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-        color: white;
+        background: rgba(128, 128, 128, 0.08);
+        color: var(--text);
       }
       .nav-item.active {
-        background: rgba(255, 255, 255, 0.08);
-        color: white;
-        border-left-color: rgba(255, 255, 255, 0.4);
+        background: rgba(128, 128, 128, 0.1);
+        color: var(--text);
+        border-left-color: var(--accent);
       }
       .nav-emoji {
         font-size: 18px;
@@ -307,7 +351,7 @@
       }
       .nav-divider {
         height: 1px;
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--border);
         margin: 8px 12px;
         flex-shrink: 0;
       }
@@ -319,9 +363,9 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgba(14, 14, 14, 0.96);
+        background: var(--navbar-bg);
         backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid var(--border);
         z-index: 500;
         padding: 8px 0 env(safe-area-inset-bottom, 8px);
       }
@@ -336,7 +380,7 @@
         align-items: center;
         gap: 3px;
         cursor: pointer;
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--text2);
         font-size: 10px;
         font-weight: 500;
         padding: 4px 8px;
@@ -346,7 +390,7 @@
         min-width: 52px;
       }
       .mobile-nav-item.active {
-        color: white;
+        color: var(--text);
       }
       .mobile-nav-item .mn-emoji {
         font-size: 20px;
@@ -437,7 +481,7 @@
         gap: 10px;
         margin-bottom: 14px;
         padding-bottom: 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--border);
       }
       .section-title {
         font-size: 16px;
@@ -445,8 +489,8 @@
       }
       .section-count {
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.06);
+        color: var(--text2);
+        background: rgba(128, 128, 128, 0.1);
         padding: 2px 8px;
         border-radius: 20px;
       }
@@ -458,7 +502,7 @@
 
       /* ── Card ── */
       .card {
-        background: #1e1e1e;
+        background: var(--card-bg);
         border-radius: 10px;
         overflow: hidden;
         cursor: pointer;
@@ -468,7 +512,7 @@
         aspect-ratio: 1/1;
         position: relative;
         transition: transform 0.18s;
-        border: 1px solid rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
       }
       .card:hover {
         transform: scale(1.06);
@@ -608,12 +652,12 @@
       .skeleton {
         border-radius: 10px;
         aspect-ratio: 1/1;
-        border: 1px solid rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
         background: linear-gradient(
           90deg,
-          #1e1e1e 25%,
-          #2a2a2a 50%,
-          #1e1e1e 75%
+          var(--shimmer1) 25%,
+          var(--shimmer2) 50%,
+          var(--shimmer1) 75%
         );
         background-size: 200% 100%;
         animation: shimmer 1.4s infinite;
@@ -627,20 +671,54 @@
         }
       }
 
+      /* ── Smooth section transitions ── */
+      #content,
+      #searchResults {
+        animation: fadeSlideIn 0.22s ease both;
+      }
+      @keyframes fadeSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .section {
+        animation: fadeSlideIn 0.2s ease both;
+      }
+      .section:nth-child(2) {
+        animation-delay: 0.03s;
+      }
+      .section:nth-child(3) {
+        animation-delay: 0.06s;
+      }
+      .section:nth-child(4) {
+        animation-delay: 0.09s;
+      }
+      .section:nth-child(5) {
+        animation-delay: 0.12s;
+      }
+      .section:nth-child(6) {
+        animation-delay: 0.15s;
+      }
+
       /* Search results */
       #searchResults {
         display: none;
       }
       .search-label {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--text2);
         margin-bottom: 16px;
         display: block;
       }
       .empty-state {
         text-align: center;
         padding: 48px 0;
-        color: rgba(255, 255, 255, 0.25);
+        color: var(--text3);
         font-size: 14px;
       }
       .empty-state .emoji {
@@ -649,7 +727,7 @@
         display: block;
       }
 
-      /* ── Suggest a game modal ── */
+      /* ── Modals ── */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -667,8 +745,8 @@
         pointer-events: all;
       }
       .modal {
-        background: #1a1a1a;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg3);
+        border: 1px solid var(--border2);
         border-radius: 14px;
         padding: 28px;
         width: 100%;
@@ -687,17 +765,17 @@
       }
       .modal p {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.45);
+        color: var(--text2);
         margin-bottom: 20px;
       }
       .modal input,
       .modal textarea {
         width: 100%;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(128, 128, 128, 0.08);
+        border: 1px solid var(--border2);
         border-radius: 8px;
         padding: 10px 14px;
-        color: white;
+        color: var(--text);
         font-size: 14px;
         outline: none;
         margin-bottom: 12px;
@@ -719,9 +797,9 @@
         margin-top: 4px;
       }
       .modal-cancel {
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.6);
+        background: rgba(128, 128, 128, 0.1);
+        border: 1px solid var(--border2);
+        color: var(--text2);
         padding: 8px 18px;
         border-radius: 8px;
         cursor: pointer;
@@ -729,10 +807,10 @@
         transition: background 0.2s;
       }
       .modal-cancel:hover {
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(128, 128, 128, 0.18);
       }
       .modal-submit {
-        background: #3182ce;
+        background: var(--accent);
         border: none;
         color: white;
         padding: 8px 18px;
@@ -755,14 +833,14 @@
         display: block;
       }
 
-      /* Suggest button in footer */
+      /* Suggest button */
       .suggest-btn {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.6);
+        background: rgba(128, 128, 128, 0.08);
+        border: 1px solid var(--border2);
+        color: var(--text2);
         padding: 8px 16px;
         border-radius: 8px;
         cursor: pointer;
@@ -773,8 +851,8 @@
           color 0.2s;
       }
       .suggest-btn:hover {
-        background: rgba(255, 255, 255, 0.12);
-        color: white;
+        background: rgba(128, 128, 128, 0.16);
+        color: var(--text);
       }
 
       /* Cookie banner */
@@ -783,8 +861,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: #1a1a1a;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg3);
+        border-top: 1px solid var(--border2);
         z-index: 600;
         padding: 14px 24px;
         display: flex;
@@ -795,12 +873,12 @@
       }
       .cookie-banner p {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.55);
+        color: var(--text2);
         flex: 1;
         min-width: 200px;
       }
       .cookie-banner p a {
-        color: #90cdf4;
+        color: var(--accent3);
         text-decoration: none;
       }
       .cookie-btns {
@@ -809,7 +887,7 @@
         flex-shrink: 0;
       }
       .cookie-accept {
-        background: #3182ce;
+        background: var(--accent);
         border: none;
         color: white;
         padding: 7px 18px;
@@ -823,9 +901,9 @@
         background: #2b6cb0;
       }
       .cookie-decline {
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.5);
+        background: rgba(128, 128, 128, 0.08);
+        border: 1px solid var(--border2);
+        color: var(--text2);
         padding: 7px 14px;
         border-radius: 7px;
         cursor: pointer;
@@ -833,13 +911,13 @@
         transition: background 0.2s;
       }
       .cookie-decline:hover {
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(128, 128, 128, 0.16);
       }
 
       /* Footer */
       footer {
-        background: #0a0a0a;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--footer-bg);
+        border-top: 1px solid var(--border);
         margin-top: 24px;
         padding: 48px 8% 28px;
       }
@@ -857,7 +935,7 @@
       }
       .footer-brand p {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.3);
+        color: var(--text3);
         line-height: 1.75;
         max-width: 280px;
       }
@@ -866,7 +944,7 @@
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--text2);
         margin-bottom: 14px;
       }
       .footer-col ul {
@@ -876,26 +954,26 @@
         gap: 10px;
       }
       .footer-col ul li a {
-        color: rgba(255, 255, 255, 0.3);
+        color: var(--text3);
         text-decoration: none;
         font-size: 13px;
         transition: color 0.15s;
       }
       .footer-col ul li a:hover {
-        color: white;
+        color: var(--text);
       }
       .footer-col ul li span {
-        color: rgba(255, 255, 255, 0.3);
+        color: var(--text3);
         font-size: 13px;
       }
       .footer-note {
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.18);
+        color: var(--text3);
         margin-top: 6px;
       }
       .footer-divider {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--border);
         width: 100%;
         margin: 0 0 20px;
       }
@@ -905,9 +983,427 @@
         justify-content: space-between;
         align-items: center;
         font-size: 12px;
-        color: rgba(255, 255, 255, 0.18);
+        color: var(--text3);
         flex-wrap: wrap;
         gap: 8px;
+      }
+
+      /* ── Theme toggle ── */
+      .theme-btn {
+        flex-shrink: 0;
+        background: rgba(128, 128, 128, 0.08);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        margin-left: 6px;
+      }
+      .theme-btn:hover {
+        background: rgba(128, 128, 128, 0.16);
+      }
+
+      /* ── Stats page ── */
+      .stats-page {
+        padding: 24px 0;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+      .stat-card {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+      }
+      .stat-card .stat-val {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--accent3);
+      }
+      .stat-card .stat-label {
+        font-size: 12px;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+
+      /* ── Theme btn ── */
+      .nav-icon-btn {
+        flex-shrink: 0;
+        background: var(--bb);
+        border: 1px solid var(--bb2);
+        color: var(--text);
+        padding: 7px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        white-space: nowrap;
+        transition: background 0.2s;
+      }
+      .nav-icon-btn:hover {
+        background: rgba(128, 128, 128, 0.15);
+      }
+
+      /* ── Stats page ── */
+      .stats-page {
+        padding: 4px 0 16px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .stat-card {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        text-align: center;
+      }
+      .stat-val {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--accent3);
+      }
+      body.light .stat-val {
+        color: var(--accent);
+      }
+      .stat-label {
+        font-size: 11px;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+      .history-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .history-row:last-child {
+        border-bottom: none;
+      }
+      .history-img {
+        width: 36px;
+        height: 36px;
+        border-radius: 7px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .history-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .history-title {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .history-meta {
+        font-size: 11px;
+        color: var(--text2);
+        margin-top: 2px;
+      }
+      .history-play {
+        font-size: 11px;
+        color: var(--accent3);
+        text-decoration: none;
+        background: var(--accent2);
+        padding: 4px 10px;
+        border-radius: 6px;
+        flex-shrink: 0;
+        font-weight: 600;
+        transition: background 0.15s;
+      }
+      body.light .history-play {
+        color: var(--accent);
+      }
+      .history-play:hover {
+        background: rgba(99, 179, 237, 0.2);
+      }
+
+      /* ── Daily challenge bar ── */
+      .challenge-bar {
+        background: linear-gradient(135deg, #0d2418, #0a1f12);
+        border: 1px solid rgba(72, 187, 120, 0.22);
+        border-radius: 12px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .challenge-bar:hover {
+        border-color: rgba(72, 187, 120, 0.4);
+      }
+      .challenge-streak-wrap {
+        text-align: center;
+        flex-shrink: 0;
+        min-width: 48px;
+      }
+      .challenge-streak-num {
+        font-size: 24px;
+        font-weight: 800;
+        color: #68d391;
+        line-height: 1;
+      }
+      .challenge-streak-lbl {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(104, 211, 145, 0.5);
+        margin-top: 1px;
+      }
+      .challenge-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .challenge-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: #68d391;
+        margin-bottom: 2px;
+      }
+      .challenge-desc {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.38);
+      }
+      .challenge-action {
+        background: rgba(72, 187, 120, 0.18);
+        border: 1px solid rgba(72, 187, 120, 0.35);
+        color: #68d391;
+        padding: 6px 14px;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .challenge-bar:hover .challenge-action {
+        background: rgba(72, 187, 120, 0.3);
+      }
+      .challenge-action.done {
+        opacity: 0.45;
+      }
+
+      /* Card label always visible on touch */
+      @media (hover: none) {
+        .card-label {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── Settings page ── */
+      .settings-page {
+        padding: 4px 0 16px;
+      }
+      .settings-section {
+        margin-bottom: 28px;
+      }
+      .settings-section h3 {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text2);
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      .settings-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 16px;
+      }
+      .settings-row:last-child {
+        border-bottom: none;
+      }
+      .settings-row-info {
+        flex: 1;
+      }
+      .settings-row-label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .settings-row-desc {
+        font-size: 12px;
+        color: var(--text2);
+        margin-top: 2px;
+      }
+      .settings-select {
+        background: var(--bg3);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        padding: 6px 10px;
+        border-radius: 7px;
+        font-size: 13px;
+        cursor: pointer;
+        outline: none;
+        flex-shrink: 0;
+      }
+      .settings-toggle {
+        position: relative;
+        width: 40px;
+        height: 22px;
+        flex-shrink: 0;
+        background: rgba(128, 128, 128, 0.2);
+        border-radius: 11px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+        padding: 0;
+      }
+      .settings-toggle::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        transition: transform 0.2s;
+      }
+      .settings-toggle.on {
+        background: var(--accent);
+      }
+      .settings-toggle.on::after {
+        transform: translateX(18px);
+      }
+      .settings-danger-btn {
+        background: rgba(220, 38, 38, 0.12);
+        border: 1px solid rgba(220, 38, 38, 0.3);
+        color: #fc8181;
+        padding: 7px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background 0.2s;
+        flex-shrink: 0;
+      }
+      .settings-danger-btn:hover {
+        background: rgba(220, 38, 38, 0.25);
+      }
+      .settings-safe-btn {
+        background: var(--accent2);
+        border: 1px solid rgba(99, 179, 237, 0.3);
+        color: var(--accent3);
+        padding: 7px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background 0.2s;
+        flex-shrink: 0;
+      }
+      body.light .settings-safe-btn {
+        color: var(--accent);
+      }
+      .settings-safe-btn:hover {
+        background: rgba(99, 179, 237, 0.2);
+      }
+
+      /* ── Achievements ── */
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .achievement {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 12px;
+        text-align: center;
+        transition: border-color 0.2s;
+      }
+      .achievement.unlocked {
+        border-color: rgba(251, 191, 36, 0.4);
+        background: rgba(251, 191, 36, 0.04);
+      }
+      .achievement-icon {
+        font-size: 28px;
+        margin-bottom: 6px;
+        line-height: 1;
+      }
+      .achievement.locked .achievement-icon {
+        filter: grayscale(1);
+        opacity: 0.35;
+      }
+      .achievement-name {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .achievement.locked .achievement-name {
+        color: var(--text2);
+      }
+      .achievement-desc {
+        font-size: 11px;
+        color: var(--text2);
+        line-height: 1.3;
+      }
+      .achievement-badge {
+        display: inline-block;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        background: rgba(251, 191, 36, 0.2);
+        color: #f6c90e;
+      }
+      .achievement.locked .achievement-badge {
+        background: rgba(128, 128, 128, 0.15);
+        color: var(--text2);
+      }
+
+      /* ── Better search ── */
+      .search-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .search-tag {
+        background: var(--bg3);
+        border: 1px solid var(--border2);
+        color: var(--text2);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .search-tag.active {
+        background: var(--accent2);
+        border-color: rgba(99, 179, 237, 0.4);
+        color: var(--accent3);
+      }
+      body.light .search-tag.active {
+        color: var(--accent);
       }
 
       @media (max-width: 800px) {
@@ -921,7 +1417,8 @@
           padding: 16px 4% 80px;
         }
         .section-grid {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
         }
         .footer-grid {
           grid-template-columns: 1fr;
@@ -938,11 +1435,17 @@
           flex-direction: column;
           text-align: center;
         }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
       @media (max-width: 480px) {
         .section-grid {
           grid-template-columns: repeat(3, 1fr);
-          gap: 7px;
+          gap: 6px;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
     </style>
@@ -974,6 +1477,10 @@
       <button class="random-btn" id="randomBtn">
         🎲 <span class="random-label">Random</span>
       </button>
+      <button class="nav-icon-btn" id="statsBtn" title="Your Stats">📊</button>
+      <button class="nav-icon-btn" id="themeBtn" title="Toggle theme">
+        🌙
+      </button>
       <button class="panic-btn" id="panicBtn">🚨 Panic</button>
     </div>
 
@@ -989,6 +1496,18 @@
         <a class="nav-item" data-tag="recent" href="#">
           <span class="nav-emoji">🕐</span
           ><span class="nav-label">Recently Played</span>
+        </a>
+        <a class="nav-item" data-tag="stats" href="#">
+          <span class="nav-emoji">📊</span
+          ><span class="nav-label">Your Stats</span>
+        </a>
+        <a class="nav-item" data-tag="achievements" href="#">
+          <span class="nav-emoji">🏆</span
+          ><span class="nav-label">Achievements</span>
+        </a>
+        <a class="nav-item" data-tag="settings" href="#">
+          <span class="nav-emoji">⚙️</span
+          ><span class="nav-label">Settings</span>
         </a>
         <div class="nav-divider"></div>
         <a class="nav-item" data-tag="new" href="#">
@@ -1038,6 +1557,7 @@
 
       <main class="main" id="main">
         <div id="searchResults">
+          <div class="search-tags" id="searchTagFilter"></div>
           <span class="search-label" id="searchLabel"></span>
           <div class="section-grid" id="searchGrid"></div>
           <div class="empty-state" id="emptyState" style="display: none">
@@ -1115,8 +1635,8 @@
         <button class="mobile-nav-item" data-tag="recent">
           <span class="mn-emoji">🕐</span><span>Recent</span>
         </button>
-        <button class="mobile-nav-item" data-tag="popular">
-          <span class="mn-emoji">🔥</span><span>Popular</span>
+        <button class="mobile-nav-item" data-tag="stats">
+          <span class="mn-emoji">📊</span><span>Stats</span>
         </button>
         <button class="mobile-nav-item" id="mobileRandom">
           <span class="mn-emoji">🎲</span><span>Random</span>
@@ -1186,10 +1706,6 @@
       </div>
     </div>
 
-    <script
-      data-cfasync="false"
-      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-    ></script>
     <script src="games.js"></script>
     <script>
       // ── Panic key ──
@@ -1197,6 +1713,44 @@
         if (e.key === "`")
           window.location.href = "https://classroom.google.com";
       });
+
+      // ── Theme ──
+      const themeBtn = document.getElementById("themeBtn");
+      function applyTheme(t) {
+        document.body.classList.toggle("light", t === "light");
+        themeBtn.textContent = t === "light" ? "🌙" : "☀️";
+      }
+      let theme = localStorage.getItem("theme") || "dark";
+      applyTheme(theme);
+      themeBtn.addEventListener("click", () => {
+        theme = theme === "dark" ? "light" : "dark";
+        localStorage.setItem("theme", theme);
+        applyTheme(theme);
+      });
+
+      // ── Settings storage ──
+      function getSettings() {
+        try {
+          return JSON.parse(localStorage.getItem("siteSettings") || "{}");
+        } catch {
+          return {};
+        }
+      }
+      function saveSetting(key, val) {
+        const s = getSettings();
+        s[key] = val;
+        try {
+          localStorage.setItem("siteSettings", JSON.stringify(s));
+        } catch {}
+      }
+      function getSetting(key, def) {
+        const v = getSettings()[key];
+        return v !== undefined ? v : def;
+      }
+
+      // Apply saved column setting immediately
+      const savedCols = getSetting("columns", 6);
+      document.documentElement.style.setProperty("--grid-cols", savedCols);
 
       // ── Cookie banner ──
       const cookieBanner = document.getElementById("cookieBanner");
@@ -1214,7 +1768,6 @@
       // ── Announcement banner ──
       const announceBanner = document.getElementById("announceBanner");
       const announceText = document.getElementById("announceText");
-      // Check if admin has set a custom message
       const adminMsg = localStorage.getItem("adminAnnounce");
       if (adminMsg) announceText.innerHTML = adminMsg;
       if (sessionStorage.getItem("announceClosed"))
@@ -1224,7 +1777,7 @@
         sessionStorage.setItem("announceClosed", "1");
       });
 
-      // ── Storage ──
+      // ── Storage helpers ──
       function getFavs() {
         try {
           return JSON.parse(localStorage.getItem("favs") || "[]");
@@ -1235,21 +1788,6 @@
       function setFavs(f) {
         try {
           localStorage.setItem("favs", JSON.stringify(f));
-        } catch {}
-      }
-      function getRecent() {
-        try {
-          return JSON.parse(localStorage.getItem("recent") || "[]");
-        } catch {
-          return [];
-        }
-      }
-      function addRecent(id) {
-        let r = getRecent().filter((x) => x !== id);
-        r.unshift(id);
-        r = r.slice(0, 8);
-        try {
-          localStorage.setItem("recent", JSON.stringify(r));
         } catch {}
       }
       function getRatings() {
@@ -1271,52 +1809,493 @@
           return [];
         }
       }
+      function getRecent() {
+        try {
+          return JSON.parse(localStorage.getItem("recent2") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function addRecent(id) {
+        let r = getRecent().filter((x) => x.id !== id);
+        r.unshift({ id, ts: Date.now() });
+        r = r.slice(0, 20);
+        try {
+          localStorage.setItem("recent2", JSON.stringify(r));
+        } catch {}
+      }
+      function getRecentIds() {
+        return getRecent().map((x) => x.id);
+      }
+      function getPlayTimes() {
+        try {
+          return JSON.parse(localStorage.getItem("playTimes") || "{}");
+        } catch {
+          return {};
+        }
+      }
+      function getTotalPlayMs() {
+        return Object.values(getPlayTimes()).reduce((a, b) => a + b, 0);
+      }
+      function formatDuration(ms) {
+        const s = Math.floor(ms / 1000);
+        if (s < 60) return s + "s";
+        const m = Math.floor(s / 60);
+        if (m < 60) return m + "m";
+        const h = Math.floor(m / 60);
+        return h + "h " + (m % 60) + "m";
+      }
 
-      // ── Daily game ──
+      // ── Achievements system ──
+      const ACHIEVEMENTS = [
+        {
+          id: "first_game",
+          icon: "🎮",
+          name: "First Steps",
+          desc: "Play your first game",
+          check: () => getRecent().length >= 1,
+        },
+        {
+          id: "played_5",
+          icon: "⭐",
+          name: "Getting Started",
+          desc: "Play 5 different games",
+          check: () => getRecent().length >= 5,
+        },
+        {
+          id: "played_25",
+          icon: "🔥",
+          name: "Hooked",
+          desc: "Play 25 different games",
+          check: () => getRecent().length >= 25,
+        },
+        {
+          id: "played_50",
+          icon: "💯",
+          name: "Dedicated",
+          desc: "Play 50 different games",
+          check: () => getRecent().length >= 50,
+        },
+        {
+          id: "first_fav",
+          icon: "❤️",
+          name: "Collector",
+          desc: "Add a game to favourites",
+          check: () => getFavs().length >= 1,
+        },
+        {
+          id: "favs_10",
+          icon: "💖",
+          name: "Super Fan",
+          desc: "Favourite 10 games",
+          check: () => getFavs().length >= 10,
+        },
+        {
+          id: "streak_3",
+          icon: "🔥",
+          name: "On Fire",
+          desc: "3-day daily challenge streak",
+          check: () => getStreak().count >= 3,
+        },
+        {
+          id: "streak_7",
+          icon: "🌟",
+          name: "Weekly Warrior",
+          desc: "7-day daily challenge streak",
+          check: () => getStreak().count >= 7,
+        },
+        {
+          id: "rated_game",
+          icon: "👍",
+          name: "Critic",
+          desc: "Rate a game thumbs up",
+          check: () => Object.values(getRatings()).includes("up"),
+        },
+        {
+          id: "hour_played",
+          icon: "⏱️",
+          name: "Time Well Spent",
+          desc: "Play for 60 minutes total",
+          check: () => getTotalPlayMs() >= 3600000,
+        },
+        {
+          id: "dark_mode",
+          icon: "🌙",
+          name: "Night Owl",
+          desc: "Switch to dark mode",
+          check: () => (localStorage.getItem("theme") || "dark") === "dark",
+        },
+        {
+          id: "all_cats",
+          icon: "🗺️",
+          name: "Explorer",
+          desc: "Play a game from 5 different categories",
+          check: () => {
+            const r = getRecent();
+            const cats = new Set();
+            r.forEach((entry) => {
+              const g = games.find((x) => x.id === entry.id);
+              if (g && g.tags)
+                g.tags
+                  .filter((t) => !["new", "popular"].includes(t))
+                  .forEach((t) => cats.add(t));
+            });
+            return cats.size >= 5;
+          },
+        },
+      ];
+
+      function getUnlocked() {
+        try {
+          return JSON.parse(localStorage.getItem("achievements") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function checkAndUnlock() {
+        const unlocked = getUnlocked();
+        const newlyUnlocked = [];
+        ACHIEVEMENTS.forEach((a) => {
+          if (!unlocked.includes(a.id) && a.check()) {
+            unlocked.push(a.id);
+            newlyUnlocked.push(a);
+          }
+        });
+        if (newlyUnlocked.length) {
+          try {
+            localStorage.setItem("achievements", JSON.stringify(unlocked));
+          } catch {}
+          newlyUnlocked.forEach((a) => showAchievementToast(a));
+        }
+      }
+
+      // Achievement toast notification
+      function showAchievementToast(a) {
+        const toast = document.createElement("div");
+        toast.style.cssText =
+          "position:fixed;top:80px;right:16px;z-index:2000;background:var(--bg3);border:1px solid rgba(251,191,36,0.4);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transform:translateX(120%);transition:transform 0.3s;max-width:260px;";
+        toast.innerHTML = `<span style="font-size:24px;line-height:1">${a.icon}</span><div><div style="font-size:11px;color:#f6c90e;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px">Achievement Unlocked!</div><div style="font-size:13px;font-weight:600">${a.name}</div><div style="font-size:11px;color:var(--text2)">${a.desc}</div></div>`;
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.style.transform = "translateX(0)";
+        });
+        setTimeout(() => {
+          toast.style.transform = "translateX(120%)";
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      // ── Daily challenge ──
+      function todayKey() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      function getChallengeGame() {
+        const day = Math.floor(Date.now() / 86400000);
+        const pool = games.filter(
+          (g) =>
+            g.tags && (g.tags.includes("popular") || g.tags.includes("new")),
+        );
+        return pool.length
+          ? pool[day % pool.length]
+          : games[day % games.length];
+      }
+      function getStreak() {
+        try {
+          return JSON.parse(
+            localStorage.getItem("challengeStreak") ||
+              '{"count":0,"lastDay":""}',
+          );
+        } catch {
+          return { count: 0, lastDay: "" };
+        }
+      }
+      function markChallengeComplete() {
+        const today = todayKey();
+        const streak = getStreak();
+        if (streak.lastDay === today) return;
+        const yesterday = new Date(Date.now() - 86400000)
+          .toISOString()
+          .slice(0, 10);
+        streak.count = streak.lastDay === yesterday ? streak.count + 1 : 1;
+        streak.lastDay = today;
+        try {
+          localStorage.setItem("challengeStreak", JSON.stringify(streak));
+        } catch {}
+      }
+      function isChallengeComplete() {
+        return getStreak().lastDay === todayKey();
+      }
+
+      // ── Daily hero ──
       function getDailyGame() {
         const day = Math.floor(Date.now() / 86400000);
         return games[day % games.length];
       }
-
       function buildDailyHero() {
         const game = getDailyGame();
         const hero = document.createElement("div");
         hero.className = "daily-hero";
-
-        const imgEl = document.createElement("img");
-        imgEl.className = "daily-hero-img";
-        imgEl.alt = game.title;
-        imgEl.src = game.img;
-
-        const info = document.createElement("div");
-        info.className = "daily-hero-info";
-        info.innerHTML = `
-          <div class="daily-hero-label">⭐ Game of the Day</div>
-          <div class="daily-hero-title">${game.title}</div>
-          <a class="daily-hero-btn" href="play.html?${game.id}">▶ Play Now</a>`;
-
-        hero.appendChild(imgEl);
-        hero.appendChild(info);
+        hero.innerHTML = `<img class="daily-hero-img" src="${game.img}" alt="${game.title}" /><div class="daily-hero-info"><div class="daily-hero-label">⭐ Game of the Day</div><div class="daily-hero-title">${game.title}</div><a class="daily-hero-btn" href="play.html?${game.id}">▶ Play Now</a></div>`;
+        hero
+          .querySelector("a")
+          .addEventListener("click", () => addRecent(game.id));
         return hero;
       }
 
-      // ── Leaderboard (top rated) ──
+      // ── Challenge bar ──
+      function buildChallengeBar() {
+        const game = getChallengeGame();
+        const streak = getStreak();
+        const done = isChallengeComplete();
+        const bar = document.createElement("div");
+        bar.className = "challenge-bar";
+        const streakDisplay = streak.count > 0 ? "🔥" + streak.count : "0";
+        bar.innerHTML = `<div class="challenge-streak-wrap"><div class="challenge-streak-num">${streakDisplay}</div><div class="challenge-streak-lbl">day streak</div></div><div class="challenge-info"><div class="challenge-title">🎯 Daily Challenge</div><div class="challenge-desc">${done ? "✅ Completed today! Come back tomorrow." : 'Play <strong style="color:#68d391">' + game.title + "</strong> to keep your streak!"}</div></div><div class="challenge-action${done ? " done" : ""}">${done ? "✅ Done" : "▶ Play"}</div>`;
+        if (!done) {
+          bar.addEventListener("click", () => {
+            markChallengeComplete();
+            addRecent(game.id);
+            checkAndUnlock();
+            window.location.href = "play.html?" + game.id;
+          });
+        }
+        return bar;
+      }
+
+      // ── Top rated ──
       function getTopRated() {
         const ratings = getRatings();
-        const scored = games
-          .map((g) => ({
-            game: g,
-            ups: Object.entries(ratings).filter(
-              ([id, v]) => id === g.id && v === "up",
-            ).length,
-            voted: ratings[g.id] === "up",
-          }))
-          .filter((x) => x.voted);
-        // Show games this user rated up, sorted; fall back to popular if none
-        if (scored.length) return scored.map((x) => x.game).slice(0, 6);
+        const liked = games.filter((g) => ratings[g.id] === "up");
+        if (liked.length) return liked.slice(0, 6);
         return games
           .filter((g) => g.tags && g.tags.includes("popular"))
           .slice(0, 6);
+      }
+
+      // ── Stats page ──
+      function buildStatsPage() {
+        const recent = getRecent();
+        const favs = getFavs();
+        const playTimes = getPlayTimes();
+        const totalMs = getTotalPlayMs();
+        const streak = getStreak();
+        const ratings = getRatings();
+        const liked = Object.values(ratings).filter((v) => v === "up").length;
+        const cats = {};
+        recent.forEach((r) => {
+          const g = games.find((x) => x.id === r.id);
+          if (g && g.tags)
+            g.tags
+              .filter((t) => !["new", "popular"].includes(t))
+              .forEach((t) => {
+                cats[t] = (cats[t] || 0) + 1;
+              });
+        });
+        const topCat = Object.entries(cats).sort((a, b) => b[1] - a[1])[0];
+        const div = document.createElement("div");
+        div.innerHTML = `<div class="section-header" style="margin-bottom:18px"><span class="section-title">📊 Your Stats</span></div><div class="stats-grid"><div class="stat-card"><div class="stat-val">${recent.length}</div><div class="stat-label">Games Played</div></div><div class="stat-card"><div class="stat-val">${formatDuration(totalMs) || "0s"}</div><div class="stat-label">Total Play Time</div></div><div class="stat-card"><div class="stat-val">${favs.length}</div><div class="stat-label">Favourites</div></div><div class="stat-card"><div class="stat-val">${liked}</div><div class="stat-label">Games Liked 👍</div></div><div class="stat-card"><div class="stat-val">${streak.count > 0 ? "🔥" + streak.count : 0}</div><div class="stat-label">Day Streak</div></div><div class="stat-card"><div class="stat-val" style="font-size:18px;padding-top:4px">${topCat ? topCat[0] : "—"}</div><div class="stat-label">Top Category</div></div></div>`;
+        if (recent.length) {
+          const histDiv = document.createElement("div");
+          histDiv.className = "section";
+          histDiv.innerHTML = `<div class="section-header"><span class="section-title">🕐 Play History</span><span class="section-count">${recent.length}</span></div>`;
+          recent.slice(0, 15).forEach((entry) => {
+            const g = games.find((x) => x.id === entry.id);
+            if (!g) return;
+            const ms = playTimes[g.id] || 0;
+            const date = new Date(entry.ts);
+            const dateStr =
+              date.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+              }) +
+              " " +
+              date.toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+            const row = document.createElement("div");
+            row.className = "history-row";
+            row.innerHTML = `<img class="history-img" src="${g.img}" alt="${g.title}" loading="lazy" /><div class="history-info"><div class="history-title">${g.title}</div><div class="history-meta">${dateStr}${ms > 0 ? " · " + formatDuration(ms) + " played" : ""}</div></div><a class="history-play" href="play.html?${g.id}">▶ Play</a>`;
+            histDiv.appendChild(row);
+          });
+          div.appendChild(histDiv);
+        } else {
+          div.innerHTML += `<div class="empty-state"><span class="emoji">🎮</span>No history yet — go play some games!</div>`;
+        }
+        return div;
+      }
+
+      // ── Achievements page ──
+      function buildAchievementsPage() {
+        const unlocked = getUnlocked();
+        const div = document.createElement("div");
+        div.innerHTML = `<div class="section-header" style="margin-bottom:18px"><span class="section-title">🏆 Achievements</span><span class="section-count">${unlocked.length}/${ACHIEVEMENTS.length}</span></div>`;
+        const grid = document.createElement("div");
+        grid.className = "achievements-grid";
+        ACHIEVEMENTS.forEach((a) => {
+          const isUnlocked = unlocked.includes(a.id);
+          const card = document.createElement("div");
+          card.className =
+            "achievement" + (isUnlocked ? " unlocked" : " locked");
+          card.innerHTML = `<div class="achievement-badge">${isUnlocked ? "✓ Unlocked" : "Locked"}</div><div class="achievement-icon">${a.icon}</div><div class="achievement-name">${a.name}</div><div class="achievement-desc">${a.desc}</div>`;
+          grid.appendChild(card);
+        });
+        div.appendChild(grid);
+        return div;
+      }
+
+      // ── Settings page ──
+      function buildSettingsPage() {
+        const div = document.createElement("div");
+        div.className = "settings-page";
+        div.innerHTML = `<div class="section-header" style="margin-bottom:18px"><span class="section-title">⚙️ Settings</span></div>`;
+
+        // Appearance section
+        const appearSection = document.createElement("div");
+        appearSection.className = "settings-section";
+        appearSection.innerHTML = `<h3>Appearance</h3>`;
+
+        // Theme row
+        const themeRow = document.createElement("div");
+        themeRow.className = "settings-row";
+        const isDark = (localStorage.getItem("theme") || "dark") === "dark";
+        themeRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Dark Mode</div><div class="settings-row-desc">Switch between dark and light themes</div></div><button class="settings-toggle ${isDark ? "on" : ""}" id="settingsThemeToggle"></button>`;
+        appearSection.appendChild(themeRow);
+
+        // Grid columns row
+        const colRow = document.createElement("div");
+        colRow.className = "settings-row";
+        const savedCols = getSetting("columns", 6);
+        colRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Grid Columns</div><div class="settings-row-desc">How many game cards per row</div></div><select class="settings-select" id="settingsCols"><option value="4" ${savedCols == 4 ? "selected" : ""}>4 — Bigger cards</option><option value="5" ${savedCols == 5 ? "selected" : ""}>5</option><option value="6" ${savedCols == 6 ? "selected" : ""}>6 — Default</option><option value="8" ${savedCols == 8 ? "selected" : ""}>8 — More games</option></select>`;
+        appearSection.appendChild(colRow);
+
+        // Always show labels
+        const labelRow = document.createElement("div");
+        labelRow.className = "settings-row";
+        const alwaysLabels = getSetting("alwaysLabels", false);
+        labelRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Always Show Game Names</div><div class="settings-row-desc">Show titles on cards without hovering</div></div><button class="settings-toggle ${alwaysLabels ? "on" : ""}" id="settingsLabels"></button>`;
+        appearSection.appendChild(labelRow);
+        div.appendChild(appearSection);
+
+        // Data section
+        const dataSection = document.createElement("div");
+        dataSection.className = "settings-section";
+        dataSection.innerHTML = `<h3>Your Data</h3>`;
+
+        // Export row
+        const exportRow = document.createElement("div");
+        exportRow.className = "settings-row";
+        exportRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Export Your Data</div><div class="settings-row-desc">Download your play history, favourites & stats as JSON</div></div><button class="settings-safe-btn" id="exportDataBtn">⬇ Export</button>`;
+        dataSection.appendChild(exportRow);
+
+        // Clear history
+        const clearRow = document.createElement("div");
+        clearRow.className = "settings-row";
+        clearRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Clear Play History</div><div class="settings-row-desc">Remove all recently played records</div></div><button class="settings-danger-btn" id="clearHistoryBtn">🗑 Clear</button>`;
+        dataSection.appendChild(clearRow);
+
+        // Reset all
+        const resetRow = document.createElement("div");
+        resetRow.className = "settings-row";
+        resetRow.innerHTML = `<div class="settings-row-info"><div class="settings-row-label">Reset All Data</div><div class="settings-row-desc">Delete all favourites, ratings, history and settings</div></div><button class="settings-danger-btn" id="resetAllBtn">⚠ Reset Everything</button>`;
+        dataSection.appendChild(resetRow);
+        div.appendChild(dataSection);
+
+        // About section
+        const aboutSection = document.createElement("div");
+        aboutSection.className = "settings-section";
+        aboutSection.innerHTML = `<h3>About</h3><div class="settings-row"><div class="settings-row-info"><div class="settings-row-label">Math Games 67</div><div class="settings-row-desc">${games.length} games · Built for students</div></div></div>`;
+        div.appendChild(aboutSection);
+
+        // Wire up events after render
+        setTimeout(() => {
+          document
+            .getElementById("settingsThemeToggle")
+            ?.addEventListener("click", function () {
+              theme = theme === "dark" ? "light" : "dark";
+              localStorage.setItem("theme", theme);
+              applyTheme(theme);
+              this.classList.toggle("on", theme === "dark");
+            });
+
+          document
+            .getElementById("settingsCols")
+            ?.addEventListener("change", function () {
+              const v = parseInt(this.value);
+              saveSetting("columns", v);
+              document.documentElement.style.setProperty("--grid-cols", v);
+              // Rebuild current sections to apply new column count
+            });
+
+          document
+            .getElementById("settingsLabels")
+            ?.addEventListener("click", function () {
+              this.classList.toggle("on");
+              const v = this.classList.contains("on");
+              saveSetting("alwaysLabels", v);
+              document.body.classList.toggle("always-labels", v);
+            });
+
+          document
+            .getElementById("exportDataBtn")
+            ?.addEventListener("click", () => {
+              const data = {
+                playHistory: getRecent(),
+                favourites: getFavs(),
+                ratings: getRatings(),
+                playTimes: getPlayTimes(),
+                achievements: getUnlocked(),
+                streak: getStreak(),
+                exportDate: new Date().toISOString(),
+              };
+              const blob = new Blob([JSON.stringify(data, null, 2)], {
+                type: "application/json",
+              });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "mathgames67-data.json";
+              a.click();
+              URL.revokeObjectURL(url);
+            });
+
+          document
+            .getElementById("clearHistoryBtn")
+            ?.addEventListener("click", () => {
+              if (confirm("Clear all play history? This cannot be undone.")) {
+                localStorage.removeItem("recent2");
+                localStorage.removeItem("playTimes");
+                buildSections("settings");
+              }
+            });
+
+          document
+            .getElementById("resetAllBtn")
+            ?.addEventListener("click", () => {
+              if (
+                confirm(
+                  "Reset EVERYTHING? Favourites, ratings, history, achievements and settings will all be deleted.",
+                )
+              ) {
+                [
+                  "favs",
+                  "recent2",
+                  "ratings",
+                  "playTimes",
+                  "achievements",
+                  "challengeStreak",
+                  "siteSettings",
+                  "theme",
+                ].forEach((k) => localStorage.removeItem(k));
+                theme = "dark";
+                applyTheme("dark");
+                buildSections("all");
+                activateTag("all");
+              }
+            });
+        }, 50);
+
+        return div;
       }
 
       const searchInput = document.getElementById("searchInput");
@@ -1326,6 +2305,7 @@
       const searchGrid = document.getElementById("searchGrid");
       const searchLabel = document.getElementById("searchLabel");
       const emptyState = document.getElementById("emptyState");
+      const searchTagFilter = document.getElementById("searchTagFilter");
 
       const sections = [
         { tag: "new", label: "🆕 New" },
@@ -1353,11 +2333,107 @@
         "red-ball",
       ];
 
+      // ── Fuzzy search ──
+      function fuzzyScore(title, query) {
+        title = title.toLowerCase();
+        query = query.toLowerCase();
+        if (title === query) return 1000;
+        if (title.startsWith(query)) return 500 + (100 - title.length);
+        if (title.includes(query)) return 200 + (100 - title.indexOf(query));
+        // Fuzzy: check if all query chars appear in order
+        let ti = 0,
+          score = 0,
+          consecutive = 0;
+        for (let qi = 0; qi < query.length; qi++) {
+          const found = title.indexOf(query[qi], ti);
+          if (found === -1) return 0;
+          if (found === ti) {
+            consecutive++;
+            score += 10 + consecutive * 5;
+          } else {
+            consecutive = 0;
+            score += 1;
+          }
+          ti = found + 1;
+        }
+        return score;
+      }
+
+      function searchGames(query, tagFilter) {
+        query = query.trim().toLowerCase();
+        let results = games;
+        if (tagFilter)
+          results = results.filter((g) => g.tags && g.tags.includes(tagFilter));
+        if (!query) return tagFilter ? results : [];
+        return results
+          .map((g) => ({ game: g, score: fuzzyScore(g.title, query) }))
+          .filter((x) => x.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .map((x) => x.game);
+      }
+
+      let activeTagFilter = null;
+      const allTags = [
+        "popular",
+        "soccer",
+        "racing",
+        "cars",
+        "3d",
+        "multiplayer",
+        "adventure",
+        "puzzle",
+        "simulators",
+        "survival",
+        "girls",
+      ];
+
+      function buildSearchTagFilter() {
+        searchTagFilter.innerHTML = "";
+        allTags.forEach((tag) => {
+          const pill = document.createElement("button");
+          pill.className =
+            "search-tag" + (activeTagFilter === tag ? " active" : "");
+          pill.textContent = sections.find((s) => s.tag === tag)?.label || tag;
+          pill.addEventListener("click", () => {
+            activeTagFilter = activeTagFilter === tag ? null : tag;
+            buildSearchTagFilter();
+            runSearch();
+          });
+          searchTagFilter.appendChild(pill);
+        });
+      }
+
+      function runSearch() {
+        const query = searchInput.value.trim();
+        if (!query && !activeTagFilter) {
+          searchResults.style.display = "none";
+          content.style.display = "block";
+          return;
+        }
+        const matches = searchGames(query, activeTagFilter);
+        searchGrid.innerHTML = "";
+        matches.forEach((game) => searchGrid.appendChild(makeCard(game)));
+        searchLabel.textContent = query
+          ? matches.length +
+            " result" +
+            (matches.length !== 1 ? "s" : "") +
+            ' for "' +
+            query +
+            '"'
+          : matches.length +
+            " games" +
+            (activeTagFilter ? " in " + activeTagFilter : "");
+        emptyState.style.display = matches.length ? "none" : "block";
+        searchResults.style.display = "block";
+        content.style.display = "none";
+      }
+
       // ── Random game ──
       function goRandom() {
         const g = games[Math.floor(Math.random() * games.length)];
         addRecent(g.id);
-        window.location.href = `play.html?${g.id}`;
+        checkAndUnlock();
+        window.location.href = "play.html?" + g.id;
       }
       document.getElementById("randomBtn").addEventListener("click", goRandom);
       document
@@ -1366,6 +2442,9 @@
       document.getElementById("panicBtn").addEventListener("click", () => {
         window.location.href = "https://classroom.google.com";
       });
+      document
+        .getElementById("statsBtn")
+        .addEventListener("click", () => activateTag("stats"));
 
       // ── Suggest modal ──
       const suggestModal = document.getElementById("suggestModal");
@@ -1397,14 +2476,14 @@
           document.getElementById("suggestName").focus();
           return;
         }
-        const suggestions = getSuggestions();
-        suggestions.push({
+        const sug = getSuggestions();
+        sug.push({
           name,
           note: document.getElementById("suggestNote").value.trim(),
           date: new Date().toISOString(),
         });
         try {
-          localStorage.setItem("suggestions", JSON.stringify(suggestions));
+          localStorage.setItem("suggestions", JSON.stringify(sug));
         } catch {}
         document.getElementById("suggestForm").style.display = "none";
         document.getElementById("suggestSuccess").style.display = "block";
@@ -1417,20 +2496,23 @@
         const card = document.createElement("div");
         card.className = "card";
 
-        const skeleton = document.createElement("div");
-        skeleton.className = "skeleton";
-        skeleton.style.cssText =
+        const skel = document.createElement("div");
+        skel.className = "skeleton";
+        skel.style.cssText =
           "position:absolute;inset:0;z-index:1;border-radius:10px;";
-        card.appendChild(skeleton);
+        card.appendChild(skel);
 
         const a = document.createElement("a");
-        a.href = `play.html?${game.id}`;
-        a.addEventListener("click", () => addRecent(game.id));
+        a.href = "play.html?" + game.id;
+        a.addEventListener("click", () => {
+          addRecent(game.id);
+          checkAndUnlock();
+        });
         const img = document.createElement("img");
         img.alt = game.title;
         img.loading = "lazy";
-        img.onload = () => skeleton.remove();
-        img.onerror = () => skeleton.remove();
+        img.onload = () => skel.remove();
+        img.onerror = () => skel.remove();
         img.src = game.img;
         a.appendChild(img);
 
@@ -1455,9 +2537,9 @@
             favBtn.classList.add("active");
           }
           setFavs(f);
+          checkAndUnlock();
           const activeTag =
-            document.querySelector(".nav-item.active")?.dataset.tag ||
-            document.querySelector(".mobile-nav-item.active")?.dataset.tag;
+            document.querySelector(".nav-item.active")?.dataset.tag;
           if (activeTag === "favourites") buildSections("favourites");
         });
 
@@ -1493,16 +2575,17 @@
                 .querySelectorAll(".rate-btn")
                 .forEach((b) => b.classList.remove("voted"));
               btn.classList.add("voted");
+              checkAndUnlock();
             }
           });
           ratePopup.appendChild(btn);
         });
 
         if (game.tags && game.tags.includes("new")) {
-          const newBadge = document.createElement("div");
-          newBadge.className = "new-badge";
-          newBadge.textContent = "NEW";
-          card.appendChild(newBadge);
+          const nb = document.createElement("div");
+          nb.className = "new-badge";
+          nb.textContent = "NEW";
+          card.appendChild(nb);
         }
 
         card.appendChild(a);
@@ -1518,17 +2601,28 @@
         searchResults.style.display = "none";
         content.style.display = "block";
         searchInput.value = "";
+        activeTagFilter = null;
         suggestionsBox.classList.remove("visible");
         buildSections(tag);
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.toggle("active", n.dataset.tag === tag));
+        document
+          .querySelectorAll(".mobile-nav-item[data-tag]")
+          .forEach((n) => n.classList.toggle("active", n.dataset.tag === tag));
       }
 
       function buildSections(tag) {
+        // Trigger fade animation
+        content.style.animation = "none";
+        content.offsetHeight; // reflow
+        content.style.animation = "";
+
         content.innerHTML = "";
         if (tag === "all") {
-          // Daily game hero
           content.appendChild(buildDailyHero());
-
-          const recentIds = getRecent();
+          content.appendChild(buildChallengeBar());
+          const recentIds = getRecentIds();
           if (recentIds.length)
             appendSection(
               "🕐 Recently Played",
@@ -1544,11 +2638,8 @@
                 .map((id) => games.find((g) => g.id === id))
                 .filter(Boolean),
             );
-
-          // Top rated
           const topRated = getTopRated();
           if (topRated.length) appendSection("⭐ Top Rated", topRated);
-
           appendSection(
             "🆕 New",
             newPicks
@@ -1568,41 +2659,68 @@
           else
             content.innerHTML = `<div class="empty-state"><span class="emoji">🤍</span>No favourites yet — hover a card and click the heart!</div>`;
         } else if (tag === "recent") {
-          const recentGames = getRecent()
+          const recentGames = getRecentIds()
             .map((id) => games.find((g) => g.id === id))
             .filter(Boolean);
           if (recentGames.length)
             appendSection("🕐 Recently Played", recentGames);
           else
             content.innerHTML = `<div class="empty-state"><span class="emoji">🕐</span>No games played yet — go play something!</div>`;
+        } else if (tag === "stats") {
+          content.appendChild(buildStatsPage());
+        } else if (tag === "achievements") {
+          content.appendChild(buildAchievementsPage());
+        } else if (tag === "settings") {
+          content.appendChild(buildSettingsPage());
+          // Apply always-labels setting
+          document.body.classList.toggle(
+            "always-labels",
+            getSetting("alwaysLabels", false),
+          );
         } else {
           const def = sections.find((s) => s.tag === tag);
           const tagged = games.filter((g) => g.tags && g.tags.includes(tag));
           if (def && tagged.length) appendSection(def.label, tagged);
+          else if (def)
+            content.innerHTML = `<div class="empty-state"><span class="emoji">🎮</span>No ${def.label} games yet!</div>`;
         }
       }
 
       function appendSection(label, gameList) {
         const section = document.createElement("div");
         section.className = "section";
+        const cols = getSetting("columns", 6);
         section.innerHTML = `<div class="section-header"><span class="section-title">${label}</span><span class="section-count">${gameList.length}</span></div>`;
         const grid = document.createElement("div");
         grid.className = "section-grid";
+        grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
         gameList.forEach((game) => grid.appendChild(makeCard(game)));
         section.appendChild(grid);
         content.appendChild(section);
       }
 
+      function getTopRated() {
+        const ratings = getRatings();
+        const liked = games.filter((g) => ratings[g.id] === "up");
+        if (liked.length) return liked.slice(0, 6);
+        return games
+          .filter((g) => g.tags && g.tags.includes("popular"))
+          .slice(0, 6);
+      }
+
+      // Apply always-labels on load
+      document.body.classList.toggle(
+        "always-labels",
+        getSetting("alwaysLabels", false),
+      );
+
       buildSections("all");
+      checkAndUnlock(); // Check achievements on load
 
       // ── Sidebar nav ──
       document.querySelectorAll(".nav-item").forEach((item) => {
         item.addEventListener("click", (e) => {
           e.preventDefault();
-          document
-            .querySelectorAll(".nav-item")
-            .forEach((n) => n.classList.remove("active"));
-          item.classList.add("active");
           activateTag(item.dataset.tag);
         });
       });
@@ -1612,10 +2730,6 @@
         .querySelectorAll(".mobile-nav-item[data-tag]")
         .forEach((item) => {
           item.addEventListener("click", () => {
-            document
-              .querySelectorAll(".mobile-nav-item")
-              .forEach((n) => n.classList.remove("active"));
-            item.classList.add("active");
             activateTag(item.dataset.tag);
             window.scrollTo({ top: 0, behavior: "smooth" });
           });
@@ -1638,8 +2752,11 @@
           return;
         }
         const matches = games
-          .filter((g) => g.title.toLowerCase().includes(filter))
-          .slice(0, 6);
+          .map((g) => ({ game: g, score: fuzzyScore(g.title, filter) }))
+          .filter((x) => x.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 6)
+          .map((x) => x.game);
         if (!matches.length) {
           suggestionsBox.classList.remove("visible");
           return;
@@ -1652,14 +2769,8 @@
           const img = document.createElement("img");
           img.src = game.img;
           img.alt = game.title;
-          const title = game.title;
-          const idx = title.toLowerCase().indexOf(filter);
           const span = document.createElement("span");
-          span.innerHTML =
-            idx !== -1
-              ? escapeHtml(title.slice(0, idx)) +
-                `<span class="match">${escapeHtml(title.slice(idx, idx + filter.length))}</span><span class="rest">${escapeHtml(title.slice(idx + filter.length))}</span>`
-              : escapeHtml(title);
+          span.textContent = game.title;
           a.appendChild(img);
           a.appendChild(span);
           suggestionsBox.appendChild(a);
@@ -1679,20 +2790,8 @@
       searchInput.addEventListener("input", () => {
         const filter = searchInput.value.toLowerCase().trim();
         showSuggestions(filter);
-        if (filter) {
-          const matches = games.filter((g) =>
-            g.title.toLowerCase().includes(filter),
-          );
-          searchGrid.innerHTML = "";
-          matches.forEach((game) => searchGrid.appendChild(makeCard(game)));
-          searchLabel.textContent = `${matches.length} result${matches.length !== 1 ? "s" : ""} for "${searchInput.value.trim()}"`;
-          emptyState.style.display = matches.length ? "none" : "block";
-          searchResults.style.display = "block";
-          content.style.display = "none";
-        } else {
-          searchResults.style.display = "none";
-          content.style.display = "block";
-        }
+        buildSearchTagFilter();
+        runSearch();
       });
 
       searchInput.addEventListener("keydown", (e) => {
@@ -1723,6 +2822,12 @@
         const f = searchInput.value.toLowerCase().trim();
         if (f) showSuggestions(f);
       });
+
+      // Add always-labels CSS
+      const styleEl = document.createElement("style");
+      styleEl.textContent =
+        "body.always-labels .card-label { opacity:1 !important; transform:translateY(0) !important; }";
+      document.head.appendChild(styleEl);
     </script>
   </body>
 </html>
