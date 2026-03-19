@@ -558,6 +558,8 @@
   function createParty(partyName, db) {
     const me = myName();
     if (!me) { switchTab('profile'); return; }
+    // Detach lobby listener FIRST so it doesn't wipe the body mid-creation
+    unsub();
     const game = getCurrentGame();
     const partyId = genId();
     db.ref('parties/' + partyId).set({
@@ -574,6 +576,8 @@
   function joinParty(partyId, db) {
     const me = myName();
     if (!me) { switchTab('profile'); return; }
+    // Detach lobby listener FIRST so it doesn't wipe the body mid-join
+    unsub();
     db.ref('parties/' + partyId + '/members').once('value').then(snap => {
       const members = snap.val() || {};
       if (Object.values(members).some(m => m.name === me)) { openChat(partyId, db); return; }
