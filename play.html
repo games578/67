@@ -5,756 +5,379 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Play Game</title>
     <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       :root {
-        --bg: #0e0e0e;
-        --bg3: #1a1a1a;
-        --border: rgba(255, 255, 255, 0.06);
-        --border2: rgba(255, 255, 255, 0.1);
-        --text: #ffffff;
-        --text2: rgba(255, 255, 255, 0.5);
-        --text3: rgba(255, 255, 255, 0.3);
-        --accent: #3182ce;
-        --accent-h: #2b6cb0;
-        --accent2: rgba(99, 179, 237, 0.12);
-        --accent3: #90cdf4;
-        --sh1: #1e1e1e;
-        --sh2: #2a2a2a;
-        --card-bg: #1e1e1e;
-        --nb: rgba(14, 14, 14, 0.85);
-        --fb: #0a0a0a;
-        --bb: rgba(255, 255, 255, 0.07);
-        --bb2: rgba(255, 255, 255, 0.12);
+        --bg:        #080b12;
+        --bg2:       #0d1220;
+        --bg3:       #111827;
+        --bg4:       #1a2235;
+        --border:    rgba(255,255,255,0.06);
+        --border2:   rgba(255,255,255,0.11);
+        --text:      #f0f4ff;
+        --text2:     rgba(200,210,255,0.55);
+        --text3:     rgba(200,210,255,0.3);
+        --accent:    #6c8fff;
+        --accent2:   rgba(108,143,255,0.15);
+        --accent3:   #a5bcff;
+        --shimmer1:  #111827;
+        --shimmer2:  #1e2d45;
+        --card-bg:   #111827;
+        --navbar-bg: rgba(8,11,18,0.85);
+        --red:       #ff5c7a;
       }
       body.light {
-        --bg: #f0f2f5;
-        --bg3: #ffffff;
-        --border: rgba(0, 0, 0, 0.08);
-        --border2: rgba(0, 0, 0, 0.14);
-        --text: #111827;
-        --text2: rgba(0, 0, 0, 0.5);
-        --text3: rgba(0, 0, 0, 0.35);
-        --accent: #2563eb;
-        --accent-h: #1d4ed8;
-        --accent2: rgba(37, 99, 235, 0.1);
-        --accent3: #1d4ed8;
-        --sh1: #e8eaed;
-        --sh2: #d1d5db;
-        --card-bg: #ffffff;
-        --nb: rgba(240, 242, 245, 0.92);
-        --fb: #dde0e4;
-        --bb: rgba(0, 0, 0, 0.05);
-        --bb2: rgba(0, 0, 0, 0.12);
+        --bg:#f3f6ff; --bg2:#eaf0ff; --bg3:#ffffff; --bg4:#f0f4ff;
+        --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.12);
+        --text:#0f172a; --text2:rgba(0,0,0,0.52); --text3:rgba(0,0,0,0.32);
+        --accent:#3b5bfc; --accent2:rgba(59,91,252,0.1); --accent3:#1e3de4;
+        --shimmer1:#e8edf8; --shimmer2:#d0d8f0;
+        --card-bg:#ffffff; --navbar-bg:rgba(243,246,255,0.92);
       }
+
       body {
+        font-family: 'DM Sans', system-ui, sans-serif;
         background: var(--bg);
-        font-family: "Segoe UI", system-ui, sans-serif;
         color: var(--text);
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        transition:
-          background 0.2s,
-          color 0.2s;
+        display: flex; flex-direction: column;
+        transition: background 0.3s, color 0.3s;
+        overflow-x: hidden;
       }
+
+      /* Noise texture */
+      body::before {
+        content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        opacity: 0.4;
+      }
+      body > * { position: relative; z-index: 1; }
 
       /* ── Navbar ── */
       .navbar {
-        display: flex;
-        align-items: center;
-        padding: 0 24px 0 16px;
-        background: var(--nb);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        box-shadow: 0 1px 0 var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 200;
-        height: 70px;
-        flex-shrink: 0;
+        display: flex; align-items: center; padding: 0 24px 0 16px;
+        background: var(--navbar-bg); backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.3);
+        position: sticky; top: 0; z-index: 200; height: 70px; flex-shrink: 0;
       }
-
       .navbar a.logo-link {
-        display: flex;
-        align-items: center;
-        margin-right: 16px;
-        flex-shrink: 0;
-        opacity: 0.9;
-        transition: opacity 0.2s;
+        display: flex; align-items: center; margin-right: 16px; flex-shrink: 0;
+        opacity: 0.92; transition: opacity 0.2s;
       }
-      .navbar a.logo-link:hover {
-        opacity: 1;
-      }
-      .navbar img.logo {
-        height: 46px;
-        display: block;
-      }
+      .navbar a.logo-link:hover { opacity: 1; }
+      .navbar img.logo { height: 46px; display: block; }
 
-      .search-wrapper {
-        flex: 1;
-        position: relative;
-        margin: 0 12px;
-      }
+      .search-wrapper { flex: 1; position: relative; margin: 0 12px; }
       .search-wrapper::before {
-        content: "⌕";
-        position: absolute;
-        left: 13px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(99, 179, 237, 0.6);
-        font-size: 17px;
-        pointer-events: none;
-        z-index: 1;
+        content: "⌕"; position: absolute; left: 13px; top: 50%;
+        transform: translateY(-50%); color: rgba(108,143,255,0.55);
+        font-size: 17px; pointer-events: none; z-index: 1;
       }
       .search-wrapper input.search {
-        width: 100%;
-        padding: 9px 16px 9px 36px;
-        border-radius: 8px;
-        border: 1px solid var(--accent2);
-        background: var(--accent2);
-        color: var(--text);
-        font-size: 14px;
-        outline: none;
-        transition:
-          border 0.2s,
-          background 0.2s,
-          box-shadow 0.2s;
-        box-shadow: 0 0 0 0 rgba(99, 179, 237, 0);
+        width: 100%; padding: 9px 16px 9px 36px; border-radius: 10px;
+        border: 1px solid var(--accent2); background: var(--accent2);
+        color: var(--text); font-size: 14px; outline: none;
+        font-family: 'DM Sans', sans-serif;
+        transition: border 0.25s, background 0.25s, box-shadow 0.25s;
       }
-      .search-wrapper input.search::placeholder {
-        color: rgba(99, 179, 237, 0.35);
-        letter-spacing: 0.02em;
-      }
+      .search-wrapper input.search::placeholder { color: rgba(108,143,255,0.4); }
       .search-wrapper input.search:focus {
-        border-color: rgba(99, 179, 237, 0.5);
-        background: rgba(99, 179, 237, 0.07);
-        box-shadow:
-          0 0 16px rgba(99, 179, 237, 0.12),
-          inset 0 0 12px rgba(99, 179, 237, 0.04);
+        border-color: rgba(108,143,255,0.55); background: rgba(108,143,255,0.08);
+        box-shadow: 0 0 0 3px rgba(108,143,255,0.12), 0 0 20px rgba(108,143,255,0.1);
       }
 
       .suggestions {
-        display: none;
-        position: absolute;
-        top: calc(100% + 6px);
-        left: 0;
-        right: 0;
-        background: var(--bg3);
-        border: 1px solid var(--border2);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.7);
-        z-index: 300;
+        display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+        background: var(--bg3); border: 1px solid var(--border2); border-radius: 12px;
+        overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.8); z-index: 300;
       }
-      .suggestions.visible {
-        display: block;
-      }
+      .suggestions.visible { display: block; }
       .suggestion-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 9px 14px;
-        cursor: pointer;
-        transition: background 0.12s;
-        text-decoration: none;
-        color: var(--text);
+        display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+        cursor: pointer; transition: background 0.12s; text-decoration: none; color: var(--text);
       }
-      .suggestion-item:hover,
-      .suggestion-item.active {
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .suggestion-item img {
-        width: 30px;
-        height: 30px;
-        border-radius: 6px;
-        object-fit: cover;
-        flex-shrink: 0;
-      }
-      .suggestion-item span {
-        font-size: 13px;
-      }
-      .suggestion-item .match {
-        color: white;
-        font-weight: 600;
-      }
-      .suggestion-item .rest {
-        color: rgba(255, 255, 255, 0.45);
-      }
+      .suggestion-item:hover, .suggestion-item.active { background: rgba(108,143,255,0.1); }
+      .suggestion-item img { width: 32px; height: 32px; border-radius: 7px; object-fit: cover; flex-shrink: 0; }
+      .suggestion-item span { font-size: 13px; }
+      .suggestion-item .match { color: var(--text); font-weight: 700; }
+      .suggestion-item .rest { color: var(--text2); }
 
       .home-link {
-        margin-left: 12px;
-        flex-shrink: 0;
-        color: white;
-        text-decoration: none;
-        font-size: 13px;
-        white-space: nowrap;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 7px 14px;
-        border-radius: 7px;
-        transition:
-          background 0.2s,
-          border-color 0.2s;
+        margin-left: 12px; flex-shrink: 0; color: var(--text2); text-decoration: none;
+        font-size: 13px; white-space: nowrap;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+        padding: 7px 14px; border-radius: 9px;
+        transition: background 0.2s, color 0.2s, transform 0.15s;
         font-weight: 500;
       }
-      .home-link:hover {
-        background: rgba(255, 255, 255, 0.18);
-        border-color: rgba(255, 255, 255, 0.3);
+      .home-link:hover { background: rgba(255,255,255,0.12); color: var(--text); transform: scale(1.04); }
+
+      .nav-icon-btn {
+        flex-shrink: 0; background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1); color: var(--text);
+        width: 38px; height: 38px; border-radius: 9px; cursor: pointer;
+        font-size: 16px; display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s, transform 0.15s; margin-left: 6px;
       }
+      .nav-icon-btn:hover { background: rgba(255,255,255,0.12); transform: scale(1.08); }
 
       .panic-btn {
-        flex-shrink: 0;
-        background: rgba(220, 38, 38, 0.15);
-        border: 1px solid rgba(220, 38, 38, 0.35);
-        color: #fc8181;
-        padding: 7px 14px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        white-space: nowrap;
-        transition:
-          background 0.2s,
-          border-color 0.2s;
-        margin-left: 6px;
+        flex-shrink: 0; background: rgba(255,92,122,0.12);
+        border: 1px solid rgba(255,92,122,0.3); color: #ff7c94;
+        padding: 7px 14px; border-radius: 9px; cursor: pointer;
+        font-size: 13px; font-weight: 700; white-space: nowrap;
+        font-family: 'DM Sans', sans-serif;
+        transition: background 0.2s, transform 0.15s; margin-left: 6px;
       }
-      .panic-btn:hover {
-        background: rgba(220, 38, 38, 0.3);
-        border-color: rgba(220, 38, 38, 0.6);
-      }
+      .panic-btn:hover { background: rgba(255,92,122,0.25); transform: scale(1.04); }
 
       /* ── Page ── */
       .page {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 24px 5% 0;
-        gap: 14px;
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        padding: 24px 5% 0; gap: 14px;
+        animation: pageIn 0.3s ease both;
       }
+      @keyframes pageIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
       /* ── Game header ── */
       .game-header {
-        width: 100%;
-        max-width: 1000px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+        width: 100%; max-width: 1000px;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
       }
-
       #gameTitle {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 21px; font-weight: 800; letter-spacing: 0.01em;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        font-family: 'Syne', sans-serif;
       }
 
-      .controls {
-        display: flex;
-        gap: 8px;
-        flex-shrink: 0;
-      }
+      .controls { display: flex; gap: 8px; flex-shrink: 0; }
 
       .btn {
-        background: rgba(255, 255, 255, 0.08);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        padding: 7px 16px;
-        cursor: pointer;
-        border-radius: 7px;
-        font-size: 13px;
-        transition:
-          background 0.2s,
-          border-color 0.2s;
+        background: rgba(255,255,255,0.06); color: var(--text);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 7px 16px; cursor: pointer; border-radius: 9px;
+        font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+        transition: background 0.2s, transform 0.15s, border-color 0.2s;
         white-space: nowrap;
       }
-      .btn:hover {
-        background: rgba(255, 255, 255, 0.16);
-        border-color: rgba(255, 255, 255, 0.25);
-      }
+      .btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); transform: scale(1.04); }
+      .btn:active { transform: scale(0.97); }
+
       .btn.primary {
-        background: rgba(99, 179, 237, 0.15);
-        border-color: rgba(99, 179, 237, 0.35);
-        color: #90cdf4;
+        background: rgba(108,143,255,0.14); border-color: rgba(108,143,255,0.32); color: var(--accent3);
       }
-      .btn.primary:hover {
-        background: rgba(99, 179, 237, 0.25);
-        border-color: rgba(99, 179, 237, 0.55);
-      }
-      .btn.fav-active {
-        background: rgba(255, 100, 100, 0.15);
-        border-color: rgba(255, 100, 100, 0.35);
-        color: #fc8181;
-      }
-      .btn.fav-active:hover {
-        background: rgba(255, 100, 100, 0.25);
+      .btn.primary:hover { background: rgba(108,143,255,0.24); border-color: rgba(108,143,255,0.5); }
+
+      .btn.fav-active { background: rgba(255,92,122,0.14); border-color: rgba(255,92,122,0.32); color: #ff7c94; }
+      .btn.fav-active:hover { background: rgba(255,92,122,0.24); }
+
+      .btn.fullscreen-active {
+        background: linear-gradient(135deg, var(--accent), #4a6ee8); border-color: transparent;
+        color: white; box-shadow: 0 4px 16px rgba(108,143,255,0.35);
       }
 
       /* ── Game container ── */
       .game-container {
-        width: 100%;
-        max-width: 1000px;
-        height: 660px;
-        background: var(--bg3);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-        border: 1px solid var(--border);
+        width: 100%; max-width: 1000px; height: 660px;
+        background: var(--bg3); border-radius: 14px; overflow: hidden;
+        box-shadow: 0 8px 48px rgba(0,0,0,0.7), 0 0 0 1px var(--border);
+        border: 1px solid var(--border2);
+        position: relative;
+        transition: box-shadow 0.3s;
+      }
+      .game-container:hover {
+        box-shadow: 0 12px 56px rgba(0,0,0,0.75), 0 0 0 1px rgba(108,143,255,0.15);
+      }
+      .game-container:-webkit-full-screen, .game-container:fullscreen {
+        width: 100vw; height: 100vh; max-width: none; border-radius: 0;
       }
 
-      iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
-      }
+      iframe { width: 100%; height: 100%; border: none; display: block; }
 
-      .game-container:-webkit-full-screen,
-      .game-container:fullscreen {
-        width: 100vw;
-        height: 100vh;
-        max-width: none;
-        border-radius: 0;
+      /* Loading overlay inside game container */
+      .game-loading {
+        position: absolute; inset: 0; background: var(--bg3);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 14px; z-index: 10; pointer-events: none;
+        transition: opacity 0.4s;
       }
+      .game-loading.hidden { opacity: 0; }
+      .loading-spinner {
+        width: 40px; height: 40px; border: 3px solid rgba(108,143,255,0.2);
+        border-top-color: var(--accent); border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .loading-title { font-size: 14px; font-weight: 600; color: var(--text2); font-family: 'DM Sans', sans-serif; }
+
+      /* ── Timer bar ── */
+      .timer-bar {
+        width: 100%; max-width: 1000px;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px; padding: 6px 2px 0;
+      }
+      .timer-display {
+        font-size: 13px; color: var(--text2);
+        display: flex; align-items: center; gap: 6px;
+        font-family: 'DM Sans', sans-serif;
+      }
+      .timer-val {
+        font-variant-numeric: tabular-nums; font-weight: 700; color: var(--accent3);
+        font-family: 'Syne', sans-serif;
+      }
+      body.light .timer-val { color: var(--accent); }
+      .timer-icon { font-size: 14px; }
+
+      .report-link {
+        font-size: 12px; color: var(--text3); background: none; border: none;
+        cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+        transition: color 0.15s; padding: 0; font-family: 'DM Sans', sans-serif;
+      }
+      .report-link:hover { color: var(--text2); }
 
       /* ── You might also like ── */
-      .also-like {
-        width: 100%;
-        max-width: 1000px;
-        margin-top: 8px;
-        padding-bottom: 16px;
-      }
+      .also-like { width: 100%; max-width: 1000px; margin-top: 8px; padding-bottom: 16px; }
       .also-like h3 {
-        font-size: 15px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: rgba(255, 255, 255, 0.85);
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 15px; font-weight: 800; margin-bottom: 14px;
+        padding-bottom: 10px; border-bottom: 1px solid var(--border);
+        font-family: 'Syne', sans-serif;
       }
-      .also-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 10px;
-      }
+      .also-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
 
-      /* ── Cards (mini) ── */
+      /* ── Cards ── */
       .card {
-        background: var(--card-bg);
-        border-radius: 10px;
-        overflow: hidden;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        aspect-ratio: 1/1;
-        position: relative;
-        transition: transform 0.18s;
+        background: var(--card-bg); border-radius: 12px; overflow: hidden;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        aspect-ratio: 1/1; position: relative;
         border: 1px solid var(--border);
+        transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.22s;
+        will-change: transform;
       }
       .card:hover {
-        transform: scale(1.06);
+        transform: scale(1.08) translateY(-3px);
+        border-color: rgba(108,143,255,0.4);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(108,143,255,0.2);
       }
-      .card:hover .card-label {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .card a {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
+      .card:hover .card-label { opacity: 1; transform: translateY(0); }
+      .card a { display: block; width: 100%; height: 100%; }
+      .card img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 11px; }
       .card-label {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-        color: white;
-        font-size: 10px;
-        font-weight: 600;
-        padding: 16px 5px 5px;
-        text-align: center;
-        opacity: 0;
-        transform: translateY(4px);
-        transition:
-          opacity 0.18s,
-          transform 0.18s;
-        pointer-events: none;
-        line-height: 1.2;
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        color: white; font-size: 10px; font-weight: 700;
+        padding: 18px 6px 7px; text-align: center;
+        opacity: 0; transform: translateY(5px);
+        transition: opacity 0.2s, transform 0.2s;
+        pointer-events: none; line-height: 1.3;
+        font-family: 'DM Sans', sans-serif;
       }
 
       /* Shimmer */
       .skeleton {
-        background: linear-gradient(
-          90deg,
-          var(--sh1) 25%,
-          var(--sh2) 50%,
-          var(--sh1) 75%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.4s infinite;
-        border-radius: 10px;
-        aspect-ratio: 1/1;
-        border: 1px solid var(--border);
+        background: linear-gradient(90deg,var(--shimmer1) 25%,var(--shimmer2) 50%,var(--shimmer1) 75%);
+        background-size: 200% 100%; animation: shimmer 1.6s infinite;
+        border-radius: 12px; aspect-ratio: 1/1; border: 1px solid var(--border);
       }
-      @keyframes shimmer {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
-      }
+      @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-      /* Share toast */
+      /* ── Share toast ── */
       .share-toast {
-        position: fixed;
-        bottom: 28px;
-        left: 50%;
+        position: fixed; bottom: 28px; left: 50%;
         transform: translateX(-50%) translateY(10px);
-        background: var(--bg3);
-        border: 1px solid var(--border2);
-        color: var(--text);
-        font-size: 13px;
-        font-weight: 500;
-        padding: 10px 20px;
-        border-radius: 10px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        opacity: 0;
-        transition:
-          opacity 0.2s,
-          transform 0.2s;
-        pointer-events: none;
-        z-index: 999;
-        white-space: nowrap;
+        background: var(--bg3); border: 1px solid var(--border2);
+        color: var(--text); font-size: 13px; font-weight: 600;
+        padding: 10px 20px; border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        opacity: 0; transition: opacity 0.2s, transform 0.2s;
+        pointer-events: none; z-index: 999; white-space: nowrap;
+        font-family: 'DM Sans', sans-serif;
       }
-      .share-toast.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
+      .share-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-      /* Report modal */
+      /* ── Report modal ── */
       .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s;
+        position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none; transition: opacity 0.22s;
+        backdrop-filter: blur(4px);
       }
-      .modal-overlay.open {
-        opacity: 1;
-        pointer-events: all;
-      }
+      .modal-overlay.open { opacity: 1; pointer-events: all; }
       .modal {
-        background: var(--bg3);
-        border: 1px solid var(--border2);
-        border-radius: 14px;
-        padding: 28px;
-        width: 100%;
-        max-width: 400px;
-        margin: 16px;
-        transform: translateY(12px);
-        transition: transform 0.2s;
+        background: var(--bg3); border: 1px solid var(--border2); border-radius: 16px;
+        padding: 28px; width: 100%; max-width: 400px; margin: 16px;
+        transform: translateY(16px) scale(0.97);
+        transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.7);
       }
-      .modal-overlay.open .modal {
-        transform: translateY(0);
-      }
-      .modal h2 {
-        font-size: 17px;
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
-      .modal p {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.4);
-        margin-bottom: 20px;
-      }
+      .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+      .modal h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; font-family: 'Syne', sans-serif; }
+      .modal p { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
       .modal textarea {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 10px 14px;
-        color: white;
-        font-size: 13px;
-        outline: none;
-        font-family: inherit;
-        resize: vertical;
-        min-height: 80px;
-        transition: border-color 0.2s;
-        margin-bottom: 16px;
+        width: 100%; background: rgba(108,143,255,0.06); border: 1px solid var(--border2);
+        border-radius: 9px; padding: 10px 14px; color: var(--text); font-size: 13px;
+        outline: none; font-family: 'DM Sans', sans-serif; resize: vertical; min-height: 80px;
+        transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 16px;
       }
-      .modal textarea:focus {
-        border-color: rgba(99, 179, 237, 0.5);
-      }
-      .modal-actions {
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-      }
+      .modal textarea:focus { border-color: rgba(108,143,255,0.5); box-shadow: 0 0 0 3px rgba(108,143,255,0.1); }
+      .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
       .modal-cancel {
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.6);
-        padding: 8px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 13px;
-        transition: background 0.2s;
+        background: rgba(255,255,255,0.06); border: 1px solid var(--border2);
+        color: var(--text2); padding: 8px 18px; border-radius: 9px; cursor: pointer;
+        font-size: 13px; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
       }
-      .modal-cancel:hover {
-        background: rgba(255, 255, 255, 0.12);
-      }
+      .modal-cancel:hover { background: rgba(255,255,255,0.12); }
       .modal-submit {
-        background: rgba(220, 38, 38, 0.2);
-        border: 1px solid rgba(220, 38, 38, 0.4);
-        color: #fc8181;
-        padding: 8px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        transition: background 0.2s;
+        background: rgba(255,92,122,0.18); border: 1px solid rgba(255,92,122,0.35);
+        color: #ff7c94; padding: 8px 18px; border-radius: 9px; cursor: pointer;
+        font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+        transition: background 0.2s, transform 0.15s;
       }
-      .modal-submit:hover {
-        background: rgba(220, 38, 38, 0.35);
-      }
-      .modal-success {
-        text-align: center;
-        padding: 8px 0 4px;
-      }
-      .modal-success .big-emoji {
-        font-size: 36px;
-        margin-bottom: 10px;
-        display: block;
-      }
+      .modal-submit:hover { background: rgba(255,92,122,0.3); transform: scale(1.03); }
+      .modal-success { text-align: center; padding: 8px 0 4px; }
+      .modal-success .big-emoji { font-size: 40px; margin-bottom: 10px; display: block; }
 
-      /* Report link under game */
-      .report-link {
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.2);
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-decoration: underline;
-        text-underline-offset: 2px;
-        transition: color 0.15s;
-        padding: 0;
-        font-family: inherit;
-      }
-      .report-link:hover {
-        color: rgba(255, 255, 255, 0.5);
-      }
-      .under-frame {
-        width: 100%;
-        max-width: 1000px;
-        display: flex;
-        justify-content: flex-end;
-        padding: 6px 2px 0;
-      }
-
-      /* Footer */
-      footer {
-        background: var(--fb);
-        border-top: 1px solid var(--border);
-        margin-top: 24px;
-        padding: 48px 8% 28px;
-      }
-      .footer-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 40px;
-        width: 100%;
-        margin-bottom: 36px;
-      }
-      .footer-brand img {
-        height: 38px;
-        margin-bottom: 14px;
-        display: block;
-      }
-      .footer-brand p {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.3);
-        line-height: 1.75;
-        max-width: 280px;
-      }
-      .footer-col h4 {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.4);
-        margin-bottom: 14px;
-      }
-      .footer-col ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .footer-col ul li a {
-        color: rgba(255, 255, 255, 0.3);
-        text-decoration: none;
-        font-size: 13px;
-        transition: color 0.15s;
-      }
-      .footer-col ul li a:hover {
-        color: white;
-      }
-      .footer-col ul li span {
-        color: rgba(255, 255, 255, 0.3);
-        font-size: 13px;
-      }
-      .footer-note {
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.18);
-        margin-top: 6px;
-      }
-      .footer-divider {
-        border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        width: 100%;
-        margin: 0 0 20px;
-      }
-      .footer-bottom {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.18);
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      @media (max-width: 700px) {
-        .footer-grid {
-          grid-template-columns: 1fr;
-          gap: 28px;
-        }
-        .footer-bottom {
-          flex-direction: column;
-          text-align: center;
-        }
-      }
-
-      /* ── Play timer ── */
-      .timer-bar {
-        width: 100%;
-        max-width: 1000px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 8px 2px 0;
-      }
-      .timer-display {
-        font-size: 13px;
-        color: var(--text2);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .timer-val {
-        font-variant-numeric: tabular-nums;
-        font-weight: 600;
-        color: var(--accent3);
-      }
-      body.light .timer-val {
-        color: var(--accent);
-      }
-      .timer-icon {
-        font-size: 14px;
-      }
-
-      /* ── Theme btn ── */
-      .nav-icon-btn {
-        flex-shrink: 0;
-        background: var(--bb);
-        border: 1px solid var(--bb2);
-        color: var(--text);
-        padding: 7px 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 13px;
-        white-space: nowrap;
-        transition: background 0.2s;
-      }
-      .nav-icon-btn:hover {
-        background: rgba(128, 128, 128, 0.15);
-      }
-
-      /* Card label always on touch */
-      @media (hover: none) {
-        .card-label {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+      /* ── Footer ── */
+      footer { background: #050810; border-top: 1px solid var(--border); margin-top: 24px; padding: 48px 8% 28px; }
+      .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; width: 100%; margin-bottom: 36px; }
+      .footer-brand img { height: 38px; margin-bottom: 14px; display: block; }
+      .footer-brand p { font-size: 13px; color: var(--text3); line-height: 1.8; max-width: 280px; }
+      .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); margin-bottom: 14px; font-family: 'Syne', sans-serif; }
+      .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+      .footer-col ul li a { color: var(--text3); text-decoration: none; font-size: 13px; transition: color 0.15s; }
+      .footer-col ul li a:hover { color: var(--text); }
+      .footer-col ul li span { color: var(--text3); font-size: 13px; }
+      .footer-note { font-size: 11px; color: var(--text3); margin-top: 6px; }
+      .footer-divider { border: none; border-top: 1px solid var(--border); width: 100%; margin: 0 0 20px; }
+      .footer-bottom { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text3); flex-wrap: wrap; gap: 8px; }
 
       @media (max-width: 700px) {
-        .page {
-          padding: 16px 4% 0;
-        }
-        .game-container {
-          height: 380px;
-        }
-        #gameTitle {
-          font-size: 16px;
-        }
-        .also-grid {
-          grid-template-columns: repeat(4, 1fr);
-        }
+        .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .page { padding: 16px 4% 0; }
+        .game-container { height: 380px; }
+        #gameTitle { font-size: 16px; }
+        .also-grid { grid-template-columns: repeat(4,1fr); }
+        .controls .btn span { display: none; }
       }
       @media (max-width: 480px) {
-        .also-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
+        .also-grid { grid-template-columns: repeat(3,1fr); }
       }
+      @media (hover: none) { .card-label { opacity: 1; transform: translateY(0); } }
     </style>
   </head>
   <body>
     <div class="navbar">
-      <a href="index.html" class="logo-link">
-        <img src="logo.png" alt="Home" class="logo" />
-      </a>
+      <a href="index.html" class="logo-link"><img src="logo.png" alt="Home" class="logo" /></a>
       <div class="search-wrapper">
-        <input
-          type="text"
-          class="search"
-          placeholder="Search games..."
-          id="searchInput"
-          autocomplete="off"
-        />
+        <input type="text" class="search" placeholder="Search games..." id="searchInput" autocomplete="off" />
         <div class="suggestions" id="suggestions"></div>
       </div>
       <a href="index.html" class="home-link">← Home</a>
-      <button class="nav-icon-btn" id="themeBtn" title="Toggle theme">
-        🌙
-      </button>
+      <button class="nav-icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
       <button class="panic-btn" id="panicBtn">🚨 Panic</button>
     </div>
 
@@ -762,18 +385,21 @@
       <div class="game-header">
         <div id="gameTitle">Loading...</div>
         <div class="controls">
-          <button class="btn" id="favBtn">🤍 Favourite</button>
-          <button class="btn" id="shareBtn">🔗 Share</button>
-          <button class="btn" id="reloadBtn">↺ Reload</button>
-          <button class="btn primary" id="fullscreenBtn">⛶ Fullscreen</button>
+          <button class="btn" id="favBtn">🤍 <span>Favourite</span></button>
+          <button class="btn" id="shareBtn">🔗 <span>Share</span></button>
+          <button class="btn" id="reloadBtn">↺ <span>Reload</span></button>
+          <button class="btn primary" id="fullscreenBtn">⛶ <span>Fullscreen</span></button>
         </div>
       </div>
 
       <div class="game-container" id="container">
+        <div class="game-loading" id="gameLoading">
+          <div class="loading-spinner"></div>
+          <div class="loading-title" id="loadingTitle">Loading game...</div>
+        </div>
         <iframe id="gameFrame" allowfullscreen></iframe>
       </div>
 
-      <!-- Timer + under-frame row -->
       <div class="timer-bar">
         <div class="timer-display">
           <span class="timer-icon">⏱</span> Session:
@@ -782,8 +408,7 @@
         <button class="report-link" id="reportBtn">⚠ Report broken game</button>
       </div>
 
-      <!-- You might also like -->
-      <div class="also-like" id="alsoLike" style="display: none">
+      <div class="also-like" id="alsoLike" style="display:none">
         <h3>🎮 You might also like</h3>
         <div class="also-grid" id="alsoGrid"></div>
       </div>
@@ -793,10 +418,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <img src="logo.png" alt="Unblocked Games" />
-          <p>
-            A free collection of the best unblocked games you can play anywhere,
-            anytime. No downloads, no logins &mdash; just pick a game and play.
-          </p>
+          <p>A free collection of the best unblocked games you can play anywhere, anytime. No downloads, no logins — just pick a game and play.</p>
         </div>
         <div class="footer-col">
           <h4>Browse</h4>
@@ -809,70 +431,38 @@
         <div class="footer-col">
           <h4>Contact</h4>
           <ul>
-            <li>
-              <a
-                href="/cdn-cgi/l/email-protection#c0b6aca1a4b0a9aca9b0a3a8b5abf1f480a7ada1a9aceea3afad"
-                >📧 Send us an email</a
-              >
-            </li>
-            <li>
-              <span
-                ><a
-                  href="/cdn-cgi/l/email-protection"
-                  class="__cf_email__"
-                  data-cfemail="d9afb5b8bda9b0b5b0a9bab1acb2e8ed99beb4b8b0b5f7bab6b4"
-                  >[email&#160;protected]</a
-                ></span
-              >
-            </li>
-            <li>
-              <span class="footer-note">We reply within 24&ndash;48 hours</span>
-            </li>
+            <li><a href="mailto:info@mathgames67.com">📧 Send us an email</a></li>
+            <li><span>info@mathgames67.com</span></li>
+            <li><span class="footer-note">We reply within 24–48 hours</span></li>
           </ul>
         </div>
       </div>
       <hr class="footer-divider" />
       <div class="footer-bottom">
-        <span>&copy; 2025 Unblocked Games. All rights reserved.</span>
+        <span>© 2025 Unblocked Games. All rights reserved.</span>
         <span>Made for students, by students.</span>
       </div>
     </footer>
 
-    <!-- Share toast -->
     <div class="share-toast" id="shareToast">🔗 Link copied to clipboard!</div>
 
-    <!-- Report broken game modal -->
+    <!-- Report modal -->
     <div class="modal-overlay" id="reportModal">
       <div class="modal">
         <div id="reportForm">
           <h2>⚠️ Report Broken Game</h2>
           <p>Tell us what's wrong and we'll fix it as soon as possible.</p>
-          <textarea
-            id="reportNote"
-            placeholder="What's wrong? (e.g. game doesn't load, black screen, wrong game)"
-            maxlength="300"
-          ></textarea>
+          <textarea id="reportNote" placeholder="What's wrong? (e.g. game doesn't load, black screen, wrong game)" maxlength="300"></textarea>
           <div class="modal-actions">
             <button class="modal-cancel" id="reportCancel">Cancel</button>
             <button class="modal-submit" id="reportSubmit">Send Report</button>
           </div>
         </div>
-        <div id="reportSuccess" class="modal-success" style="display: none">
+        <div id="reportSuccess" class="modal-success" style="display:none">
           <span class="big-emoji">✅</span>
           <h2>Thanks!</h2>
-          <p
-            style="
-              color: rgba(255, 255, 255, 0.4);
-              font-size: 13px;
-              margin-top: 8px;
-            "
-          >
-            Report saved. We'll look into it!
-          </p>
-          <div
-            class="modal-actions"
-            style="justify-content: center; margin-top: 20px"
-          >
+          <p style="color:var(--text2);font-size:13px;margin-top:8px;">Report saved. We'll look into it!</p>
+          <div class="modal-actions" style="justify-content:center;margin-top:20px">
             <button class="modal-cancel" id="reportClose">Close</button>
           </div>
         </div>
@@ -881,339 +471,178 @@
 
     <script src="games.js"></script>
     <script>
+      // ── Panic ──
+      document.addEventListener('keydown', e => { if(e.key==='`') window.location.href='https://classroom.google.com'; });
+      document.getElementById('panicBtn').addEventListener('click', () => { window.location.href='https://classroom.google.com'; });
+
       // ── Theme ──
-      const themeBtn = document.getElementById("themeBtn");
-      function applyTheme(t) {
-        document.body.classList.toggle("light", t === "light");
-        if (themeBtn) themeBtn.textContent = t === "light" ? "🌙" : "☀️";
-      }
-      const theme = localStorage.getItem("theme") || "dark";
+      const themeBtn = document.getElementById('themeBtn');
+      function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(themeBtn) themeBtn.textContent = t==='light'?'🌙':'☀️'; }
+      const theme = localStorage.getItem('theme')||'dark';
       applyTheme(theme);
-      if (themeBtn)
-        themeBtn.addEventListener("click", () => {
-          const t = document.body.classList.contains("light")
-            ? "dark"
-            : "light";
-          localStorage.setItem("theme", t);
-          applyTheme(t);
-        });
+      if(themeBtn) themeBtn.addEventListener('click', () => { const t=document.body.classList.contains('light')?'dark':'light'; localStorage.setItem('theme',t); applyTheme(t); });
 
       // ── Storage ──
-      function getFavs() {
-        try {
-          return JSON.parse(localStorage.getItem("favs") || "[]");
-        } catch {
-          return [];
-        }
-      }
-      function setFavs(f) {
-        try {
-          localStorage.setItem("favs", JSON.stringify(f));
-        } catch {}
-      }
-      function addRecent(id) {
-        try {
-          let r = JSON.parse(localStorage.getItem("recent2") || "[]");
-          r = r.filter((x) => x.id !== id);
-          r.unshift({ id, ts: Date.now() });
-          r = r.slice(0, 20);
-          localStorage.setItem("recent2", JSON.stringify(r));
-        } catch {}
+      function getFavs(){ try{return JSON.parse(localStorage.getItem('favs')||'[]');}catch{return[];} }
+      function setFavs(f){ try{localStorage.setItem('favs',JSON.stringify(f));}catch{} }
+      function addRecent(id){
+        try{ let r=JSON.parse(localStorage.getItem('recent2')||'[]'); r=r.filter(x=>x.id!==id); r.unshift({id,ts:Date.now()}); r=r.slice(0,20); localStorage.setItem('recent2',JSON.stringify(r)); }catch{}
       }
 
       // ── Play timer ──
-      let sessionStart = Date.now();
-      let totalSeconds = 0;
-      const timerVal = document.getElementById("timerVal");
+      let sessionStart = Date.now(), totalSeconds = 0;
+      const timerVal = document.getElementById('timerVal');
+      function formatTimer(s){ const m=Math.floor(s/60); return m+':'+String(s%60).padStart(2,'0'); }
+      setInterval(() => { totalSeconds++; if(timerVal) timerVal.textContent = formatTimer(totalSeconds); }, 1000);
 
-      function formatTimer(s) {
-        const m = Math.floor(s / 60);
-        const sec = s % 60;
-        return m + ":" + String(sec).padStart(2, "0");
+      function savePlayTime(gameId){
+        if(!gameId) return;
+        const ms = Date.now()-sessionStart;
+        try{ const times=JSON.parse(localStorage.getItem('playTimes')||'{}'); times[gameId]=(times[gameId]||0)+ms; localStorage.setItem('playTimes',JSON.stringify(times)); }catch{}
       }
-
-      const timerInterval = setInterval(() => {
-        totalSeconds++;
-        if (timerVal) timerVal.textContent = formatTimer(totalSeconds);
-      }, 1000);
-
-      // Save play time when leaving
-      function savePlayTime(gameId) {
-        if (!gameId) return;
-        const ms = Date.now() - sessionStart;
-        try {
-          const times = JSON.parse(localStorage.getItem("playTimes") || "{}");
-          times[gameId] = (times[gameId] || 0) + ms;
-          localStorage.setItem("playTimes", JSON.stringify(times));
-        } catch {}
-      }
-
-      window.addEventListener("beforeunload", () => {
-        const gn = window.location.search.substring(1).trim().toLowerCase();
-        savePlayTime(gn);
-      });
+      window.addEventListener('beforeunload', () => { const gn=window.location.search.substring(1).trim().toLowerCase(); savePlayTime(gn); });
 
       // ── Load game ──
       const gameName = window.location.search.substring(1).trim().toLowerCase();
-      const game = games.find((g) => g.id === gameName);
-      const frame = document.getElementById("gameFrame");
-      const favBtn = document.getElementById("favBtn");
+      const game = games.find(g => g.id === gameName);
+      const frame = document.getElementById('gameFrame');
+      const favBtn = document.getElementById('favBtn');
+      const gameLoading = document.getElementById('gameLoading');
+      const loadingTitle = document.getElementById('loadingTitle');
 
-      if (game) {
-        document.getElementById("gameTitle").textContent = game.title;
-        document.title = game.title + " — Unblocked Games";
+      if(game){
+        document.getElementById('gameTitle').textContent = game.title;
+        document.title = game.title + ' — Unblocked Games';
+        loadingTitle.textContent = 'Loading ' + game.title + '...';
         frame.src = game.src;
         addRecent(game.id);
 
-        function updateFavBtn() {
+        // Hide loading once iframe loads
+        frame.addEventListener('load', () => {
+          gameLoading.classList.add('hidden');
+          setTimeout(() => { gameLoading.style.display='none'; }, 400);
+        });
+
+        // Fav button
+        function updateFavBtn(){
           const isFav = getFavs().includes(game.id);
-          favBtn.textContent = isFav ? "❤️ Favourited" : "🤍 Favourite";
-          favBtn.className = "btn" + (isFav ? " fav-active" : "");
+          favBtn.innerHTML = isFav ? '❤️ <span>Favourited</span>' : '🤍 <span>Favourite</span>';
+          favBtn.className = 'btn' + (isFav?' fav-active':'');
         }
         updateFavBtn();
-        favBtn.addEventListener("click", () => {
+        favBtn.addEventListener('click', () => {
           let f = getFavs();
-          if (f.includes(game.id)) f = f.filter((x) => x !== game.id);
-          else f.push(game.id);
-          setFavs(f);
-          updateFavBtn();
+          if(f.includes(game.id)) f=f.filter(x=>x!==game.id); else f.push(game.id);
+          setFavs(f); updateFavBtn();
         });
 
         // You might also like
-        const tagMatches = games.filter(
-          (g) =>
-            g.id !== game.id &&
-            g.tags &&
-            game.tags &&
-            g.tags.some((t) => game.tags.includes(t)),
-        );
-        const others = games.filter(
-          (g) => g.id !== game.id && !tagMatches.find((m) => m.id === g.id),
-        );
-        const related = [...tagMatches, ...others].slice(0, 12);
-
-        if (related.length) {
-          const alsoLike = document.getElementById("alsoLike");
-          const alsoGrid = document.getElementById("alsoGrid");
-          alsoLike.style.display = "block";
-          related.forEach((g) => {
-            const card = document.createElement("div");
-            card.className = "card";
-            const skel = document.createElement("div");
-            skel.style.cssText =
-              "position:absolute;inset:0;z-index:1;border-radius:10px;background:linear-gradient(90deg,var(--sh1) 25%,var(--sh2) 50%,var(--sh1) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;";
+        const tagMatches = games.filter(g => g.id!==game.id && g.tags && game.tags && g.tags.some(t=>game.tags.includes(t)));
+        const others = games.filter(g => g.id!==game.id && !tagMatches.find(m=>m.id===g.id));
+        const related = [...tagMatches,...others].slice(0,12);
+        if(related.length){
+          const alsoLike = document.getElementById('alsoLike');
+          const alsoGrid = document.getElementById('alsoGrid');
+          alsoLike.style.display = 'block';
+          related.forEach(g => {
+            const card = document.createElement('div'); card.className='card';
+            const skel = document.createElement('div');
+            skel.style.cssText='position:absolute;inset:0;z-index:1;border-radius:11px;background:linear-gradient(90deg,var(--shimmer1) 25%,var(--shimmer2) 50%,var(--shimmer1) 75%);background-size:200% 100%;animation:shimmer 1.6s infinite;';
             card.appendChild(skel);
-            const a = document.createElement("a");
-            a.href = "play.html?" + g.id;
-            a.addEventListener("click", () => {
-              savePlayTime(gameName);
-            });
-            const img = document.createElement("img");
-            img.alt = g.title;
-            img.loading = "lazy";
-            img.onload = () => skel.remove();
-            img.onerror = () => skel.remove();
-            img.src = g.img;
-            const label = document.createElement("div");
-            label.className = "card-label";
-            label.textContent = g.title;
-            a.appendChild(img);
-            card.appendChild(a);
-            card.appendChild(label);
+            const a = document.createElement('a'); a.href='play.html?'+g.id;
+            a.addEventListener('click', () => { savePlayTime(gameName); });
+            const img = document.createElement('img'); img.alt=g.title; img.loading='lazy';
+            img.onload=()=>skel.remove(); img.onerror=()=>skel.remove(); img.src=g.img;
+            const label = document.createElement('div'); label.className='card-label'; label.textContent=g.title;
+            a.appendChild(img); card.appendChild(a); card.appendChild(label);
             alsoGrid.appendChild(card);
           });
         }
       } else {
-        document.getElementById("gameTitle").textContent = "Game not found";
-        favBtn.style.display = "none";
+        document.getElementById('gameTitle').textContent = 'Game not found';
+        favBtn.style.display = 'none';
+        gameLoading.style.display = 'none';
       }
 
       // ── Share ──
-      document.getElementById("shareBtn").addEventListener("click", () => {
+      document.getElementById('shareBtn').addEventListener('click', () => {
         const url = window.location.href;
-        if (navigator.clipboard) {
-          navigator.clipboard
-            .writeText(url)
-            .then(showShareToast)
-            .catch(() => prompt("Copy this link:", url));
-        } else {
-          prompt("Copy this link:", url);
-        }
+        if(navigator.clipboard){ navigator.clipboard.writeText(url).then(showShareToast).catch(()=>prompt('Copy this link:',url)); }
+        else prompt('Copy this link:',url);
       });
-      function showShareToast() {
-        const t = document.getElementById("shareToast");
-        t.classList.add("show");
-        setTimeout(() => t.classList.remove("show"), 2200);
-      }
+      function showShareToast(){ const t=document.getElementById('shareToast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
 
-      // ── Report broken game ──
-      const reportModal = document.getElementById("reportModal");
-      document
-        .getElementById("reportBtn")
-        .addEventListener("click", () => reportModal.classList.add("open"));
-      function closeReport() {
-        reportModal.classList.remove("open");
-        document.getElementById("reportForm").style.display = "block";
-        document.getElementById("reportSuccess").style.display = "none";
-        document.getElementById("reportNote").value = "";
-      }
-      document
-        .getElementById("reportCancel")
-        .addEventListener("click", closeReport);
-      document
-        .getElementById("reportClose")
-        .addEventListener("click", closeReport);
-      reportModal.addEventListener("click", (e) => {
-        if (e.target === reportModal) closeReport();
-      });
-      document.getElementById("reportSubmit").addEventListener("click", () => {
-        const note = document.getElementById("reportNote").value.trim();
-        try {
-          const reports = JSON.parse(
-            localStorage.getItem("brokenReports") || "[]",
-          );
-          reports.push({
-            gameId: gameName,
-            note,
-            date: new Date().toISOString(),
-          });
-          localStorage.setItem("brokenReports", JSON.stringify(reports));
-        } catch {}
-        document.getElementById("reportForm").style.display = "none";
-        document.getElementById("reportSuccess").style.display = "block";
+      // ── Report ──
+      const reportModal = document.getElementById('reportModal');
+      document.getElementById('reportBtn').addEventListener('click', ()=>reportModal.classList.add('open'));
+      function closeReport(){ reportModal.classList.remove('open'); document.getElementById('reportForm').style.display='block'; document.getElementById('reportSuccess').style.display='none'; document.getElementById('reportNote').value=''; }
+      document.getElementById('reportCancel').addEventListener('click', closeReport);
+      document.getElementById('reportClose').addEventListener('click', closeReport);
+      reportModal.addEventListener('click', e=>{ if(e.target===reportModal) closeReport(); });
+      document.getElementById('reportSubmit').addEventListener('click', ()=>{
+        const note = document.getElementById('reportNote').value.trim();
+        try{ const reports=JSON.parse(localStorage.getItem('brokenReports')||'[]'); reports.push({gameId:gameName,note,date:new Date().toISOString()}); localStorage.setItem('brokenReports',JSON.stringify(reports)); }catch{}
+        document.getElementById('reportForm').style.display='none'; document.getElementById('reportSuccess').style.display='block';
       });
 
       // ── Reload ──
-      document.getElementById("reloadBtn").addEventListener("click", () => {
-        frame.src = frame.src;
-      });
+      document.getElementById('reloadBtn').addEventListener('click', ()=>{ frame.src=frame.src; gameLoading.style.display='flex'; gameLoading.classList.remove('hidden'); });
 
       // ── Fullscreen ──
-      const container = document.getElementById("container");
-      const fsBtn = document.getElementById("fullscreenBtn");
-      fsBtn.addEventListener("click", () => {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-          if (container.requestFullscreen) container.requestFullscreen();
-          else if (container.webkitRequestFullscreen)
-            container.webkitRequestFullscreen();
-        } else {
-          if (document.exitFullscreen) document.exitFullscreen();
-          else if (document.webkitExitFullscreen)
-            document.webkitExitFullscreen();
-        }
+      const container = document.getElementById('container');
+      const fsBtn = document.getElementById('fullscreenBtn');
+      fsBtn.addEventListener('click', ()=>{
+        if(!document.fullscreenElement && !document.webkitFullscreenElement){
+          if(container.requestFullscreen) container.requestFullscreen(); else if(container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+        } else { if(document.exitFullscreen) document.exitFullscreen(); else if(document.webkitExitFullscreen) document.webkitExitFullscreen(); }
       });
-      function updateFsBtn() {
-        const inFs =
-          document.fullscreenElement === container ||
-          document.webkitFullscreenElement === container;
-        fsBtn.textContent = inFs ? "✕ Exit Fullscreen" : "⛶ Fullscreen";
+      function updateFsBtn(){
+        const inFs = document.fullscreenElement===container || document.webkitFullscreenElement===container;
+        fsBtn.innerHTML = inFs ? '✕ <span>Exit</span>' : '⛶ <span>Fullscreen</span>';
+        fsBtn.className = 'btn primary' + (inFs?' fullscreen-active':'');
       }
-      document.addEventListener("fullscreenchange", updateFsBtn);
-      document.addEventListener("webkitfullscreenchange", updateFsBtn);
+      document.addEventListener('fullscreenchange', updateFsBtn);
+      document.addEventListener('webkitfullscreenchange', updateFsBtn);
 
       // ── Keyboard shortcuts ──
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "`") {
-          window.location.href = "https://classroom.google.com";
-          return;
-        }
-        if (
-          document.activeElement.tagName === "INPUT" ||
-          document.activeElement.tagName === "TEXTAREA"
-        )
-          return;
-        if (e.key === "f" || e.key === "F") fsBtn.click();
-        if (e.key === "r" || e.key === "R") {
-          frame.src = frame.src;
-        }
-      });
-      document.getElementById("panicBtn").addEventListener("click", () => {
-        window.location.href = "https://classroom.google.com";
+      document.addEventListener('keydown', e=>{
+        if(e.key==='`'){ window.location.href='https://classroom.google.com'; return; }
+        if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='TEXTAREA') return;
+        if(e.key==='f'||e.key==='F') fsBtn.click();
+        if(e.key==='r'||e.key==='R'){ frame.src=frame.src; gameLoading.style.display='flex'; gameLoading.classList.remove('hidden'); }
       });
 
       // ── Search autocomplete ──
-      const searchInput = document.getElementById("searchInput");
-      const suggestionsBox = document.getElementById("suggestions");
+      const searchInput = document.getElementById('searchInput');
+      const suggestionsBox = document.getElementById('suggestions');
       let activeIndex = -1;
-      function escapeHtml(s) {
-        return s
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-      }
-      function showSuggestions(filter) {
-        suggestionsBox.innerHTML = "";
-        activeIndex = -1;
-        if (!filter) {
-          suggestionsBox.classList.remove("visible");
-          return;
-        }
-        const matches = games
-          .filter((g) => g.title.toLowerCase().includes(filter))
-          .slice(0, 6);
-        if (!matches.length) {
-          suggestionsBox.classList.remove("visible");
-          return;
-        }
-        matches.forEach((g) => {
-          const a = document.createElement("a");
-          a.className = "suggestion-item";
-          a.href = "play.html?" + g.id;
-          const img = document.createElement("img");
-          img.src = g.img;
-          img.alt = g.title;
-          const title = g.title;
-          const idx = title.toLowerCase().indexOf(filter);
-          const span = document.createElement("span");
-          span.innerHTML =
-            idx !== -1
-              ? escapeHtml(title.slice(0, idx)) +
-                `<span class="match">${escapeHtml(title.slice(idx, idx + filter.length))}</span>` +
-                `<span class="rest">${escapeHtml(title.slice(idx + filter.length))}</span>`
-              : escapeHtml(title);
-          a.appendChild(img);
-          a.appendChild(span);
-          suggestionsBox.appendChild(a);
+      function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      function showSuggestions(filter){
+        suggestionsBox.innerHTML=''; activeIndex=-1;
+        if(!filter){ suggestionsBox.classList.remove('visible'); return; }
+        const matches=games.filter(g=>g.title.toLowerCase().includes(filter)).slice(0,6);
+        if(!matches.length){ suggestionsBox.classList.remove('visible'); return; }
+        matches.forEach(g=>{
+          const a=document.createElement('a'); a.className='suggestion-item'; a.href='play.html?'+g.id;
+          const img=document.createElement('img'); img.src=g.img; img.alt=g.title;
+          const title=g.title; const idx=title.toLowerCase().indexOf(filter);
+          const span=document.createElement('span');
+          span.innerHTML=idx!==-1?escapeHtml(title.slice(0,idx))+`<span class="match">${escapeHtml(title.slice(idx,idx+filter.length))}</span><span class="rest">${escapeHtml(title.slice(idx+filter.length))}</span>`:escapeHtml(title);
+          a.appendChild(img); a.appendChild(span); suggestionsBox.appendChild(a);
         });
-        suggestionsBox.classList.add("visible");
+        suggestionsBox.classList.add('visible');
       }
-      function setActive(idx) {
-        const items = suggestionsBox.querySelectorAll(".suggestion-item");
-        items.forEach((el) => el.classList.remove("active"));
-        if (idx >= 0 && idx < items.length) {
-          items[idx].classList.add("active");
-          activeIndex = idx;
-        }
-      }
-      searchInput.addEventListener("input", () =>
-        showSuggestions(searchInput.value.toLowerCase().trim()),
-      );
-      searchInput.addEventListener("keydown", (e) => {
-        const items = suggestionsBox.querySelectorAll(".suggestion-item");
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          setActive(Math.min(activeIndex + 1, items.length - 1));
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          setActive(Math.max(activeIndex - 1, 0));
-        } else if (
-          e.key === "Enter" &&
-          activeIndex >= 0 &&
-          items[activeIndex]
-        ) {
-          window.location.href = items[activeIndex].href;
-        } else if (e.key === "Escape") {
-          suggestionsBox.classList.remove("visible");
-        }
+      function setActive(idx){ const items=suggestionsBox.querySelectorAll('.suggestion-item'); items.forEach(el=>el.classList.remove('active')); if(idx>=0&&idx<items.length){items[idx].classList.add('active');activeIndex=idx;} }
+      searchInput.addEventListener('input',()=>showSuggestions(searchInput.value.toLowerCase().trim()));
+      searchInput.addEventListener('keydown',e=>{
+        const items=suggestionsBox.querySelectorAll('.suggestion-item');
+        if(e.key==='ArrowDown'){e.preventDefault();setActive(Math.min(activeIndex+1,items.length-1));}
+        else if(e.key==='ArrowUp'){e.preventDefault();setActive(Math.max(activeIndex-1,0));}
+        else if(e.key==='Enter'&&activeIndex>=0&&items[activeIndex]){ window.location.href=items[activeIndex].href; }
+        else if(e.key==='Escape'){ suggestionsBox.classList.remove('visible'); }
       });
-      document.addEventListener("click", (e) => {
-        if (!e.target.closest(".search-wrapper"))
-          suggestionsBox.classList.remove("visible");
-      });
-      searchInput.addEventListener("focus", () => {
-        const f = searchInput.value.toLowerCase().trim();
-        if (f) showSuggestions(f);
-      });
+      document.addEventListener('click',e=>{ if(!e.target.closest('.search-wrapper')) suggestionsBox.classList.remove('visible'); });
+      searchInput.addEventListener('focus',()=>{ const f=searchInput.value.toLowerCase().trim(); if(f)showSuggestions(f); });
     </script>
   </body>
 </html>
