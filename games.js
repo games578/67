@@ -4,49 +4,49 @@ const games = [
     title: "A Small World Cup",
     src: "https://mc0825.github.io/g16/class-680/",
     img: "https://jamestore214.github.io/img/class-680.png",
-    tags: ["new", "soccer", "multiplayer", "fun", "best"]
+    tags: ["soccer", "multiplayer", "fun", "best"]
   },
   {
     id: "subway-surfers",
     title: "Subway Surfers",
     src: "https://jamestore214.github.io/g26/class-444/",
     img: "https://jamestore214.github.io/img/class-444.png",
-    tags: ["new", "popular", "adventure", "fun", "best"]
+    tags: ["popular", "adventure", "fun", "best"]
   },
   {
     id: "murder",
     title: "Murder",
     src: "https://jamestore214.github.io/g72/class-580/",
     img: "https://jamestore214.github.io/img/class-580.png",
-    tags: ["new", "multiplayer", "fun"]
+    tags: ["multiplayer", "fun"]
   },
   {
     id: "slope",
     title: "Slope",
     src: "https://jamestore214.github.io/g5/class-450",
     img: "https://jamestore214.github.io/img/class-450.png",
-    tags: ["new", "popular", "3d", "fun", "best"]
+    tags: ["popular", "3d", "fun", "best"]
   },
   {
     id: "swat",
     title: "Swat",
     src: "https://mc0825.github.io/g97/class-792/",
     img: "https://jamestore214.github.io/img/class-792.png",
-    tags: ["new", "survival", "3d"]
+    tags: ["survival", "3d"]
   },
   {
     id: "lol",
     title: "lol",
     src: "https://mc0825.github.io/g20/class-440/",
     img: "https://jamestore214.github.io/img/class-440.png",
-    tags: ["new", "multiplayer", "fun"]
+    tags: ["multiplayer", "fun"]
   },
   {
     id: "snow-rider",
     title: "Snow Rider",
     src: "https://mc0825.github.io/g26/class-537/",
     img: "https://jamestore214.github.io/img/class-537.png",
-    tags: ["new", "racing", "fun"]
+    tags: ["racing", "fun"]
   },
   {
     id: "shotz",
@@ -277,7 +277,7 @@ const games = [
     title: "Minecraft",
     src: "https://d23tskfudfp1j.cloudfront.net/games/2026/more/duckcraft/index.html",
     img: "https://thumbs.dreamstime.com/b/minecraft-logo-online-game-dirt-block-illustrations-concept-design-isolated-186775550.jpg",
-    tags: ["popular", "survival", "multiplayer", "adventure", "3d", "best"]
+    tags: ["new", "popular", "survival", "multiplayer", "adventure", "3d", "best"]
   },
   {
     id: "run",
@@ -312,14 +312,14 @@ const games = [
     title: "DeadHead Parkour",
     src: "https://jamestore214.github.io/g97/class-412/",
     img: "https://mc0825.github.io/img/class-412.png",
-    tags: ["popular", "adventure", "new"]
+    tags: ["popular", "adventure"]
   },
   {
     id: "paperio",
     title: "Paper Io 3d",
     src: "https://lesson1225.github.io/lesson305/lesson-414/",
     img: "https://lesson1225.github.io/img/lesson-414.png",
-    tags: ["multiplayer", "3d", "new"]
+    tags: ["multiplayer", "3d"]
   },
   {
     id: "clusterrush",
@@ -333,21 +333,21 @@ const games = [
     title: "Time Shooter 3",
     src: "https://lesson1225.github.io/lesson85/lesson-2232/",
     img: "https://lesson1225.github.io/img/lesson-2232.png",
-    tags: ["3d", "survival", "new", "popular"]
+    tags: ["3d", "survival", "popular"]
   },
   {
     id: "pubg",
     title: "Pubg",
     src: "https://lesson1225.github.io/lesson85/lesson-2233/",
     img: "https://lesson1225.github.io/img/lesson-2233.png",
-    tags: ["survival", "multiplayer", "3d", "new", "popular"]
+    tags: ["survival", "multiplayer", "3d", "popular"]
   },
   {
     id: "plantsvs",
     title: "Plants vs Zombies",
     src: "https://lesson1225.github.io/lesson305/lesson-416/",
     img: "https://lesson1225.github.io/img/lesson-416.png",
-    tags: ["puzzle", "survival", "new", "popular"]
+    tags: ["puzzle", "survival", "popular"]
   },
   {
     id: "headsoccer",
@@ -361,21 +361,21 @@ const games = [
     title: "Backrooms",
     src: "https://lesson1225.github.io/lesson305/lesson-411/",
     img: "game%20logos/backrooms.jpg",
-    tags: ["adventure", "survival", "new", "popular"]
+    tags: ["adventure", "survival", "popular"]
   },
   {
     id: "cardfa",
     title: "Crazy Car",
     src: "https://unblocked-games.s3.amazonaws.com/games/2023/mjs/idle-mining-empire/index.html",
     img: "https://unblocked-games.s3.amazonaws.com/media/posts/372/responsive/idle-mining-empire-512-xs.jpg",
-    tags: ["adventure", "survival", "new", "popular"]
+    tags: ["adventure", "survival", "popular"]
   },
   {
     id: "wafed",
     title: "Backflip Challenge",
     src: "https://d23tskfudfp1j.cloudfront.net/games/2026/unity/backflip-challenge/index.html",
     img: "https://unblocked-games.s3.amazonaws.com/media/posts/743/responsive/backflip-challenge-game-sm.webp",
-    tags: ["adventure", "survival", "new", "popular"]
+    tags: ["adventure", "survival", "popular"]
   },
   {
     id: "2048",
@@ -417,35 +417,35 @@ const games = [
     title: "Baldi's Basics",
     src: "https://dubdoo.com/games/baldisbasics.html",
     img: "game%20logos/baldis-basics.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "papas-pizzeria",
     title: "Papa's Pizzeria",
     src: "https://papaspizzeria.io/papas-pizzeria.embed",
     img: "game%20logos/papas-pizzeria.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "retro-bowl",
     title: "Retro Bowl",
     src: "https://retrobowlofficial.com/game/9a5a5ef4-bd76-48fa-bf07-5ccbdc09b1f6/index.html?game_id=806e2242-df99-4dcd-b6ac-2c20175159a8&game_version_id=9a5a5ef4-bd76-48fa-bf07-5ccbdc09b1f6&referrer=https%3A%2F%2Fwww.bing.com%2F",
     img: "game%20logos/retro-bowl.png",
-    tags: ["popular", "fun", "best"]
+    tags: ["new", "popular", "fun", "best"]
   },
   {
     id: "monkey-mart",
     title: "Monkey Mart",
     src: "https://voidnetgames.github.io/monkeymartgame/file/",
     img: "game%20logos/monkey-mart.png",
-    tags: ["popular", "simulators", "fun"]
+    tags: ["new", "popular", "simulators", "fun"]
   },
   {
     id: "crossy-road",
     title: "Crossy Road",
     src: "https://dubdoo.com/games/crossyroad.html",
     img: "game%20logos/crossy-road.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "wordle",
@@ -459,14 +459,14 @@ const games = [
     title: "Five Nights at Epstein's",
     src: "https://dubdoo.com/games/fivenightsatbigeps.html",
     img: "game%20logos/five-nights-at-epsteins.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "geometry-dash-subzero",
     title: "Geometry Dash SubZero",
     src: "https://dubdoo.com/games/geometrydashsubzero.html",
     img: "game%20logos/geometry-dash-subzero.png",
-    tags: ["popular", "fun", "best"]
+    tags: ["new", "popular", "fun", "best"]
   },
   {
     id: "block-blast",
@@ -571,35 +571,35 @@ const games = [
     title: "Adventure Capitalist",
     src: "https://dubdoo.com/games/adventurecapitalist.html",
     img: "game%20logos/adventurre-capatilist.png",
-    tags: ["popular", "simulators", "fun"]
+    tags: ["new", "popular", "simulators", "fun"]
   },
   {
     id: "happy-wheels",
     title: "Happy Wheels",
     src: "https://dubdoo.com/games/happywheels.html",
     img: "game%20logos/happy-wheels.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "wheelie-life",
     title: "Wheelie Life",
     src: "https://scratch.mit.edu/projects/1231016758/embed",
     img: "game%20logos/wheelie-life.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "tiny-fishing",
     title: "Tiny Fishing",
     src: "https://dubdoo.com/games/tinyfishing.html",
     img: "game%20logos/tiny-fishing.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "melon-sandbox",
     title: "Melon Sandbox",
     src: "https://melonplayground.io/game/melon-playground/",
     img: "game%20logos/melon-sandbox.png",
-    tags: ["popular", "fun", "best"]
+    tags: ["new", "popular", "fun", "best"]
   },
   {
     id: "snow-rider-3d",
@@ -634,35 +634,35 @@ const games = [
     title: "Cookie Clicker",
     src: "https://ubgwtf.gitlab.io/cookie-clicker/",
     img: "game%20logos/cookie-clicker.png",
-    tags: ["popular", "simulators", "fun"]
+    tags: ["new", "popular", "simulators", "fun"]
   },
   {
     id: "ultrakill",
     title: "UltraKill",
     src: "https://dubdoo.com/games/ultrakill.html",
     img: "game%20logos/ultrakill.png",
-    tags: ["popular", "survival", "fun", "best"]
+    tags: ["new", "popular", "survival", "fun", "best"]
   },
   {
     id: "rocket-league",
     title: "Rocket League",
     src: "https://rocketgoal.io/",
     img: "game%20logos/rocket-league.png",
-    tags: ["popular", "fun", "best"]
+    tags: ["new", "popular", "fun", "best"]
   },
   {
     id: "crazy-cattle-3d",
     title: "Crazy Cattle 3D",
     src: "https://dubdoo.com/games/crazycattle3d.html",
     img: "game%20logos/crazy-cattle-3d.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "terraria",
     title: "Terraria",
     src: "https://dubdoo.com/games/terraria.html",
     img: "game%20logos/terraria.png",
-    tags: ["popular", "survival", "adventure", "best"]
+    tags: ["new", "popular", "survival", "adventure", "best"]
   },
   {
     id: "survivor-io",
@@ -676,7 +676,7 @@ const games = [
     title: "Soundbuttons",
     src: "https://dubdoo.com/games/soundboard.html",
     img: "game%20logos/soundbuttons.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "smashy-road",
@@ -690,27 +690,27 @@ const games = [
     title: "Papa's Hotdoggeria",
     src: "https://dnrweqffuwjtx.cloudfront.net/games/2024/flash/papas-hot-doggeria/index.html",
     img: "game%20logos/papas-hotdoggeria.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "papas-freezeria",
     title: "Papa's Freezeria",
     src: "https://dnrweqffuwjtx.cloudfront.net/games/2024/flash/papas-freezeria/index.html",
     img: "game%20logos/papas-freezeria.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "papas-pastaria",
     title: "Papa's Pastaria",
     src: "https://dnrweqffuwjtx.cloudfront.net/games/2024/flash/papas-pastaria/index.html",
     img: "game%20logos/papas-pastaria.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
   {
     id: "papas-donuteria",
     title: "Papa's Donuteria",
     src: "https://dnrweqffuwjtx.cloudfront.net/games/2024/flash/papas-donuteria/index.html",
     img: "game%20logos/papas-donuteria.png",
-    tags: ["popular", "fun"]
+    tags: ["new", "popular", "fun"]
   },
 ];
