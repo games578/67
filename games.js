@@ -558,7 +558,7 @@ const games = [
   {
     id: "a-small-world-cup",
     title: "A Small World Cup",
-    src: "https://asmall-worldcup.github.io/file/",
+    src: "https://a-small-world-cup.vercel.app/file/",
     img: "game%20logos/a-small-world-cup.png",
     tags: ["soccer", "multiplayer", "fun", "best"]
   },
