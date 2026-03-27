@@ -5,379 +5,881 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Play Game</title>
     <link rel="icon" type="image/png" href="logo.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
       :root {
-        --bg:        #080b12;
-        --bg2:       #0d1220;
-        --bg3:       #111827;
-        --bg4:       #1a2235;
-        --border:    rgba(255,255,255,0.06);
-        --border2:   rgba(255,255,255,0.11);
-        --text:      #f0f4ff;
-        --text2:     rgba(200,210,255,0.55);
-        --text3:     rgba(200,210,255,0.3);
-        --accent:    #6c8fff;
-        --accent2:   rgba(108,143,255,0.15);
-        --accent3:   #a5bcff;
-        --shimmer1:  #111827;
-        --shimmer2:  #1e2d45;
-        --card-bg:   #111827;
-        --navbar-bg: rgba(8,11,18,0.85);
-        --red:       #ff5c7a;
+        --bg: #080b12;
+        --bg2: #0d1220;
+        --bg3: #111827;
+        --bg4: #1a2235;
+        --border: rgba(255, 255, 255, 0.06);
+        --border2: rgba(255, 255, 255, 0.11);
+        --text: #f0f4ff;
+        --text2: rgba(200, 210, 255, 0.55);
+        --text3: rgba(200, 210, 255, 0.3);
+        --accent: #6c8fff;
+        --accent2: rgba(108, 143, 255, 0.15);
+        --accent3: #a5bcff;
+        --shimmer1: #111827;
+        --shimmer2: #1e2d45;
+        --card-bg: #111827;
+        --navbar-bg: rgba(8, 11, 18, 0.85);
+        --red: #ff5c7a;
       }
       body.light {
-        --bg:#f3f6ff; --bg2:#eaf0ff; --bg3:#ffffff; --bg4:#f0f4ff;
-        --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.12);
-        --text:#0f172a; --text2:rgba(0,0,0,0.52); --text3:rgba(0,0,0,0.32);
-        --accent:#3b5bfc; --accent2:rgba(59,91,252,0.1); --accent3:#1e3de4;
-        --shimmer1:#e8edf8; --shimmer2:#d0d8f0;
-        --card-bg:#ffffff; --navbar-bg:rgba(243,246,255,0.92);
+        --bg: #f3f6ff;
+        --bg2: #eaf0ff;
+        --bg3: #ffffff;
+        --bg4: #f0f4ff;
+        --border: rgba(0, 0, 0, 0.07);
+        --border2: rgba(0, 0, 0, 0.12);
+        --text: #0f172a;
+        --text2: rgba(0, 0, 0, 0.52);
+        --text3: rgba(0, 0, 0, 0.32);
+        --accent: #3b5bfc;
+        --accent2: rgba(59, 91, 252, 0.1);
+        --accent3: #1e3de4;
+        --shimmer1: #e8edf8;
+        --shimmer2: #d0d8f0;
+        --card-bg: #ffffff;
+        --navbar-bg: rgba(243, 246, 255, 0.92);
       }
 
       body {
-        font-family: 'DM Sans', system-ui, sans-serif;
+        font-family: "DM Sans", system-ui, sans-serif;
         background: var(--bg);
         color: var(--text);
         min-height: 100vh;
-        display: flex; flex-direction: column;
-        transition: background 0.3s, color 0.3s;
+        display: flex;
+        flex-direction: column;
+        transition:
+          background 0.3s,
+          color 0.3s;
         overflow-x: hidden;
       }
 
       /* Noise texture */
       body::before {
-        content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
         opacity: 0.4;
       }
-      body > * { position: relative; z-index: 1; }
+      body > * {
+        position: relative;
+        z-index: 1;
+      }
 
       /* ── Navbar ── */
       .navbar {
-        display: flex; align-items: center; padding: 0 24px 0 16px;
-        background: var(--navbar-bg); backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        padding: 0 24px 0 16px;
+        background: var(--navbar-bg);
+        backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.3);
-        position: sticky; top: 0; z-index: 200; height: 70px; flex-shrink: 0;
+        box-shadow:
+          0 1px 0 var(--border),
+          0 4px 24px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        height: 70px;
+        flex-shrink: 0;
       }
       .navbar a.logo-link {
-        display: flex; align-items: center; margin-right: 16px; flex-shrink: 0;
-        opacity: 0.92; transition: opacity 0.2s;
+        display: flex;
+        align-items: center;
+        margin-right: 16px;
+        flex-shrink: 0;
+        opacity: 0.92;
+        transition: opacity 0.2s;
       }
-      .navbar a.logo-link:hover { opacity: 1; }
-      .navbar img.logo { height: 46px; display: block; }
+      .navbar a.logo-link:hover {
+        opacity: 1;
+      }
+      .navbar img.logo {
+        height: 46px;
+        display: block;
+      }
 
-      .search-wrapper { flex: 1; position: relative; margin: 0 12px; }
+      .search-wrapper {
+        flex: 1;
+        position: relative;
+        margin: 0 12px;
+      }
       .search-wrapper::before {
-        content: "⌕"; position: absolute; left: 13px; top: 50%;
-        transform: translateY(-50%); color: rgba(108,143,255,0.55);
-        font-size: 17px; pointer-events: none; z-index: 1;
+        content: "⌕";
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(108, 143, 255, 0.55);
+        font-size: 17px;
+        pointer-events: none;
+        z-index: 1;
       }
       .search-wrapper input.search {
-        width: 100%; padding: 9px 16px 9px 36px; border-radius: 10px;
-        border: 1px solid var(--accent2); background: var(--accent2);
-        color: var(--text); font-size: 14px; outline: none;
-        font-family: 'DM Sans', sans-serif;
-        transition: border 0.25s, background 0.25s, box-shadow 0.25s;
+        width: 100%;
+        padding: 9px 16px 9px 36px;
+        border-radius: 10px;
+        border: 1px solid var(--accent2);
+        background: var(--accent2);
+        color: var(--text);
+        font-size: 14px;
+        outline: none;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          border 0.25s,
+          background 0.25s,
+          box-shadow 0.25s;
       }
-      .search-wrapper input.search::placeholder { color: rgba(108,143,255,0.4); }
+      .search-wrapper input.search::placeholder {
+        color: rgba(108, 143, 255, 0.4);
+      }
       .search-wrapper input.search:focus {
-        border-color: rgba(108,143,255,0.55); background: rgba(108,143,255,0.08);
-        box-shadow: 0 0 0 3px rgba(108,143,255,0.12), 0 0 20px rgba(108,143,255,0.1);
+        border-color: rgba(108, 143, 255, 0.55);
+        background: rgba(108, 143, 255, 0.08);
+        box-shadow:
+          0 0 0 3px rgba(108, 143, 255, 0.12),
+          0 0 20px rgba(108, 143, 255, 0.1);
       }
 
       .suggestions {
-        display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0;
-        background: var(--bg3); border: 1px solid var(--border2); border-radius: 12px;
-        overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.8); z-index: 300;
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background: var(--bg3);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
+        z-index: 300;
       }
-      .suggestions.visible { display: block; }
+      .suggestions.visible {
+        display: block;
+      }
       .suggestion-item {
-        display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-        cursor: pointer; transition: background 0.12s; text-decoration: none; color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: background 0.12s;
+        text-decoration: none;
+        color: var(--text);
       }
-      .suggestion-item:hover, .suggestion-item.active { background: rgba(108,143,255,0.1); }
-      .suggestion-item img { width: 32px; height: 32px; border-radius: 7px; object-fit: cover; flex-shrink: 0; }
-      .suggestion-item span { font-size: 13px; }
-      .suggestion-item .match { color: var(--text); font-weight: 700; }
-      .suggestion-item .rest { color: var(--text2); }
+      .suggestion-item:hover,
+      .suggestion-item.active {
+        background: rgba(108, 143, 255, 0.1);
+      }
+      .suggestion-item img {
+        width: 32px;
+        height: 32px;
+        border-radius: 7px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .suggestion-item span {
+        font-size: 13px;
+      }
+      .suggestion-item .match {
+        color: var(--text);
+        font-weight: 700;
+      }
+      .suggestion-item .rest {
+        color: var(--text2);
+      }
 
       .home-link {
-        margin-left: 12px; flex-shrink: 0; color: var(--text2); text-decoration: none;
-        font-size: 13px; white-space: nowrap;
-        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-        padding: 7px 14px; border-radius: 9px;
-        transition: background 0.2s, color 0.2s, transform 0.15s;
+        margin-left: 12px;
+        flex-shrink: 0;
+        color: var(--text2);
+        text-decoration: none;
+        font-size: 13px;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 7px 14px;
+        border-radius: 9px;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.15s;
         font-weight: 500;
       }
-      .home-link:hover { background: rgba(255,255,255,0.12); color: var(--text); transform: scale(1.04); }
+      .home-link:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--text);
+        transform: scale(1.04);
+      }
 
       .nav-icon-btn {
-        flex-shrink: 0; background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1); color: var(--text);
-        width: 38px; height: 38px; border-radius: 9px; cursor: pointer;
-        font-size: 16px; display: flex; align-items: center; justify-content: center;
-        transition: background 0.2s, transform 0.15s; margin-left: 6px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        margin-left: 6px;
       }
-      .nav-icon-btn:hover { background: rgba(255,255,255,0.12); transform: scale(1.08); }
+      .nav-icon-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: scale(1.08);
+      }
 
       .panic-btn {
-        flex-shrink: 0; background: rgba(255,92,122,0.12);
-        border: 1px solid rgba(255,92,122,0.3); color: #ff7c94;
-        padding: 7px 14px; border-radius: 9px; cursor: pointer;
-        font-size: 13px; font-weight: 700; white-space: nowrap;
-        font-family: 'DM Sans', sans-serif;
-        transition: background 0.2s, transform 0.15s; margin-left: 6px;
+        flex-shrink: 0;
+        background: rgba(255, 92, 122, 0.12);
+        border: 1px solid rgba(255, 92, 122, 0.3);
+        color: #ff7c94;
+        padding: 7px 14px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        margin-left: 6px;
       }
-      .panic-btn:hover { background: rgba(255,92,122,0.25); transform: scale(1.04); }
+      .panic-btn:hover {
+        background: rgba(255, 92, 122, 0.25);
+        transform: scale(1.04);
+      }
 
       /* ── Page ── */
       .page {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        padding: 24px 5% 0; gap: 14px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 5% 0;
+        gap: 14px;
         animation: pageIn 0.3s ease both;
       }
-      @keyframes pageIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
       /* ── Game header ── */
       .game-header {
-        width: 100%; max-width: 1000px;
-        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
       }
       #gameTitle {
-        font-size: 21px; font-weight: 800; letter-spacing: 0.01em;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        font-family: 'Syne', sans-serif;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-family: "Syne", sans-serif;
       }
 
-      .controls { display: flex; gap: 8px; flex-shrink: 0; }
+      .controls {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
 
       .btn {
-        background: rgba(255,255,255,0.06); color: var(--text);
-        border: 1px solid rgba(255,255,255,0.1);
-        padding: 7px 16px; cursor: pointer; border-radius: 9px;
-        font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif;
-        transition: background 0.2s, transform 0.15s, border-color 0.2s;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 7px 16px;
+        cursor: pointer;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          border-color 0.2s;
         white-space: nowrap;
       }
-      .btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); transform: scale(1.04); }
-      .btn:active { transform: scale(0.97); }
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: scale(1.04);
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
 
       .btn.primary {
-        background: rgba(108,143,255,0.14); border-color: rgba(108,143,255,0.32); color: var(--accent3);
+        background: rgba(108, 143, 255, 0.14);
+        border-color: rgba(108, 143, 255, 0.32);
+        color: var(--accent3);
       }
-      .btn.primary:hover { background: rgba(108,143,255,0.24); border-color: rgba(108,143,255,0.5); }
+      .btn.primary:hover {
+        background: rgba(108, 143, 255, 0.24);
+        border-color: rgba(108, 143, 255, 0.5);
+      }
 
-      .btn.fav-active { background: rgba(255,92,122,0.14); border-color: rgba(255,92,122,0.32); color: #ff7c94; }
-      .btn.fav-active:hover { background: rgba(255,92,122,0.24); }
+      .btn.fav-active {
+        background: rgba(255, 92, 122, 0.14);
+        border-color: rgba(255, 92, 122, 0.32);
+        color: #ff7c94;
+      }
+      .btn.fav-active:hover {
+        background: rgba(255, 92, 122, 0.24);
+      }
 
       .btn.fullscreen-active {
-        background: linear-gradient(135deg, var(--accent), #4a6ee8); border-color: transparent;
-        color: white; box-shadow: 0 4px 16px rgba(108,143,255,0.35);
+        background: linear-gradient(135deg, var(--accent), #4a6ee8);
+        border-color: transparent;
+        color: white;
+        box-shadow: 0 4px 16px rgba(108, 143, 255, 0.35);
       }
 
       /* ── Game container ── */
       .game-container {
-        width: 100%; max-width: 1000px; height: 660px;
-        background: var(--bg3); border-radius: 14px; overflow: hidden;
-        box-shadow: 0 8px 48px rgba(0,0,0,0.7), 0 0 0 1px var(--border);
+        width: 100%;
+        max-width: 1000px;
+        height: 660px;
+        background: var(--bg3);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow:
+          0 8px 48px rgba(0, 0, 0, 0.7),
+          0 0 0 1px var(--border);
         border: 1px solid var(--border2);
         position: relative;
         transition: box-shadow 0.3s;
       }
       .game-container:hover {
-        box-shadow: 0 12px 56px rgba(0,0,0,0.75), 0 0 0 1px rgba(108,143,255,0.15);
+        box-shadow:
+          0 12px 56px rgba(0, 0, 0, 0.75),
+          0 0 0 1px rgba(108, 143, 255, 0.15);
       }
-      .game-container:-webkit-full-screen, .game-container:fullscreen {
-        width: 100vw; height: 100vh; max-width: none; border-radius: 0;
+      .game-container:-webkit-full-screen,
+      .game-container:fullscreen {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        border-radius: 0;
       }
 
-      iframe { width: 100%; height: 100%; border: none; display: block; }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
 
       /* Loading overlay inside game container */
       .game-loading {
-        position: absolute; inset: 0; background: var(--bg3);
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 14px; z-index: 10; pointer-events: none;
+        position: absolute;
+        inset: 0;
+        background: var(--bg3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        z-index: 10;
+        pointer-events: none;
         transition: opacity 0.4s;
       }
-      .game-loading.hidden { opacity: 0; }
+      .game-loading.hidden {
+        opacity: 0;
+      }
       .loading-spinner {
-        width: 40px; height: 40px; border: 3px solid rgba(108,143,255,0.2);
-        border-top-color: var(--accent); border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(108, 143, 255, 0.2);
+        border-top-color: var(--accent);
+        border-radius: 50%;
         animation: spin 0.8s linear infinite;
       }
-      @keyframes spin { to { transform: rotate(360deg); } }
-      .loading-title { font-size: 14px; font-weight: 600; color: var(--text2); font-family: 'DM Sans', sans-serif; }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loading-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text2);
+        font-family: "DM Sans", sans-serif;
+      }
 
       /* ── Timer bar ── */
       .timer-bar {
-        width: 100%; max-width: 1000px;
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 16px; padding: 6px 2px 0;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 6px 2px 0;
       }
       .timer-display {
-        font-size: 13px; color: var(--text2);
-        display: flex; align-items: center; gap: 6px;
-        font-family: 'DM Sans', sans-serif;
+        font-size: 13px;
+        color: var(--text2);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "DM Sans", sans-serif;
       }
       .timer-val {
-        font-variant-numeric: tabular-nums; font-weight: 700; color: var(--accent3);
-        font-family: 'Syne', sans-serif;
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+        color: var(--accent3);
+        font-family: "Syne", sans-serif;
       }
-      body.light .timer-val { color: var(--accent); }
-      .timer-icon { font-size: 14px; }
+      body.light .timer-val {
+        color: var(--accent);
+      }
+      .timer-icon {
+        font-size: 14px;
+      }
 
       .report-link {
-        font-size: 12px; color: var(--text3); background: none; border: none;
-        cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
-        transition: color 0.15s; padding: 0; font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: var(--text3);
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.15s;
+        padding: 0;
+        font-family: "DM Sans", sans-serif;
       }
-      .report-link:hover { color: var(--text2); }
+      .report-link:hover {
+        color: var(--text2);
+      }
+
+      /* ── Ad container ── */
+      .ad-container {
+        width: 100%;
+        max-width: 1000px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--bg3);
+      }
 
       /* ── You might also like ── */
-      .also-like { width: 100%; max-width: 1000px; margin-top: 8px; padding-bottom: 16px; }
-      .also-like h3 {
-        font-size: 15px; font-weight: 800; margin-bottom: 14px;
-        padding-bottom: 10px; border-bottom: 1px solid var(--border);
-        font-family: 'Syne', sans-serif;
+      .also-like {
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 8px;
+        padding-bottom: 16px;
       }
-      .also-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
+      .also-like h3 {
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        font-family: "Syne", sans-serif;
+      }
+      .also-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+      }
 
       /* ── Cards ── */
       .card {
-        background: var(--card-bg); border-radius: 12px; overflow: hidden;
-        cursor: pointer; display: flex; align-items: center; justify-content: center;
-        aspect-ratio: 1/1; position: relative;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1/1;
+        position: relative;
         border: 1px solid var(--border);
-        transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.22s;
+        transition:
+          transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+          border-color 0.2s,
+          box-shadow 0.22s;
         will-change: transform;
       }
       .card:hover {
         transform: scale(1.08) translateY(-3px);
-        border-color: rgba(108,143,255,0.4);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(108,143,255,0.2);
+        border-color: rgba(108, 143, 255, 0.4);
+        box-shadow:
+          0 12px 32px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(108, 143, 255, 0.2);
       }
-      .card:hover .card-label { opacity: 1; transform: translateY(0); }
-      .card a { display: block; width: 100%; height: 100%; }
-      .card img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 11px; }
+      .card:hover .card-label {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .card a {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 11px;
+      }
       .card-label {
-        position: absolute; bottom: 0; left: 0; right: 0;
-        background: linear-gradient(transparent, rgba(0,0,0,0.9));
-        color: white; font-size: 10px; font-weight: 700;
-        padding: 18px 6px 7px; text-align: center;
-        opacity: 0; transform: translateY(5px);
-        transition: opacity 0.2s, transform 0.2s;
-        pointer-events: none; line-height: 1.3;
-        font-family: 'DM Sans', sans-serif;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 18px 6px 7px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(5px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+        line-height: 1.3;
+        font-family: "DM Sans", sans-serif;
       }
 
       /* Shimmer */
       .skeleton {
-        background: linear-gradient(90deg,var(--shimmer1) 25%,var(--shimmer2) 50%,var(--shimmer1) 75%);
-        background-size: 200% 100%; animation: shimmer 1.6s infinite;
-        border-radius: 12px; aspect-ratio: 1/1; border: 1px solid var(--border);
+        background: linear-gradient(
+          90deg,
+          var(--shimmer1) 25%,
+          var(--shimmer2) 50%,
+          var(--shimmer1) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.6s infinite;
+        border-radius: 12px;
+        aspect-ratio: 1/1;
+        border: 1px solid var(--border);
       }
-      @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
 
       /* ── Share toast ── */
       .share-toast {
-        position: fixed; bottom: 28px; left: 50%;
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
         transform: translateX(-50%) translateY(10px);
-        background: var(--bg3); border: 1px solid var(--border2);
-        color: var(--text); font-size: 13px; font-weight: 600;
-        padding: 10px 20px; border-radius: 10px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-        opacity: 0; transition: opacity 0.2s, transform 0.2s;
-        pointer-events: none; z-index: 999; white-space: nowrap;
-        font-family: 'DM Sans', sans-serif;
+        background: var(--bg3);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+        z-index: 999;
+        white-space: nowrap;
+        font-family: "DM Sans", sans-serif;
       }
-      .share-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+      .share-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
 
       /* ── Report modal ── */
       .modal-overlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000;
-        display: flex; align-items: center; justify-content: center;
-        opacity: 0; pointer-events: none; transition: opacity 0.22s;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.22s;
         backdrop-filter: blur(4px);
       }
-      .modal-overlay.open { opacity: 1; pointer-events: all; }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
       .modal {
-        background: var(--bg3); border: 1px solid var(--border2); border-radius: 16px;
-        padding: 28px; width: 100%; max-width: 400px; margin: 16px;
+        background: var(--bg3);
+        border: 1px solid var(--border2);
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 400px;
+        margin: 16px;
         transform: translateY(16px) scale(0.97);
-        transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1);
-        box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+        transition: transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
       }
-      .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-      .modal h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; font-family: 'Syne', sans-serif; }
-      .modal p { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+      .modal-overlay.open .modal {
+        transform: translateY(0) scale(1);
+      }
+      .modal h2 {
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 6px;
+        font-family: "Syne", sans-serif;
+      }
+      .modal p {
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 20px;
+      }
       .modal textarea {
-        width: 100%; background: rgba(108,143,255,0.06); border: 1px solid var(--border2);
-        border-radius: 9px; padding: 10px 14px; color: var(--text); font-size: 13px;
-        outline: none; font-family: 'DM Sans', sans-serif; resize: vertical; min-height: 80px;
-        transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 16px;
+        width: 100%;
+        background: rgba(108, 143, 255, 0.06);
+        border: 1px solid var(--border2);
+        border-radius: 9px;
+        padding: 10px 14px;
+        color: var(--text);
+        font-size: 13px;
+        outline: none;
+        font-family: "DM Sans", sans-serif;
+        resize: vertical;
+        min-height: 80px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        margin-bottom: 16px;
       }
-      .modal textarea:focus { border-color: rgba(108,143,255,0.5); box-shadow: 0 0 0 3px rgba(108,143,255,0.1); }
-      .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+      .modal textarea:focus {
+        border-color: rgba(108, 143, 255, 0.5);
+        box-shadow: 0 0 0 3px rgba(108, 143, 255, 0.1);
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
       .modal-cancel {
-        background: rgba(255,255,255,0.06); border: 1px solid var(--border2);
-        color: var(--text2); padding: 8px 18px; border-radius: 9px; cursor: pointer;
-        font-size: 13px; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border2);
+        color: var(--text2);
+        padding: 8px 18px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: "DM Sans", sans-serif;
+        transition: background 0.2s;
       }
-      .modal-cancel:hover { background: rgba(255,255,255,0.12); }
+      .modal-cancel:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
       .modal-submit {
-        background: rgba(255,92,122,0.18); border: 1px solid rgba(255,92,122,0.35);
-        color: #ff7c94; padding: 8px 18px; border-radius: 9px; cursor: pointer;
-        font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif;
-        transition: background 0.2s, transform 0.15s;
+        background: rgba(255, 92, 122, 0.18);
+        border: 1px solid rgba(255, 92, 122, 0.35);
+        color: #ff7c94;
+        padding: 8px 18px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          background 0.2s,
+          transform 0.15s;
       }
-      .modal-submit:hover { background: rgba(255,92,122,0.3); transform: scale(1.03); }
-      .modal-success { text-align: center; padding: 8px 0 4px; }
-      .modal-success .big-emoji { font-size: 40px; margin-bottom: 10px; display: block; }
+      .modal-submit:hover {
+        background: rgba(255, 92, 122, 0.3);
+        transform: scale(1.03);
+      }
+      .modal-success {
+        text-align: center;
+        padding: 8px 0 4px;
+      }
+      .modal-success .big-emoji {
+        font-size: 40px;
+        margin-bottom: 10px;
+        display: block;
+      }
 
       /* ── Footer ── */
-      footer { background: #050810; border-top: 1px solid var(--border); margin-top: 24px; padding: 48px 8% 28px; }
-      .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; width: 100%; margin-bottom: 36px; }
-      .footer-brand img { height: 38px; margin-bottom: 14px; display: block; }
-      .footer-brand p { font-size: 13px; color: var(--text3); line-height: 1.8; max-width: 280px; }
-      .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); margin-bottom: 14px; font-family: 'Syne', sans-serif; }
-      .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-      .footer-col ul li a { color: var(--text3); text-decoration: none; font-size: 13px; transition: color 0.15s; }
-      .footer-col ul li a:hover { color: var(--text); }
-      .footer-col ul li span { color: var(--text3); font-size: 13px; }
-      .footer-note { font-size: 11px; color: var(--text3); margin-top: 6px; }
-      .footer-divider { border: none; border-top: 1px solid var(--border); width: 100%; margin: 0 0 20px; }
-      .footer-bottom { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text3); flex-wrap: wrap; gap: 8px; }
+      footer {
+        background: #050810;
+        border-top: 1px solid var(--border);
+        margin-top: 24px;
+        padding: 48px 8% 28px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 40px;
+        width: 100%;
+        margin-bottom: 36px;
+      }
+      .footer-brand img {
+        height: 38px;
+        margin-bottom: 14px;
+        display: block;
+      }
+      .footer-brand p {
+        font-size: 13px;
+        color: var(--text3);
+        line-height: 1.8;
+        max-width: 280px;
+      }
+      .footer-col h4 {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text2);
+        margin-bottom: 14px;
+        font-family: "Syne", sans-serif;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-col ul li a {
+        color: var(--text3);
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.15s;
+      }
+      .footer-col ul li a:hover {
+        color: var(--text);
+      }
+      .footer-col ul li span {
+        color: var(--text3);
+        font-size: 13px;
+      }
+      .footer-note {
+        font-size: 11px;
+        color: var(--text3);
+        margin-top: 6px;
+      }
+      .footer-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        width: 100%;
+        margin: 0 0 20px;
+      }
+      .footer-bottom {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--text3);
+        flex-wrap: wrap;
+        gap: 8px;
+      }
 
       @media (max-width: 700px) {
-        .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-        .footer-bottom { flex-direction: column; text-align: center; }
-        .page { padding: 16px 4% 0; }
-        .game-container { height: 380px; }
-        #gameTitle { font-size: 16px; }
-        .also-grid { grid-template-columns: repeat(4,1fr); }
-        .controls .btn span { display: none; }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .page {
+          padding: 16px 4% 0;
+        }
+        .game-container {
+          height: 380px;
+        }
+        #gameTitle {
+          font-size: 16px;
+        }
+        .also-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .controls .btn span {
+          display: none;
+        }
       }
       @media (max-width: 480px) {
-        .also-grid { grid-template-columns: repeat(3,1fr); }
+        .also-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
-      @media (hover: none) { .card-label { opacity: 1; transform: translateY(0); } }
+      @media (hover: none) {
+        .card-label {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
   <body>
     <div class="navbar">
-      <a href="index.html" class="logo-link"><img src="logo.png" alt="Home" class="logo" /></a>
+      <a href="index.html" class="logo-link"
+        ><img src="logo.png" alt="Home" class="logo"
+      /></a>
       <div class="search-wrapper">
-        <input type="text" class="search" placeholder="Search games..." id="searchInput" autocomplete="off" />
+        <input
+          type="text"
+          class="search"
+          placeholder="Search games..."
+          id="searchInput"
+          autocomplete="off"
+        />
         <div class="suggestions" id="suggestions"></div>
       </div>
       <a href="index.html" class="home-link">← Home</a>
-      <button class="nav-icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
+      <button class="nav-icon-btn" id="themeBtn" title="Toggle theme">
+        🌙
+      </button>
       <button class="panic-btn" id="panicBtn">🚨 Panic</button>
     </div>
 
@@ -388,7 +890,9 @@
           <button class="btn" id="favBtn">🤍 <span>Favourite</span></button>
           <button class="btn" id="shareBtn">🔗 <span>Share</span></button>
           <button class="btn" id="reloadBtn">↺ <span>Reload</span></button>
-          <button class="btn primary" id="fullscreenBtn">⛶ <span>Fullscreen</span></button>
+          <button class="btn primary" id="fullscreenBtn">
+            ⛶ <span>Fullscreen</span>
+          </button>
         </div>
       </div>
 
@@ -408,7 +912,25 @@
         <button class="report-link" id="reportBtn">⚠ Report broken game</button>
       </div>
 
-      <div class="also-like" id="alsoLike" style="display:none">
+      <!-- ── Game Monetize Ad ── -->
+      <div class="ad-container">
+        <div id="gamemonetize-video"></div>
+        <script type="text/javascript">
+           window.VIDEO_OPTIONS = {
+               gameid : "4kci7og3klgj0ivy2wz3gdvd9dth5e7n",
+               width  : "100%",
+               height : "480px",
+               color  : "#3f007e",
+               getads  : "true"
+           };
+           (function (a, b, c) {
+              var d = a.getElementsByTagName(b)[0];
+              a.getElementById(c) || (a = a.createElement(b), a.id = c, a.src = "https://api.gamemonetize.com/video.js", d.parentNode.insertBefore(a, d))
+           })(document, "script", "gamemonetize-video-api"); 
+        </script>
+      </div>
+
+      <div class="also-like" id="alsoLike" style="display: none">
         <h3>🎮 You might also like</h3>
         <div class="also-grid" id="alsoGrid"></div>
       </div>
@@ -418,7 +940,10 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <img src="logo.png" alt="Unblocked Games" />
-          <p>A free collection of the best unblocked games you can play anywhere, anytime. No downloads, no logins — just pick a game and play.</p>
+          <p>
+            A free collection of the best unblocked games you can play anywhere,
+            anytime. No downloads, no logins — just pick a game and play.
+          </p>
         </div>
         <div class="footer-col">
           <h4>Browse</h4>
@@ -431,9 +956,13 @@
         <div class="footer-col">
           <h4>Contact</h4>
           <ul>
-            <li><a href="mailto:info@mathgames67.com">📧 Send us an email</a></li>
+            <li>
+              <a href="mailto:info@mathgames67.com">📧 Send us an email</a>
+            </li>
             <li><span>info@mathgames67.com</span></li>
-            <li><span class="footer-note">We reply within 24–48 hours</span></li>
+            <li>
+              <span class="footer-note">We reply within 24–48 hours</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -452,17 +981,26 @@
         <div id="reportForm">
           <h2>⚠️ Report Broken Game</h2>
           <p>Tell us what's wrong and we'll fix it as soon as possible.</p>
-          <textarea id="reportNote" placeholder="What's wrong? (e.g. game doesn't load, black screen, wrong game)" maxlength="300"></textarea>
+          <textarea
+            id="reportNote"
+            placeholder="What's wrong? (e.g. game doesn't load, black screen, wrong game)"
+            maxlength="300"
+          ></textarea>
           <div class="modal-actions">
             <button class="modal-cancel" id="reportCancel">Cancel</button>
             <button class="modal-submit" id="reportSubmit">Send Report</button>
           </div>
         </div>
-        <div id="reportSuccess" class="modal-success" style="display:none">
+        <div id="reportSuccess" class="modal-success" style="display: none">
           <span class="big-emoji">✅</span>
           <h2>Thanks!</h2>
-          <p style="color:var(--text2);font-size:13px;margin-top:8px;">Report saved. We'll look into it!</p>
-          <div class="modal-actions" style="justify-content:center;margin-top:20px">
+          <p style="color: var(--text2); font-size: 13px; margin-top: 8px">
+            Report saved. We'll look into it!
+          </p>
+          <div
+            class="modal-actions"
+            style="justify-content: center; margin-top: 20px"
+          >
             <button class="modal-cancel" id="reportClose">Close</button>
           </div>
         </div>
@@ -472,177 +1010,357 @@
     <script src="games.js"></script>
     <script>
       // ── Panic ──
-      document.addEventListener('keydown', e => { if(e.key==='`') window.location.href='https://classroom.google.com'; });
-      document.getElementById('panicBtn').addEventListener('click', () => { window.location.href='https://classroom.google.com'; });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "`")
+          window.location.href = "https://classroom.google.com";
+      });
+      document.getElementById("panicBtn").addEventListener("click", () => {
+        window.location.href = "https://classroom.google.com";
+      });
 
       // ── Theme ──
-      const themeBtn = document.getElementById('themeBtn');
-      function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(themeBtn) themeBtn.textContent = t==='light'?'🌙':'☀️'; }
-      const theme = localStorage.getItem('theme')||'dark';
+      const themeBtn = document.getElementById("themeBtn");
+      function applyTheme(t) {
+        document.body.classList.toggle("light", t === "light");
+        if (themeBtn) themeBtn.textContent = t === "light" ? "🌙" : "☀️";
+      }
+      const theme = localStorage.getItem("theme") || "dark";
       applyTheme(theme);
-      if(themeBtn) themeBtn.addEventListener('click', () => { const t=document.body.classList.contains('light')?'dark':'light'; localStorage.setItem('theme',t); applyTheme(t); });
+      if (themeBtn)
+        themeBtn.addEventListener("click", () => {
+          const t = document.body.classList.contains("light")
+            ? "dark"
+            : "light";
+          localStorage.setItem("theme", t);
+          applyTheme(t);
+        });
 
       // ── Storage ──
-      function getFavs(){ try{return JSON.parse(localStorage.getItem('favs')||'[]');}catch{return[];} }
-      function setFavs(f){ try{localStorage.setItem('favs',JSON.stringify(f));}catch{} }
-      function addRecent(id){
-        try{ let r=JSON.parse(localStorage.getItem('recent2')||'[]'); r=r.filter(x=>x.id!==id); r.unshift({id,ts:Date.now()}); r=r.slice(0,20); localStorage.setItem('recent2',JSON.stringify(r)); }catch{}
+      function getFavs() {
+        try {
+          return JSON.parse(localStorage.getItem("favs") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function setFavs(f) {
+        try {
+          localStorage.setItem("favs", JSON.stringify(f));
+        } catch {}
+      }
+      function addRecent(id) {
+        try {
+          let r = JSON.parse(localStorage.getItem("recent2") || "[]");
+          r = r.filter((x) => x.id !== id);
+          r.unshift({ id, ts: Date.now() });
+          r = r.slice(0, 20);
+          localStorage.setItem("recent2", JSON.stringify(r));
+        } catch {}
       }
 
       // ── Play timer ──
-      let sessionStart = Date.now(), totalSeconds = 0;
-      const timerVal = document.getElementById('timerVal');
-      function formatTimer(s){ const m=Math.floor(s/60); return m+':'+String(s%60).padStart(2,'0'); }
-      setInterval(() => { totalSeconds++; if(timerVal) timerVal.textContent = formatTimer(totalSeconds); }, 1000);
-
-      function savePlayTime(gameId){
-        if(!gameId) return;
-        const ms = Date.now()-sessionStart;
-        try{ const times=JSON.parse(localStorage.getItem('playTimes')||'{}'); times[gameId]=(times[gameId]||0)+ms; localStorage.setItem('playTimes',JSON.stringify(times)); }catch{}
+      let sessionStart = Date.now(),
+        totalSeconds = 0;
+      const timerVal = document.getElementById("timerVal");
+      function formatTimer(s) {
+        const m = Math.floor(s / 60);
+        return m + ":" + String(s % 60).padStart(2, "0");
       }
-      window.addEventListener('beforeunload', () => { const gn=window.location.search.substring(1).trim().toLowerCase(); savePlayTime(gn); });
+      setInterval(() => {
+        totalSeconds++;
+        if (timerVal) timerVal.textContent = formatTimer(totalSeconds);
+      }, 1000);
+
+      function savePlayTime(gameId) {
+        if (!gameId) return;
+        const ms = Date.now() - sessionStart;
+        try {
+          const times = JSON.parse(localStorage.getItem("playTimes") || "{}");
+          times[gameId] = (times[gameId] || 0) + ms;
+          localStorage.setItem("playTimes", JSON.stringify(times));
+        } catch {}
+      }
+      window.addEventListener("beforeunload", () => {
+        const gn = window.location.search.substring(1).trim().toLowerCase();
+        savePlayTime(gn);
+      });
 
       // ── Load game ──
       const gameName = window.location.search.substring(1).trim().toLowerCase();
-      const game = games.find(g => g.id === gameName);
-      const frame = document.getElementById('gameFrame');
-      const favBtn = document.getElementById('favBtn');
-      const gameLoading = document.getElementById('gameLoading');
-      const loadingTitle = document.getElementById('loadingTitle');
+      const game = games.find((g) => g.id === gameName);
+      const frame = document.getElementById("gameFrame");
+      const favBtn = document.getElementById("favBtn");
+      const gameLoading = document.getElementById("gameLoading");
+      const loadingTitle = document.getElementById("loadingTitle");
 
-      if(game){
-        document.getElementById('gameTitle').textContent = game.title;
-        document.title = game.title + ' — Unblocked Games';
-        loadingTitle.textContent = 'Loading ' + game.title + '...';
+      if (game) {
+        document.getElementById("gameTitle").textContent = game.title;
+        document.title = game.title + " — Unblocked Games";
+        loadingTitle.textContent = "Loading " + game.title + "...";
         frame.src = game.src;
         addRecent(game.id);
 
         // Hide loading once iframe loads
-        frame.addEventListener('load', () => {
-          gameLoading.classList.add('hidden');
-          setTimeout(() => { gameLoading.style.display='none'; }, 400);
+        frame.addEventListener("load", () => {
+          gameLoading.classList.add("hidden");
+          setTimeout(() => {
+            gameLoading.style.display = "none";
+          }, 400);
         });
 
         // Fav button
-        function updateFavBtn(){
+        function updateFavBtn() {
           const isFav = getFavs().includes(game.id);
-          favBtn.innerHTML = isFav ? '❤️ <span>Favourited</span>' : '🤍 <span>Favourite</span>';
-          favBtn.className = 'btn' + (isFav?' fav-active':'');
+          favBtn.innerHTML = isFav
+            ? "❤️ <span>Favourited</span>"
+            : "🤍 <span>Favourite</span>";
+          favBtn.className = "btn" + (isFav ? " fav-active" : "");
         }
         updateFavBtn();
-        favBtn.addEventListener('click', () => {
+        favBtn.addEventListener("click", () => {
           let f = getFavs();
-          if(f.includes(game.id)) f=f.filter(x=>x!==game.id); else f.push(game.id);
-          setFavs(f); updateFavBtn();
+          if (f.includes(game.id)) f = f.filter((x) => x !== game.id);
+          else f.push(game.id);
+          setFavs(f);
+          updateFavBtn();
         });
 
         // You might also like
-        const tagMatches = games.filter(g => g.id!==game.id && g.tags && game.tags && g.tags.some(t=>game.tags.includes(t)));
-        const others = games.filter(g => g.id!==game.id && !tagMatches.find(m=>m.id===g.id));
-        const related = [...tagMatches,...others].slice(0,12);
-        if(related.length){
-          const alsoLike = document.getElementById('alsoLike');
-          const alsoGrid = document.getElementById('alsoGrid');
-          alsoLike.style.display = 'block';
-          related.forEach(g => {
-            const card = document.createElement('div'); card.className='card';
-            const skel = document.createElement('div');
-            skel.style.cssText='position:absolute;inset:0;z-index:1;border-radius:11px;background:linear-gradient(90deg,var(--shimmer1) 25%,var(--shimmer2) 50%,var(--shimmer1) 75%);background-size:200% 100%;animation:shimmer 1.6s infinite;';
+        const tagMatches = games.filter(
+          (g) =>
+            g.id !== game.id &&
+            g.tags &&
+            game.tags &&
+            g.tags.some((t) => game.tags.includes(t)),
+        );
+        const others = games.filter(
+          (g) => g.id !== game.id && !tagMatches.find((m) => m.id === g.id),
+        );
+        const related = [...tagMatches, ...others].slice(0, 12);
+        if (related.length) {
+          const alsoLike = document.getElementById("alsoLike");
+          const alsoGrid = document.getElementById("alsoGrid");
+          alsoLike.style.display = "block";
+          related.forEach((g) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            const skel = document.createElement("div");
+            skel.style.cssText =
+              "position:absolute;inset:0;z-index:1;border-radius:11px;background:linear-gradient(90deg,var(--shimmer1) 25%,var(--shimmer2) 50%,var(--shimmer1) 75%);background-size:200% 100%;animation:shimmer 1.6s infinite;";
             card.appendChild(skel);
-            const a = document.createElement('a'); a.href='play.html?'+g.id;
-            a.addEventListener('click', () => { savePlayTime(gameName); });
-            const img = document.createElement('img'); img.alt=g.title; img.loading='lazy';
-            img.onload=()=>skel.remove(); img.onerror=()=>skel.remove(); img.src=g.img;
-            const label = document.createElement('div'); label.className='card-label'; label.textContent=g.title;
-            a.appendChild(img); card.appendChild(a); card.appendChild(label);
+            const a = document.createElement("a");
+            a.href = "play.html?" + g.id;
+            a.addEventListener("click", () => {
+              savePlayTime(gameName);
+            });
+            const img = document.createElement("img");
+            img.alt = g.title;
+            img.loading = "lazy";
+            img.onload = () => skel.remove();
+            img.onerror = () => skel.remove();
+            img.src = g.img;
+            const label = document.createElement("div");
+            label.className = "card-label";
+            label.textContent = g.title;
+            a.appendChild(img);
+            card.appendChild(a);
+            card.appendChild(label);
             alsoGrid.appendChild(card);
           });
         }
       } else {
-        document.getElementById('gameTitle').textContent = 'Game not found';
-        favBtn.style.display = 'none';
-        gameLoading.style.display = 'none';
+        document.getElementById("gameTitle").textContent = "Game not found";
+        favBtn.style.display = "none";
+        gameLoading.style.display = "none";
       }
 
       // ── Share ──
-      document.getElementById('shareBtn').addEventListener('click', () => {
+      document.getElementById("shareBtn").addEventListener("click", () => {
         const url = window.location.href;
-        if(navigator.clipboard){ navigator.clipboard.writeText(url).then(showShareToast).catch(()=>prompt('Copy this link:',url)); }
-        else prompt('Copy this link:',url);
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(url)
+            .then(showShareToast)
+            .catch(() => prompt("Copy this link:", url));
+        } else prompt("Copy this link:", url);
       });
-      function showShareToast(){ const t=document.getElementById('shareToast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+      function showShareToast() {
+        const t = document.getElementById("shareToast");
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
+      }
 
       // ── Report ──
-      const reportModal = document.getElementById('reportModal');
-      document.getElementById('reportBtn').addEventListener('click', ()=>reportModal.classList.add('open'));
-      function closeReport(){ reportModal.classList.remove('open'); document.getElementById('reportForm').style.display='block'; document.getElementById('reportSuccess').style.display='none'; document.getElementById('reportNote').value=''; }
-      document.getElementById('reportCancel').addEventListener('click', closeReport);
-      document.getElementById('reportClose').addEventListener('click', closeReport);
-      reportModal.addEventListener('click', e=>{ if(e.target===reportModal) closeReport(); });
-      document.getElementById('reportSubmit').addEventListener('click', ()=>{
-        const note = document.getElementById('reportNote').value.trim();
-        try{ const reports=JSON.parse(localStorage.getItem('brokenReports')||'[]'); reports.push({gameId:gameName,note,date:new Date().toISOString()}); localStorage.setItem('brokenReports',JSON.stringify(reports)); }catch{}
-        document.getElementById('reportForm').style.display='none'; document.getElementById('reportSuccess').style.display='block';
+      const reportModal = document.getElementById("reportModal");
+      document
+        .getElementById("reportBtn")
+        .addEventListener("click", () => reportModal.classList.add("open"));
+      function closeReport() {
+        reportModal.classList.remove("open");
+        document.getElementById("reportForm").style.display = "block";
+        document.getElementById("reportSuccess").style.display = "none";
+        document.getElementById("reportNote").value = "";
+      }
+      document
+        .getElementById("reportCancel")
+        .addEventListener("click", closeReport);
+      document
+        .getElementById("reportClose")
+        .addEventListener("click", closeReport);
+      reportModal.addEventListener("click", (e) => {
+        if (e.target === reportModal) closeReport();
+      });
+      document.getElementById("reportSubmit").addEventListener("click", () => {
+        const note = document.getElementById("reportNote").value.trim();
+        try {
+          const reports = JSON.parse(
+            localStorage.getItem("brokenReports") || "[]",
+          );
+          reports.push({
+            gameId: gameName,
+            note,
+            date: new Date().toISOString(),
+          });
+          localStorage.setItem("brokenReports", JSON.stringify(reports));
+        } catch {}
+        document.getElementById("reportForm").style.display = "none";
+        document.getElementById("reportSuccess").style.display = "block";
       });
 
       // ── Reload ──
-      document.getElementById('reloadBtn').addEventListener('click', ()=>{ frame.src=frame.src; gameLoading.style.display='flex'; gameLoading.classList.remove('hidden'); });
+      document.getElementById("reloadBtn").addEventListener("click", () => {
+        frame.src = frame.src;
+        gameLoading.style.display = "flex";
+        gameLoading.classList.remove("hidden");
+      });
 
       // ── Fullscreen ──
-      const container = document.getElementById('container');
-      const fsBtn = document.getElementById('fullscreenBtn');
-      fsBtn.addEventListener('click', ()=>{
-        if(!document.fullscreenElement && !document.webkitFullscreenElement){
-          if(container.requestFullscreen) container.requestFullscreen(); else if(container.webkitRequestFullscreen) container.webkitRequestFullscreen();
-        } else { if(document.exitFullscreen) document.exitFullscreen(); else if(document.webkitExitFullscreen) document.webkitExitFullscreen(); }
+      const container = document.getElementById("container");
+      const fsBtn = document.getElementById("fullscreenBtn");
+      fsBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (container.requestFullscreen) container.requestFullscreen();
+          else if (container.webkitRequestFullscreen)
+            container.webkitRequestFullscreen();
+        } else {
+          if (document.exitFullscreen) document.exitFullscreen();
+          else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        }
       });
-      function updateFsBtn(){
-        const inFs = document.fullscreenElement===container || document.webkitFullscreenElement===container;
-        fsBtn.innerHTML = inFs ? '✕ <span>Exit</span>' : '⛶ <span>Fullscreen</span>';
-        fsBtn.className = 'btn primary' + (inFs?' fullscreen-active':'');
+      function updateFsBtn() {
+        const inFs =
+          document.fullscreenElement === container ||
+          document.webkitFullscreenElement === container;
+        fsBtn.innerHTML = inFs
+          ? "✕ <span>Exit</span>"
+          : "⛶ <span>Fullscreen</span>";
+        fsBtn.className = "btn primary" + (inFs ? " fullscreen-active" : "");
       }
-      document.addEventListener('fullscreenchange', updateFsBtn);
-      document.addEventListener('webkitfullscreenchange', updateFsBtn);
+      document.addEventListener("fullscreenchange", updateFsBtn);
+      document.addEventListener("webkitfullscreenchange", updateFsBtn);
 
       // ── Keyboard shortcuts ──
-      document.addEventListener('keydown', e=>{
-        if(e.key==='`'){ window.location.href='https://classroom.google.com'; return; }
-        if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='TEXTAREA') return;
-        if(e.key==='f'||e.key==='F') fsBtn.click();
-        if(e.key==='r'||e.key==='R'){ frame.src=frame.src; gameLoading.style.display='flex'; gameLoading.classList.remove('hidden'); }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "`") {
+          window.location.href = "https://classroom.google.com";
+          return;
+        }
+        if (
+          document.activeElement.tagName === "INPUT" ||
+          document.activeElement.tagName === "TEXTAREA"
+        )
+          return;
+        if (e.key === "f" || e.key === "F") fsBtn.click();
+        if (e.key === "r" || e.key === "R") {
+          frame.src = frame.src;
+          gameLoading.style.display = "flex";
+          gameLoading.classList.remove("hidden");
+        }
       });
 
       // ── Search autocomplete ──
-      const searchInput = document.getElementById('searchInput');
-      const suggestionsBox = document.getElementById('suggestions');
+      const searchInput = document.getElementById("searchInput");
+      const suggestionsBox = document.getElementById("suggestions");
       let activeIndex = -1;
-      function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-      function showSuggestions(filter){
-        suggestionsBox.innerHTML=''; activeIndex=-1;
-        if(!filter){ suggestionsBox.classList.remove('visible'); return; }
-        const matches=games.filter(g=>g.title.toLowerCase().includes(filter)).slice(0,6);
-        if(!matches.length){ suggestionsBox.classList.remove('visible'); return; }
-        matches.forEach(g=>{
-          const a=document.createElement('a'); a.className='suggestion-item'; a.href='play.html?'+g.id;
-          const img=document.createElement('img'); img.src=g.img; img.alt=g.title;
-          const title=g.title; const idx=title.toLowerCase().indexOf(filter);
-          const span=document.createElement('span');
-          span.innerHTML=idx!==-1?escapeHtml(title.slice(0,idx))+`<span class="match">${escapeHtml(title.slice(idx,idx+filter.length))}</span><span class="rest">${escapeHtml(title.slice(idx+filter.length))}</span>`:escapeHtml(title);
-          a.appendChild(img); a.appendChild(span); suggestionsBox.appendChild(a);
-        });
-        suggestionsBox.classList.add('visible');
+      function escapeHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
       }
-      function setActive(idx){ const items=suggestionsBox.querySelectorAll('.suggestion-item'); items.forEach(el=>el.classList.remove('active')); if(idx>=0&&idx<items.length){items[idx].classList.add('active');activeIndex=idx;} }
-      searchInput.addEventListener('input',()=>showSuggestions(searchInput.value.toLowerCase().trim()));
-      searchInput.addEventListener('keydown',e=>{
-        const items=suggestionsBox.querySelectorAll('.suggestion-item');
-        if(e.key==='ArrowDown'){e.preventDefault();setActive(Math.min(activeIndex+1,items.length-1));}
-        else if(e.key==='ArrowUp'){e.preventDefault();setActive(Math.max(activeIndex-1,0));}
-        else if(e.key==='Enter'&&activeIndex>=0&&items[activeIndex]){ window.location.href=items[activeIndex].href; }
-        else if(e.key==='Escape'){ suggestionsBox.classList.remove('visible'); }
+      function showSuggestions(filter) {
+        suggestionsBox.innerHTML = "";
+        activeIndex = -1;
+        if (!filter) {
+          suggestionsBox.classList.remove("visible");
+          return;
+        }
+        const matches = games
+          .filter((g) => g.title.toLowerCase().includes(filter))
+          .slice(0, 6);
+        if (!matches.length) {
+          suggestionsBox.classList.remove("visible");
+          return;
+        }
+        matches.forEach((g) => {
+          const a = document.createElement("a");
+          a.className = "suggestion-item";
+          a.href = "play.html?" + g.id;
+          const img = document.createElement("img");
+          img.src = g.img;
+          img.alt = g.title;
+          const title = g.title;
+          const idx = title.toLowerCase().indexOf(filter);
+          const span = document.createElement("span");
+          span.innerHTML =
+            idx !== -1
+              ? escapeHtml(title.slice(0, idx)) +
+                `<span class="match">${escapeHtml(title.slice(idx, idx + filter.length))}</span><span class="rest">${escapeHtml(title.slice(idx + filter.length))}</span>`
+              : escapeHtml(title);
+          a.appendChild(img);
+          a.appendChild(span);
+          suggestionsBox.appendChild(a);
+        });
+        suggestionsBox.classList.add("visible");
+      }
+      function setActive(idx) {
+        const items = suggestionsBox.querySelectorAll(".suggestion-item");
+        items.forEach((el) => el.classList.remove("active"));
+        if (idx >= 0 && idx < items.length) {
+          items[idx].classList.add("active");
+          activeIndex = idx;
+        }
+      }
+      searchInput.addEventListener("input", () =>
+        showSuggestions(searchInput.value.toLowerCase().trim()),
+      );
+      searchInput.addEventListener("keydown", (e) => {
+        const items = suggestionsBox.querySelectorAll(".suggestion-item");
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setActive(Math.min(activeIndex + 1, items.length - 1));
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          setActive(Math.max(activeIndex - 1, 0));
+        } else if (
+          e.key === "Enter" &&
+          activeIndex >= 0 &&
+          items[activeIndex]
+        ) {
+          window.location.href = items[activeIndex].href;
+        } else if (e.key === "Escape") {
+          suggestionsBox.classList.remove("visible");
+        }
       });
-      document.addEventListener('click',e=>{ if(!e.target.closest('.search-wrapper')) suggestionsBox.classList.remove('visible'); });
-      searchInput.addEventListener('focus',()=>{ const f=searchInput.value.toLowerCase().trim(); if(f)showSuggestions(f); });
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-wrapper"))
+          suggestionsBox.classList.remove("visible");
+      });
+      searchInput.addEventListener("focus", () => {
+        const f = searchInput.value.toLowerCase().trim();
+        if (f) showSuggestions(f);
+      });
     </script>
   </body>
 </html>
